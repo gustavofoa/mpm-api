@@ -41,52 +41,32 @@ public class CategoriaService {
 		categoria.getChildren().forEach(c -> initializeChildren(c) );
 	}
 
-	@Transactional
-    public void delete(Categoria categoria) throws UnableToRemoveException {
-		if(categoria!=null && categoria.getChildren().size() > 0){
-			throw new UnableToRemoveException("Esta categoria possui categorias filhas.");
-		}
-		List<Musica> musicas = musicaRepository.findByCategoria(categoria);
-		musicas.forEach(musica -> {
-			musica.getCategorias().remove(categoria);
-			musicaRepository.save(musica);
-		});
-		List<SugestaoMusica> sugestoesMusicas = itemLiturgiaRepository.findByCategoria(categoria);
-		sugestoesMusicas.forEach(sugestao -> {
-			sugestao.getCategorias().remove(categoria);
-			itemLiturgiaRepository.save(sugestao);
-		});
-		categoriaRepository.delete(categoria);
-	}
-
-	public Categoria getAmem() {
-		return categoriaRepository.findOne("amem");
-	}
-
-	public Categoria getRefraoOrante() {
-		return categoriaRepository.findOne("refrao-orante");
-	}
-
 	public Categoria getCategoria(String slug) {
 		return categoriaRepository.findOne(slug);
 	}
 
-	@Transactional
-	public void validateAndSave(Categoria categoria) throws InvalidEntityException {
-		validate(categoria);
-		categoriaRepository.save(categoria);
-	}
+    @Transactional
+    public void save(Categoria categoria) throws InvalidEntityException {
+        categoriaRepository.save(categoria);
+    }
 
-	private void validate(Categoria categoria) throws InvalidEntityException {
-		if(categoria.getSlug() == null){
-			throw new InvalidEntityException("Informe o slug!");
-		}
-		if(categoria.getNome() == null){
-			throw new InvalidEntityException("Informe o nome!");
-		}
-		if(categoria.getOrdem() == null){
-			throw new InvalidEntityException("Informe a ordem!");
-		}
-	}
+    @Transactional
+    public void delete(String slug) throws UnableToRemoveException {
+        Categoria categoria = categoriaRepository.findOne(slug);
+        if(categoria!=null && categoria.getChildren().size() > 0){
+            throw new UnableToRemoveException("Esta categoria possui categorias filhas.");
+        }
+        List<Musica> musicas = musicaRepository.findByCategoria(categoria);
+        musicas.forEach(musica -> {
+            musica.getCategorias().remove(categoria);
+            musicaRepository.save(musica);
+        });
+        List<SugestaoMusica> sugestoesMusicas = itemLiturgiaRepository.findByCategoria(categoria);
+        sugestoesMusicas.forEach(sugestao -> {
+            sugestao.getCategorias().remove(categoria);
+            itemLiturgiaRepository.save(sugestao);
+        });
+        categoriaRepository.delete(categoria);
+    }
 
 }

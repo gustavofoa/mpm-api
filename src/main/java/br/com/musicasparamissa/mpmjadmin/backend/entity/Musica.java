@@ -1,17 +1,9 @@
 package br.com.musicasparamissa.mpmjadmin.backend.entity;
 
-import javafx.collections.ObservableList;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import java.util.HashSet;
+import javax.persistence.*;
 import java.util.Set;
 
 @Getter
@@ -75,24 +67,6 @@ public class Musica {
 		} else if (!slug.equals(other.slug))
 			return false;
 		return true;
-	}
-
-	public void joinCategorias(ObservableList<Categoria> items) {
-		if(categorias == null){
-			categorias = new HashSet<>();
-			categorias.addAll(items);
-		} else {
-			//remove
-			final Set<Categoria> removeds = new HashSet<>();
-			for(Categoria categoria : categorias){
-				if(!items.contains(categoria)){
-					removeds.add(categoria);
-				}
-			}
-			categorias.removeAll(removeds);
-			//add
-			categorias.addAll(items);
-		}
 	}
 
 }
