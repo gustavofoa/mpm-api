@@ -14,13 +14,13 @@ import java.util.Set;
 
 @Repository
 public interface MusicaRepository extends CrudRepository<Musica, String> {
-	
-	@Query("select m from mpm_musica m inner join m.categorias c where c = :categoria")
-	List<Musica> findByCategoria(@Param("categoria") Categoria categoria);
 
-	Set<Musica> findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrLetraIgnoreCaseContaining(String slug,
-																									String nome, String letra);
+    @Query("select m from mpm_musica m inner join m.categorias c where c = :categoria")
+    List<Musica> findByCategoria(@Param("categoria") Categoria categoria);
 
-	Page<Musica> findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrLetraIgnoreCaseContaining(String slug, String nome, String letra, Pageable pageable);
-	
+    Set<Musica> findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrLetraIgnoreCaseContaining(String slug,
+                                                                                                    String nome, String letra);
+
+    Page<Musica> findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrLetraIgnoreCaseContaining(String slug, String nome, String letra, Pageable pageable);
+
 }

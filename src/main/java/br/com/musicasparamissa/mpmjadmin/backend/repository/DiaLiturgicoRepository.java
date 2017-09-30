@@ -10,9 +10,9 @@ import java.util.Set;
 
 @Repository
 public interface DiaLiturgicoRepository extends CrudRepository<DiaLiturgico, String> {
-	
-	Page<DiaLiturgico> findBySlugIgnoreCaseContainingOrTituloIgnoreCaseContaining(String slug, String titulo, Pageable pageable);
 
-	Set<DiaLiturgico> findBySlugIgnoreCaseContainingOrTituloIgnoreCaseContaining(String slug, String titulo);
+    Page<DiaLiturgico> findBySlugIgnoreCaseContainingOrTituloIgnoreCaseContaining(String slug, String titulo, Pageable pageable);
+
+    Set<DiaLiturgico> findBySlugIgnoreCaseContainingOrTituloIgnoreCaseContaining(String slug, String titulo);
 
 }

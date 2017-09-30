@@ -18,26 +18,26 @@ import java.util.Set;
 @RequestMapping("/categorias")
 public class CategoriaController {
 
-	@Autowired
-	private CategoriaService categoriaService;
+    @Autowired
+    private CategoriaService categoriaService;
 
-	@GetMapping("/search")
-	public ResponseEntity<Set<Categoria>> search(@RequestParam("filter") String filter){
+    @GetMapping("/search")
+    public ResponseEntity<Set<Categoria>> search(@RequestParam("filter") String filter) {
 
-		Set<Categoria> categorias = categoriaService.search(filter);
+        Set<Categoria> categorias = categoriaService.search(filter);
 
-		return new ResponseEntity<>(categorias, HttpStatus.OK);
+        return new ResponseEntity<>(categorias, HttpStatus.OK);
 
-	}
+    }
 
-	@GetMapping("/tree")
-	public ResponseEntity<Set<Categoria>> getTree(){
+    @GetMapping("/tree")
+    public ResponseEntity<Set<Categoria>> getTree() {
 
-		Set<Categoria> categoriasTree = categoriaService.getTree();
+        Set<Categoria> categoriasTree = categoriaService.getTree();
 
-		return new ResponseEntity<>(categoriasTree, HttpStatus.OK);
+        return new ResponseEntity<>(categoriasTree, HttpStatus.OK);
 
-	}
+    }
 
     @GetMapping("/{slug}")
     public ResponseEntity<Categoria> get(@PathVariable("slug") String slug) {

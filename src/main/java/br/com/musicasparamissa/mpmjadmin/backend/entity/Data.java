@@ -4,47 +4,42 @@ import br.com.musicasparamissa.mpmjadmin.backend.util.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Getter
 @Setter
-@Entity(name="mpm_data")
+@Entity(name = "mpm_data")
 public class Data implements Serializable {
 
-	private static final long serialVersionUID = -7033097463967043822L;
+    private static final long serialVersionUID = -7033097463967043822L;
 
-	@Id
-	@Temporal(value=TemporalType.DATE)
-	private Date data;
+    @Id
+    @Temporal(value = TemporalType.DATE)
+    private Date data;
 
-	private Boolean destaque;
-	
-	@ManyToOne
-	@JoinColumn(name = "liturgia_id", referencedColumnName = "slug")
-	private DiaLiturgico liturgia;
+    private Boolean destaque;
 
-	public String getDataFormatada(){
-		return DateUtil.format(data);
-	}
+    @ManyToOne
+    @JoinColumn(name = "liturgia_id", referencedColumnName = "slug")
+    private DiaLiturgico liturgia;
 
-	public String getDiaLiturgicoSlug(){
-		return liturgia.getSlug();
-	}
+    public String getDataFormatada() {
+        return DateUtil.format(data);
+    }
 
-	public String getDiaLiturgicoTitulo(){
-		return liturgia.getTitulo();
-	}
+    public String getDiaLiturgicoSlug() {
+        return liturgia.getSlug();
+    }
 
-	public String getDiaLiturgicoIntroducao(){
-		return liturgia.getIntroducao();
-	}
-	
+    public String getDiaLiturgicoTitulo() {
+        return liturgia.getTitulo();
+    }
+
+    public String getDiaLiturgicoIntroducao() {
+        return liturgia.getIntroducao();
+    }
+
 }
 

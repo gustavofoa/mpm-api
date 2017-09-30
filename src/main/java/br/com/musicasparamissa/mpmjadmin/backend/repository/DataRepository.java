@@ -11,6 +11,6 @@ import java.util.Date;
 @Repository
 public interface DataRepository extends CrudRepository<Data, Date> {
 
-	Page<Data> findAllByOrderByDataDesc(Pageable pageable);
-	
+    Page<Data> findAllByOrderByDataDesc(Pageable pageable);
+
 }

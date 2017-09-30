@@ -7,9 +7,9 @@ import lombok.Setter;
 @Setter
 public class Post {
 
-	private String url;
-	private String titulo;
-	private String imagem;
-	private String autor;
-	
+    private String url;
+    private String titulo;
+    private String imagem;
+    private String autor;
+
 }

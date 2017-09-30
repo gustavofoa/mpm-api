@@ -11,14 +11,14 @@ import java.util.Set;
 
 @Repository
 public interface ItemLiturgiaRepository extends CrudRepository<ItemLiturgia, Long> {
-	
-	Set<ItemLiturgia> findByDiaLiturgicoOrderByPosicao(DiaLiturgico diaLiturgico);
 
-	@Query("select m from mpm_sugestaomusica m left join m.avulsas a left join m.remover r"
-			+ " where a = :musica or r = :musica")
-	Set<SugestaoMusica> findByMusica(@Param("musica") Musica musica);
+    Set<ItemLiturgia> findByDiaLiturgicoOrderByPosicao(DiaLiturgico diaLiturgico);
+
+    @Query("select m from mpm_sugestaomusica m left join m.avulsas a left join m.remover r"
+            + " where a = :musica or r = :musica")
+    Set<SugestaoMusica> findByMusica(@Param("musica") Musica musica);
 
 
-	@Query("select m from mpm_sugestaomusica m inner join m.categorias c where c = :categoria")
+    @Query("select m from mpm_sugestaomusica m inner join m.categorias c where c = :categoria")
     List<SugestaoMusica> findByCategoria(@Param("categoria") Categoria categoria);
 }

@@ -1,10 +1,10 @@
 package br.com.musicasparamissa.mpmjadmin.backend.service;
 
-import br.com.musicasparamissa.mpmjadmin.backend.exception.InvalidEntityException;
-import br.com.musicasparamissa.mpmjadmin.backend.exception.UnableToRemoveException;
 import br.com.musicasparamissa.mpmjadmin.backend.entity.Categoria;
 import br.com.musicasparamissa.mpmjadmin.backend.entity.Musica;
 import br.com.musicasparamissa.mpmjadmin.backend.entity.SugestaoMusica;
+import br.com.musicasparamissa.mpmjadmin.backend.exception.InvalidEntityException;
+import br.com.musicasparamissa.mpmjadmin.backend.exception.UnableToRemoveException;
 import br.com.musicasparamissa.mpmjadmin.backend.repository.CategoriaRepository;
 import br.com.musicasparamissa.mpmjadmin.backend.repository.ItemLiturgiaRepository;
 import br.com.musicasparamissa.mpmjadmin.backend.repository.MusicaRepository;
@@ -17,33 +17,33 @@ import java.util.Set;
 
 @Service
 public class CategoriaService {
-	
-	@Autowired
-	private CategoriaRepository categoriaRepository;
 
-	@Autowired
-	private MusicaRepository musicaRepository;
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
-	@Autowired
-	private ItemLiturgiaRepository itemLiturgiaRepository;
+    @Autowired
+    private MusicaRepository musicaRepository;
 
-	public Set<Categoria> search(String filter){
-		return categoriaRepository.findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrDescricaoIgnoreCaseContaining(filter, filter, filter);
-	}
+    @Autowired
+    private ItemLiturgiaRepository itemLiturgiaRepository;
 
-	public Set<Categoria> getTree() {
-		Set<Categoria> root = categoriaRepository.findByCategoriaMae(null);
-		root.forEach(c -> initializeChildren(c) );
-		return root;
-	}
+    public Set<Categoria> search(String filter) {
+        return categoriaRepository.findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrDescricaoIgnoreCaseContaining(filter, filter, filter);
+    }
 
-	private void initializeChildren(Categoria categoria){
-		categoria.getChildren().forEach(c -> initializeChildren(c) );
-	}
+    public Set<Categoria> getTree() {
+        Set<Categoria> root = categoriaRepository.findByCategoriaMae(null);
+        root.forEach(c -> initializeChildren(c));
+        return root;
+    }
 
-	public Categoria getCategoria(String slug) {
-		return categoriaRepository.findOne(slug);
-	}
+    private void initializeChildren(Categoria categoria) {
+        categoria.getChildren().forEach(c -> initializeChildren(c));
+    }
+
+    public Categoria getCategoria(String slug) {
+        return categoriaRepository.findOne(slug);
+    }
 
     @Transactional
     public void save(Categoria categoria) throws InvalidEntityException {
@@ -53,7 +53,7 @@ public class CategoriaService {
     @Transactional
     public void delete(String slug) throws UnableToRemoveException {
         Categoria categoria = categoriaRepository.findOne(slug);
-        if(categoria!=null && categoria.getChildren().size() > 0){
+        if (categoria != null && categoria.getChildren().size() > 0) {
             throw new UnableToRemoveException("Esta categoria possui categorias filhas.");
         }
         List<Musica> musicas = musicaRepository.findByCategoria(categoria);

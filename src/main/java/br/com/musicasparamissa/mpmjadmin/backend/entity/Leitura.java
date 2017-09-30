@@ -9,12 +9,12 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 @Getter
 @Setter
-@Entity(name="mpm_leitura")
-@PrimaryKeyJoinColumn(name="itemliturgia_ptr_id")
+@Entity(name = "mpm_leitura")
+@PrimaryKeyJoinColumn(name = "itemliturgia_ptr_id")
 public class Leitura extends ItemLiturgia {
 
-	@Column(name="marcacao_biblia")
-	private String marcacaoBiblia;
-	private String texto;
-	
+    @Column(name = "marcacao_biblia")
+    private String marcacaoBiblia;
+    private String texto;
+
 }
