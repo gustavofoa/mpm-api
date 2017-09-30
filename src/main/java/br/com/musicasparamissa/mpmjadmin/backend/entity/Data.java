@@ -1,6 +1,9 @@
 package br.com.musicasparamissa.mpmjadmin.backend.entity;
 
+import br.com.musicasparamissa.mpmjadmin.backend.util.DateJsonDeserializer;
 import br.com.musicasparamissa.mpmjadmin.backend.util.DateUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +20,7 @@ public class Data implements Serializable {
 
     @Id
     @Temporal(value = TemporalType.DATE)
+    @JsonDeserialize(using = DateJsonDeserializer.class)
     private Date data;
 
     private Boolean destaque;
@@ -24,22 +28,6 @@ public class Data implements Serializable {
     @ManyToOne
     @JoinColumn(name = "liturgia_id", referencedColumnName = "slug")
     private DiaLiturgico liturgia;
-
-    public String getDataFormatada() {
-        return DateUtil.format(data);
-    }
-
-    public String getDiaLiturgicoSlug() {
-        return liturgia.getSlug();
-    }
-
-    public String getDiaLiturgicoTitulo() {
-        return liturgia.getTitulo();
-    }
-
-    public String getDiaLiturgicoIntroducao() {
-        return liturgia.getIntroducao();
-    }
 
 }
 

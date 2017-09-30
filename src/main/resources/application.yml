@@ -1,4 +1,7 @@
-
+app:
+  name: @project.name@
+  version: @project.version@
+  description: @project.description@
 server.port: 7001
 spring:
   h2.console:

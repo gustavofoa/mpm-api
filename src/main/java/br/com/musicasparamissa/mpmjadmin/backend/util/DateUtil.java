@@ -13,6 +13,10 @@ public class DateUtil {
         return format.format(data);
     }
 
+    public static String format(LocalDate data) {
+        return format.format(data);
+    }
+
     public static LocalDate toLocalDate(Date data) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(data);
