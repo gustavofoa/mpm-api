@@ -13,6 +13,4 @@ public interface DiaLiturgicoRepository extends CrudRepository<DiaLiturgico, Str
 
     Page<DiaLiturgico> findBySlugIgnoreCaseContainingOrTituloIgnoreCaseContaining(String slug, String titulo, Pageable pageable);
 
-    Set<DiaLiturgico> findBySlugIgnoreCaseContainingOrTituloIgnoreCaseContaining(String slug, String titulo);
-
 }

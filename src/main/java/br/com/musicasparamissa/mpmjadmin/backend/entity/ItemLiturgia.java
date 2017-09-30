@@ -1,5 +1,7 @@
 package br.com.musicasparamissa.mpmjadmin.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +12,14 @@ import java.util.HashSet;
 @Setter
 @Entity(name = "mpm_itemliturgia")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "_class")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = SugestaoMusica.class),
+        @JsonSubTypes.Type(value = Leitura.class)
+})
 public abstract class ItemLiturgia implements Comparable<ItemLiturgia> {
 
     @Id

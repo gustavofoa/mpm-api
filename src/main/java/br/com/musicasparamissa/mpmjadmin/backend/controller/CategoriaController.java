@@ -1,6 +1,3 @@
-/* 
- * @(#)CategoriaController.java 1.0 08/2017
- */
 package br.com.musicasparamissa.mpmjadmin.backend.controller;
 
 import br.com.musicasparamissa.mpmjadmin.backend.entity.Categoria;

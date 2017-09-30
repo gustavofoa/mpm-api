@@ -1,12 +1,7 @@
-/* 
- * @(#)CategoriaController.java 1.0 08/2017
- */
 package br.com.musicasparamissa.mpmjadmin.backend.controller;
 
-import br.com.musicasparamissa.mpmjadmin.backend.entity.Categoria;
 import br.com.musicasparamissa.mpmjadmin.backend.entity.Data;
 import br.com.musicasparamissa.mpmjadmin.backend.exception.InvalidEntityException;
-import br.com.musicasparamissa.mpmjadmin.backend.exception.UnableToRemoveException;
 import br.com.musicasparamissa.mpmjadmin.backend.service.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
