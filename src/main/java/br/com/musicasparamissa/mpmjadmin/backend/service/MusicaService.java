@@ -21,15 +21,15 @@ public class MusicaService {
 	@Autowired
 	private ItemLiturgiaRepository itemLiturgiaRepository;
 
-	public Set<Musica> search(String filter){
-		return musicaRepository.findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrLetraIgnoreCaseContaining(filter, filter, filter);
-	}
+    public boolean exists(String slug) {
+        return musicaRepository.exists(slug);
+    }
 
-	public Page<Musica> filter(String filter, Pageable pageable) {
+	public Page<Musica> search(String filter, Pageable pageable) {
 		return musicaRepository.findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrLetraIgnoreCaseContaining(filter, filter, filter, pageable);
 	}
 
-	@Transactional
+    @Transactional
 	public void save(Musica musica) {
 		musicaRepository.save(musica);
 	}
@@ -45,8 +45,7 @@ public class MusicaService {
         musicaRepository.delete(musica);
     }
 
-	public boolean exists(String slug) {
-		return musicaRepository.exists(slug);
-	}
-	
+    public Musica getMusica(String slug) {
+        return musicaRepository.findOne(slug);
+    }
 }
