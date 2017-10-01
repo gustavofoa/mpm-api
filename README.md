@@ -1,2 +1,4 @@
 # mpmjadmin-backend
-Back-end of Admin app of MpM
+API for Musicas para Missa apps.
+
+Secure by oAuth2.
