@@ -18,6 +18,6 @@ spring:
 logging:
   level:
     root: INFO
-    org.springframework.web: WARN
-    org.springframework.security: DEBUG
-    org.springframework.cloud: WARN
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.cloud: INFO

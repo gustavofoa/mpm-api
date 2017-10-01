@@ -31,13 +31,13 @@ public class DiaLiturgicoController {
 
     }
 
-    @RequestMapping(path = "/{slug}/exists", method = RequestMethod.HEAD)
-    public ResponseEntity<Void> exists(@PathVariable("slug") String slug) {
+    @GetMapping(path = "/{slug}/exists")
+    public ResponseEntity<String> exists(@PathVariable("slug") String slug) {
 
         if(diaLiturgicoService.exists(slug))
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("1", HttpStatus.OK);
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("0", HttpStatus.OK);
 
     }
 
@@ -56,6 +56,16 @@ public class DiaLiturgicoController {
         Set<ItemLiturgia> items = diaLiturgicoService.listItems(diaLiturgico);
 
         return new ResponseEntity<>(items, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{slug}/items/{item}")
+    public ResponseEntity<ItemLiturgia> getItemLiturgia(@PathVariable("slug") String slug,
+                                                            @PathVariable("item") Long item) {
+
+        ItemLiturgia itemLiturgia = diaLiturgicoService.getItemLiturgia(item);
+
+        return new ResponseEntity<>(itemLiturgia, HttpStatus.OK);
 
     }
 
@@ -79,10 +89,10 @@ public class DiaLiturgicoController {
     }
 
     @PostMapping("/{slug}/items")
-    public ResponseEntity<String> save(@RequestBody ItemLiturgia item) {
+    public ResponseEntity<ItemLiturgia> save(@RequestBody ItemLiturgia item) {
 
-        diaLiturgicoService.save(item);
-        return new ResponseEntity<>(HttpStatus.OK);
+        ItemLiturgia itemLiturgia = diaLiturgicoService.save(item);
+        return new ResponseEntity<>(itemLiturgia, HttpStatus.OK);
 
     }
 
