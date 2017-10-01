@@ -1,10 +1,9 @@
 package br.com.musicasparamissa.api.service;
 
 import br.com.musicasparamissa.api.entity.*;
-import br.com.musicasparamissa.api.repository.MusicaRepository;
-import br.com.musicasparamissa.mpmjadmin.backend.entity.*;
 import br.com.musicasparamissa.api.repository.DiaLiturgicoRepository;
 import br.com.musicasparamissa.api.repository.ItemLiturgiaRepository;
+import br.com.musicasparamissa.api.repository.MusicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

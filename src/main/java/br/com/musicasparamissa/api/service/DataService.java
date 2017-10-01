@@ -1,8 +1,8 @@
 package br.com.musicasparamissa.api.service;
 
-import br.com.musicasparamissa.api.repository.DataRepository;
 import br.com.musicasparamissa.api.entity.Data;
 import br.com.musicasparamissa.api.exception.InvalidEntityException;
+import br.com.musicasparamissa.api.repository.DataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

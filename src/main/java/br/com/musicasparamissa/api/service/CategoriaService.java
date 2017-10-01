@@ -3,11 +3,11 @@ package br.com.musicasparamissa.api.service;
 import br.com.musicasparamissa.api.entity.Categoria;
 import br.com.musicasparamissa.api.entity.Musica;
 import br.com.musicasparamissa.api.entity.SugestaoMusica;
+import br.com.musicasparamissa.api.exception.InvalidEntityException;
 import br.com.musicasparamissa.api.exception.UnableToRemoveException;
+import br.com.musicasparamissa.api.repository.CategoriaRepository;
 import br.com.musicasparamissa.api.repository.ItemLiturgiaRepository;
 import br.com.musicasparamissa.api.repository.MusicaRepository;
-import br.com.musicasparamissa.api.exception.InvalidEntityException;
-import br.com.musicasparamissa.api.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

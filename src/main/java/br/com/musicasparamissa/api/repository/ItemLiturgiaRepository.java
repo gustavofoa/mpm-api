@@ -1,7 +1,6 @@
 package br.com.musicasparamissa.api.repository;
 
 import br.com.musicasparamissa.api.entity.*;
-import br.com.musicasparamissa.mpmjadmin.backend.entity.*;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
