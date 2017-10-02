@@ -1,16 +1,18 @@
+info:
+  name: @project.name@
+  version: @project.version@
+  description: @project.description@
+  environment: ${MPMAPI_environment}
 app:
   name: @project.name@
   version: @project.version@
   description: @project.description@
-server.port: 7001
+server.port: ${MPMAPI_port}
 spring:
-  h2.console:
-    enabled: true
-    path: /h2
   datasource:
-    url: jdbc:mysql://localhost/pympm?useSSL=false
-    username: pympm
-    password: pympm
+    url: jdbc:mysql://${MPMAPI_dbhost}/pympm?useSSL=false
+    username: ${MPMAPI_dbuser}
+    password: ${MPMAPI_dbpass}
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     show-sql: false
