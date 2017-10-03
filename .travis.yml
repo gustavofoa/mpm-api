@@ -8,3 +8,13 @@ deploy:
   env: $AWS_ELB_ENV
   bucket_name: $AWS_ELB_BUCKET
   zip_file: './target//mpm-api-0.0.1-SNAPSHOT.jar'
+sudo: false
+branches:
+  only:
+  - master
+language: java
+script:
+  - mvn clean install
+notifications:
+  email:
+      on_failure: always
