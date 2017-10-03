@@ -3,11 +3,11 @@ deploy:
   provider: elasticbeanstalk
   access-key-id: $AWS_ACCESS_KEY_ID
   secret-access-key: $AWS_SECRET_KEY
-  region: us-east-1
+  region: $AWS_REGION
   app: $AWS_ELB_APP
   env: $AWS_ELB_ENV
   bucket_name: $AWS_ELB_BUCKET
-  zip_file: './target//mpm-api-0.0.1-SNAPSHOT.jar'
+  zip_file: './target//mpm-api-1.0.0.jar'
 sudo: false
 branches:
   only:
