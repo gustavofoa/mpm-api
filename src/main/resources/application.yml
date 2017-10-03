@@ -20,8 +20,22 @@ spring:
 logging:
   level:
     root: INFO
-    org.springframework.web: INFO
-    org.springframework.security: INFO
-    org.springframework.cloud: INFO
+    org.springframework:
+      web: INFO
+      security: INFO
+      cloud: INFO
 
 security.basic.enable: false
+
+mpm_api:
+  apps:
+    mpmjadmin:
+      client_id: ${MPMAPI_mpmjadmin_client_id}
+      client_secret: ${MPMAPI_mpmjadmin_client_secret}
+      grant_type: ${MPMAPI_mpmjadmin_grant_type}
+      role: ${MPMAPI_mpmjadmin_role}
+    mpmMobile:
+      client_id: ${MPMAPI_mpmMobile_client_id}
+      client_secret: ${MPMAPI_mpmMobile_client_secret}
+      grant_type: ${MPMAPI_mpmMobile_grant_type}
+      role: ${MPMAPI_mpmMobile_role}

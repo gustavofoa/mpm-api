@@ -1,6 +1,7 @@
 package br.com.musicasparamissa.api.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -19,15 +20,23 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    private String mpmjadminAppClientId = "1234567";
-    private String mpmjadminAppSecret = "123456789";
-    private String mpmjadminAppGrantType = "client_credentials";
-    private String mpmjadminAppRole = "FULL";
+    @Value("${mpm_api.apps.mpmjadmin.client_id}")
+    private String mpmjadminAppClientId;
+    @Value("${mpm_api.apps.mpmjadmin.client_secret}")
+    private String mpmjadminAppSecret;
+    @Value("${mpm_api.apps.mpmjadmin.grant_type}")
+    private String mpmjadminAppGrantType;
+    @Value("${mpm_api.apps.mpmjadmin.role}")
+    private String mpmjadminAppRole;
 
-    private String mpmMobileAppClientId = "123456";
-    private String mpmMobileAppSecret = "12345678";
-    private String mpmMobileAppGrantType = "client_credentials";
-    private String mpmMobileAppRole = "READ";
+    @Value("${mpm_api.apps.mpmMobile.client_id}")
+    private String mpmMobileAppClientId;
+    @Value("${mpm_api.apps.mpmMobile.client_secret}")
+    private String mpmMobileAppSecret;
+    @Value("${mpm_api.apps.mpmMobile.grant_type}")
+    private String mpmMobileAppGrantType;
+    @Value("${mpm_api.apps.mpmMobile.role}")
+    private String mpmMobileAppRole;
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
