@@ -1,6 +1,10 @@
-language: java
-jdk:
- - oraclejdk8
-script:
-- cd mpm-api
-- AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" AWS_SECRET_KEY="$AWS_SECRET_KEY" mvn clean install beanstalk:upload-source-bundle beanstalk:create-application-version beanstalk:update-environment
+deploy:
+  skip_cleanup: true
+  provider: elasticbeanstalk
+  access-key-id: $AWS_ACCESS_KEY_ID
+  secret-access-key: $AWS_SECRET_KEY
+  region: us-east-1
+  app: $AWS_ELB_APP
+  env: $AWS_ELB_ENV
+  bucket_name: $AWS_ELB_BUCKET
+  zip_file: './target//mpm-api-0.0.1-SNAPSHOT.jar'
