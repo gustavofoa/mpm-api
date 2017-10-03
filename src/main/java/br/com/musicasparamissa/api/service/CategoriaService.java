@@ -10,6 +10,7 @@ import br.com.musicasparamissa.api.repository.ItemLiturgiaRepository;
 import br.com.musicasparamissa.api.repository.MusicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -47,6 +48,8 @@ public class CategoriaService {
 
     @Transactional
     public void save(Categoria categoria) throws InvalidEntityException {
+        if(StringUtils.isEmpty(categoria.getCategoriaMae()))
+            categoria.setCategoriaMae(null);
         categoriaRepository.save(categoria);
     }
 
