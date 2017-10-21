@@ -1,19 +1,16 @@
 package br.com.musicasparamissa.api.controller;
 
-import br.com.musicasparamissa.api.entity.Categoria;
-import br.com.musicasparamissa.api.exception.InvalidEntityException;
-import br.com.musicasparamissa.api.exception.UnableToRemoveException;
-import br.com.musicasparamissa.api.service.CategoriaService;
+import br.com.musicasparamissa.api.service.QueryService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -35,15 +32,15 @@ public class QueryControllerTest {
     }
 
     @Test
-    public void testQuery() {
+    public void testQuery() throws SQLException {
 
         String query = "query";
 
-        Page<Map<String, String>> dynamicResponseSet = Mockito.mock(Page.class);
+        Set<Map<String, String>> dynamicResponseSet = new HashSet<>();
 
         Mockito.when(queryService.query(query)).thenReturn(dynamicResponseSet);
 
-        ResponseEntity<Page<Map<String, String>>> response = controller.query("query");
+        ResponseEntity<Set<Map<String, String>>> response = controller.query("query");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertSame(dynamicResponseSet, response.getBody());
