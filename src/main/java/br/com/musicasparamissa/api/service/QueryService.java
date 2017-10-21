@@ -14,7 +14,7 @@ import java.util.Set;
 public class QueryService {
 
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     public Set<Map<String, String>> query(String query) throws SQLException {
 
