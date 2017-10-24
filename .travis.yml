@@ -7,7 +7,7 @@ deploy:
   app: $AWS_ELB_APP
   env: $AWS_ELB_ENV
   bucket_name: $AWS_ELB_BUCKET
-  zip_file: './target/mpm-api-1.0.0.jar'
+  zip_file: './target/mpm-api-1.0.1.jar'
 sudo: false
 branches:
   only:
