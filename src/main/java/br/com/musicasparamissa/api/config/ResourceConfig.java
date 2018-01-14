@@ -13,11 +13,13 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
 
         http
+            .cors().and()
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers("/stars")
+            .antMatchers("/stars/**")
             .permitAll()
             .anyRequest().authenticated()
         ;
     }
+
 }
