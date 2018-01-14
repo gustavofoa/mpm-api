@@ -15,6 +15,8 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
         http
             .csrf().disable()
             .authorizeRequests()
+            .antMatchers("/stars")
+            .permitAll()
             .anyRequest().authenticated()
         ;
     }
