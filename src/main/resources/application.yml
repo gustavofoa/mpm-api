@@ -39,3 +39,10 @@ mpm_api:
       client_secret: ${MPMAPI_mpmMobile_client_secret}
       grant_type: ${MPMAPI_mpmMobile_grant_type}
       role: ${MPMAPI_mpmMobile_role}
+  cache:
+    url:
+      all: ${MPMAPI_cache_url_all}
+      one: ${MPMAPI_cache_url_one}
+    token:
+      key: ${MPMAPI_cache_token_key}
+      value: ${MPMAPI_cache_token_value}
