@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -76,6 +77,11 @@ public class DiaLiturgicoService {
 
 	@Transactional
 	public void save(DiaLiturgico diaLiturgico) {
+
+		if(diaLiturgico.getDataCadastro() == null)
+			diaLiturgico.setDataCadastro(LocalDate.now());
+		diaLiturgico.setDataUltimaEdicao(LocalDate.now());
+
 		diaLiturgicoRepository.save(diaLiturgico);
 	}
 

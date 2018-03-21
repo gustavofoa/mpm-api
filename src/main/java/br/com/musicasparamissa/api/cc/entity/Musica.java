@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
@@ -25,6 +26,10 @@ public class Musica {
     //Stars
     private Float rating;
     private Integer votes;
+
+    //Log
+    private LocalDate dataCadastro;
+    private LocalDate dataUltimaEdicao;
 
 
     @Override

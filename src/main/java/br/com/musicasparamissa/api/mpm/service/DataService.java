@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Service
@@ -27,13 +28,23 @@ public class DataService {
 		if(oldDate != null){
 			dataRepository.delete(oldDate);
 		}
+
+		if(data.getDataCadastro() == null)
+			data.setDataCadastro(LocalDate.now());
+		data.setDataUltimaEdicao(LocalDate.now());
+
 		dataRepository.save(data);
 	}
 
     @Transactional
     public void create(Data data) throws InvalidEntityException {
         validate(data);
-        dataRepository.save(data);
+
+		if(data.getDataCadastro() == null)
+			data.setDataCadastro(LocalDate.now());
+		data.setDataUltimaEdicao(LocalDate.now());
+
+		dataRepository.save(data);
     }
 
 	private void validate(Data data) throws InvalidEntityException {

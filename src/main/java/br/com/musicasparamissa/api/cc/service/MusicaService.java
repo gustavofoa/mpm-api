@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service("CcMusicaService")
@@ -26,7 +27,12 @@ public class MusicaService {
 
     @Transactional
 	public void save(Musica musica) {
-		musicaRepository.save(musica);
+
+        if(musica.getDataCadastro() == null)
+            musica.setDataCadastro(LocalDate.now());
+            musica.setDataUltimaEdicao(LocalDate.now());
+
+        musicaRepository.save(musica);
 	}
 
     @Transactional

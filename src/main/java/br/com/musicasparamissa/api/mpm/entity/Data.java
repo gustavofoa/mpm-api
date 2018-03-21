@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -26,6 +27,10 @@ public class Data implements Serializable {
     @ManyToOne
     @JoinColumn(name = "liturgia_id", referencedColumnName = "slug")
     private DiaLiturgico liturgia;
+
+    //Log
+    private LocalDate dataCadastro;
+    private LocalDate dataUltimaEdicao;
 
 }
 

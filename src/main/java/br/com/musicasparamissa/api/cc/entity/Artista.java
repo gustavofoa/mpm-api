@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -17,6 +18,10 @@ public class Artista {
     private String nome;
     private String info;
     private String imagem;
+
+    //Log
+    private LocalDate dataCadastro;
+    private LocalDate dataUltimaEdicao;
 
     @Override
     public String toString() {
