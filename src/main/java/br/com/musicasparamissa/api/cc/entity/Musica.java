@@ -19,6 +19,8 @@ public class Musica {
     private String info;
     @Column(name = "link_video")
     private String linkVideo;
+    @ManyToOne
+    private Artista artista;
 
     //Stars
     private Float rating;
