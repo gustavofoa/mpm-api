@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("CcSiteGenerateController")
-@RequestMapping("/cc/site-generate")
+    @RequestMapping("/cc/site-generate")
 public class SiteGenerateController {
 
     @Autowired

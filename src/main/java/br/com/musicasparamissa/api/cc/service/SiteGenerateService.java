@@ -4,9 +4,16 @@ import br.com.musicasparamissa.api.cc.entity.Artista;
 import br.com.musicasparamissa.api.cc.entity.Musica;
 import br.com.musicasparamissa.api.cc.repository.ArtistaRepository;
 import br.com.musicasparamissa.api.cc.repository.MusicaRepository;
+import com.google.common.base.Charsets;
+import com.google.common.collect.Maps;
+import com.google.common.io.Resources;
+import com.hubspot.jinjava.Jinjava;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.Map;
 
 @Slf4j
 @Service("CcSiteGenerateService")
@@ -26,6 +33,8 @@ public class SiteGenerateService {
     private ArtistaRepository artistaRepository;
     @Autowired
     private MusicaRepository musicaRepository;
+    @Autowired()
+    private SiteStorage siteStorage;
 
 	public void generateAll(){
 
@@ -66,11 +75,40 @@ public class SiteGenerateService {
     }
 
     private void generateOnlyArtista(Artista artista) {
-        //TODO implement artista page generation
+
+        Map<String, Object> context = Maps.newHashMap();
+        context.put("nome", artista.getNome());
+        context.put("slug", artista.getSlug());
+
+        String content = renderTemplate("cifrascatolicas/templates/artista.html", context);
+
+        siteStorage.saveFile(String.format("/%s/index.html", artista.getSlug()), content);
+
     }
 
     private void generateOnlyMusica(Musica musica) {
-        //TODO implement musica page generation
+
+        Map<String, Object> context = Maps.newHashMap();
+        context.put("nome", musica.getNome());
+        context.put("slug", musica.getSlug());
+
+        String content = renderTemplate("cifrascatolicas/templates/musica.html", context);
+
+        siteStorage.saveFile(String.format("/%s/%s/index.html", musica.getArtista().getSlug(), musica.getSlug()), content);
+
+    }
+
+    private String renderTemplate(String templateName, Map<String, Object> context) {
+        Jinjava jinjava = new Jinjava();
+
+        String template = null;
+        try {
+            template = Resources.toString(Resources.getResource(templateName), Charsets.UTF_8);
+        } catch (IOException e) {
+            log.error("Error on getting template page.");
+        }
+
+        return jinjava.render(template, context);
     }
 
 }
