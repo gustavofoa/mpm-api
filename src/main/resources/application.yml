@@ -46,3 +46,9 @@ mpm_api:
     token:
       key: ${MPMAPI_cache_token_key}
       value: ${MPMAPI_cache_token_value}
+  aws:
+    client_id: ${MPMAPI_aws_client_id}
+    client_secret: ${MPMAPI_aws_client_secret}
+    s3:
+      mpm_static_bucket: ${MPMAPI_aws_s3_mpm_static_bucket}
+      mpm_bucket: ${MPMAPI_aws_s3_mpm_bucket}
