@@ -44,7 +44,7 @@ public class MusicaController {
 
     }
 
-    @DeleteMapping("/{artista}/{slug}/exists")
+    @DeleteMapping("/{artista}/{slug}")
     public ResponseEntity<String> delete(@PathVariable("artista") String artista,
                                          @PathVariable("slug") String slug) {
 
