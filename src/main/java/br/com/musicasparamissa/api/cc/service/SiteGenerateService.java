@@ -16,11 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -65,10 +62,11 @@ public class SiteGenerateService {
         log.info("[CC] Generating Artista page: " + slugArtista);
 
 	    Artista artista = artistaRepository.findOne(slugArtista);
+        List<Musica> musicas = musicaRepository.findByArtistaSlug(slugArtista);
 
-	    generateOnlyArtista(artista);
+	    generateOnlyArtista(artista, musicas);
 
-        for(Musica musica : musicaRepository.findByArtistaSlug(slugArtista))
+        for(Musica musica : musicas)
             generateOnlyMusica(musica);
 
     }
@@ -81,15 +79,23 @@ public class SiteGenerateService {
 
         generateOnlyMusica(musica);
 
-        generateOnlyArtista(musica.getArtista());
+        generateOnlyArtista(musica.getArtista(), musicaRepository.findByArtistaSlug(musica.getArtista().getSlug()));
 
     }
 
-    private void generateOnlyArtista(Artista artista) {
+    private void generateOnlyArtista(Artista artista, List<Musica> musicas) {
 
-        Map<String, Object> context = Maps.newHashMap();
-        context.put("nome", artista.getNome());
-        context.put("slug", artista.getSlug());
+        Map<String, Object> context = getContext();
+
+        Map<String, Object> artistaContext = Maps.newHashMap();
+        context.put("artista", artistaContext);
+
+        artistaContext.put("nome", artista.getNome());
+        artistaContext.put("slug", artista.getSlug());
+        artistaContext.put("img", artista.getImagem());
+        artistaContext.put("info", artista.getInfo());
+
+        artistaContext.put("musicas", musicas);
 
         String content = renderTemplate(TEMPLATE_PATH + "artista.html", context);
 
@@ -99,14 +105,12 @@ public class SiteGenerateService {
 
     private void generateOnlyMusica(Musica musica) {
 
-        Map<String, Object> context = Maps.newHashMap();
-
-        context.put("STATICPATH", "https://static.cifrascatolicas.com.br");
+        Map<String, Object> context = getContext();
 
         Map<String, Object> musicaContext = Maps.newHashMap();
         context.put("musica", musicaContext);
 
-        musicaContext.put("slut", musica.getSlug());
+        musicaContext.put("slug", musica.getSlug());
         musicaContext.put("titulo", musica.getNome());
         musicaContext.put("cifra", musica.getCifra());
 
@@ -122,6 +126,12 @@ public class SiteGenerateService {
 
         siteStorage.saveFile(String.format("/%s/%s/index.html", musica.getArtista().getSlug(), musica.getSlug()), content);
 
+    }
+
+    private Map<String, Object> getContext() {
+        Map<String, Object> context = Maps.newHashMap();
+        context.put("STATICPATH", "https://static.cifrascatolicas.com.br");
+        return context;
     }
 
     private String renderTemplate(String templateName, Map<String, Object> context) {
