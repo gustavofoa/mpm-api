@@ -47,19 +47,37 @@ public class SiteGenerateService {
 	public void generateAll(){
 
 	    generateHome();
-	    for(Artista artista : artistaRepository.findAll())
+
+        generateSitemap();
+
+        for(Artista artista : artistaRepository.findAll())
 	        generateArtista(artista.getSlug());
 
         for(Musica musica : musicaRepository.findAll())
             generateOnlyMusica(musica);
 
+    }
 
+    private void generateSitemap() {
+
+	    String sitemap = "sitemap";
+
+        siteStorage.saveFile("sitemap.xml", sitemap);
     }
 
     public void generateHome(){
         log.info("[CC] Generating Home.");
+
         //Pensar na home depois
         //Fazer interface de gerenciamento
+
+        Map<String, Object> context = getContext();
+
+        context.put("artistas", artistaRepository.findAllByOrderByNome());
+
+        String content = renderTemplate(TEMPLATE_PATH + "index.html", context);
+
+        siteStorage.saveFile("index.html", content);
     }
 
     public void generateArtista(String slugArtista){
