@@ -13,7 +13,7 @@ public class LocalSiteStorage implements SiteStorage {
     private static String localFolder = "C:/temp/cc";
 
     @Override
-    public void saveFile(String path, String content) {
+    public void saveFile(String path, String content, String contentType) {
 
         try {
 

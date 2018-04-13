@@ -33,7 +33,7 @@ public class S3SiteStorage implements SiteStorage {
 
 
     @Override
-    public void saveFile(String path, String content) {
+    public void saveFile(String path, String content, String contentType) {
 
         AWSCredentials credentials = new BasicAWSCredentials(clientId, clientSecret);
 
@@ -48,7 +48,7 @@ public class S3SiteStorage implements SiteStorage {
 
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(content.length());;
-            metadata.setContentType("text/html");
+            metadata.setContentType(contentType);
 
             s3client.putObject(new PutObjectRequest(
                     bucketName, path, new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)), metadata));

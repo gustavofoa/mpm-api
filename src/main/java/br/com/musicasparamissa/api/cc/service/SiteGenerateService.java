@@ -27,16 +27,6 @@ public class SiteGenerateService {
 
     private static final String TEMPLATE_PATH = "static.cifrascatolicas.com.br/app/templates/";
 
-    /*
-     * Planejamento:
-     *
-     * - Gerar tudo
-     * - Gerar home
-     * - Gerar página do artista
-     * - Gerar página da música
-     *
-     */
-
     @Autowired
     private ArtistaRepository artistaRepository;
     @Autowired
@@ -59,10 +49,19 @@ public class SiteGenerateService {
     }
 
     private void generateSitemap() {
+        log.info("[CC] Generating Sitemap.");
 
-	    String sitemap = "sitemap";
+        //TODO Pensar na home
+        //TODO Fazer interface de gerenciamento
 
-        siteStorage.saveFile("sitemap.xml", sitemap);
+        Map<String, Object> context = getContext();
+
+        context.put("artistas", artistaRepository.findAllByOrderByNome());
+        context.put("musicas", musicaRepository.findAll());
+
+        String content = renderTemplate(TEMPLATE_PATH + "sitemap.xml", context);
+
+        siteStorage.saveFile("sitemap.xml", content, "text/xml");
     }
 
     public void generateHome(){
