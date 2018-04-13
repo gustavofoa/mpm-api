@@ -80,7 +80,7 @@ public class SiteGenerateService {
 
         System.out.println("Home content:" + content);
 
-        siteStorage.saveFile("index.html", content);
+        siteStorage.saveFile("index.html", content, "text/html");
     }
 
     public void generateArtista(String slugArtista){
@@ -121,7 +121,7 @@ public class SiteGenerateService {
 
         String content = renderTemplate(TEMPLATE_PATH + "artista.html", context);
 
-        siteStorage.saveFile(String.format("%s/index.html", artista.getSlug()), content);
+        siteStorage.saveFile(String.format("%s/index.html", artista.getSlug()), content, "text/html");
 
     }
 
@@ -146,7 +146,7 @@ public class SiteGenerateService {
 
         String content = renderTemplate(TEMPLATE_PATH + "musica.html", context);
 
-        siteStorage.saveFile(String.format("%s/%s/index.html", musica.getArtista().getSlug(), musica.getSlug()), content);
+        siteStorage.saveFile(String.format("%s/%s/index.html", musica.getArtista().getSlug(), musica.getSlug()), content, "text/html");
 
     }
 
@@ -187,6 +187,8 @@ public class SiteGenerateService {
         //Get file from resources folder
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource(fileName).getFile());
+
+        System.out.println("Template " + fileName + " exists: " + file.exists());
 
         try (Scanner scanner = new Scanner(file)) {
 

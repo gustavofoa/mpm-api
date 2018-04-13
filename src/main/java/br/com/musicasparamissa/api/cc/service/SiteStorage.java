@@ -4,8 +4,4 @@ public interface SiteStorage {
 
     void saveFile(String path, String content, String contentType);
 
-    default void saveFile(String path, String content) {
-        this.saveFile(path, content, "text/html");
-    }
-
 }
