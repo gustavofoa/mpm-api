@@ -14,8 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
@@ -182,26 +184,20 @@ public class SiteGenerateService {
 
     private String getFile(String fileName) {
 
-        StringBuilder result = new StringBuilder("");
+        StringBuilder result = new StringBuilder();
 
         //Get file from resources folder
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(fileName).getFile());
+        InputStream in = getClass().getClassLoader().getResourceAsStream(fileName);
 
-        System.out.println("Template " + fileName + " exists: " + file.exists());
+        Scanner scanner = new Scanner(in);
 
-        try (Scanner scanner = new Scanner(file)) {
-
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                result.append(line).append("\n");
-            }
-
-            scanner.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            result.append(line).append("\n");
         }
+
+        scanner.close();
+
 
         return result.toString();
 
