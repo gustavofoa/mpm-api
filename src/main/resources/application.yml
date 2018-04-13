@@ -50,5 +50,9 @@ mpm_api:
     client_id: ${MPMAPI_aws_client_id}
     client_secret: ${MPMAPI_aws_client_secret}
     s3:
-      mpm_static_bucket: ${MPMAPI_aws_s3_mpm_static_bucket}
-      mpm_bucket: ${MPMAPI_aws_s3_mpm_bucket}
+      cc:
+        static_bucket: ${MPMAPI_aws_s3_cc_static_bucket}
+        bucket: ${MPMAPI_aws_s3_cc_bucket}
+      mpm:
+        static_bucket: ${MPMAPI_aws_s3_mpm_static_bucket}
+        bucket: ${MPMAPI_aws_s3_mpm_bucket}

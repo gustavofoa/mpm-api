@@ -16,7 +16,7 @@ public class SiteGenerateController {
     @Autowired
     private SiteGenerateService siteGenerateService;
 
-    @PostMapping(path = "/")
+    @PostMapping
     public ResponseEntity<Void> generateAll() {
 
         siteGenerateService.generateAll();

@@ -50,6 +50,10 @@ public class SiteGenerateService {
 	    for(Artista artista : artistaRepository.findAll())
 	        generateArtista(artista.getSlug());
 
+        for(Musica musica : musicaRepository.findAll())
+            generateOnlyMusica(musica);
+
+
     }
 
     public void generateHome(){
@@ -96,7 +100,7 @@ public class SiteGenerateService {
 
         String content = renderTemplate(TEMPLATE_PATH + "artista.html", context);
 
-        siteStorage.saveFile(String.format("/%s/index.html", artista.getSlug()), content);
+        siteStorage.saveFile(String.format("%s/index.html", artista.getSlug()), content);
 
     }
 
@@ -121,7 +125,7 @@ public class SiteGenerateService {
 
         String content = renderTemplate(TEMPLATE_PATH + "musica.html", context);
 
-        siteStorage.saveFile(String.format("/%s/%s/index.html", musica.getArtista().getSlug(), musica.getSlug()), content);
+        siteStorage.saveFile(String.format("%s/%s/index.html", musica.getArtista().getSlug(), musica.getSlug()), content);
 
     }
 

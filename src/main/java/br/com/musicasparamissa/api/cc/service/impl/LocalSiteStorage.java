@@ -7,15 +7,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
-@Component("siteStorage")
+//@Component("siteStorage")
 public class LocalSiteStorage implements SiteStorage {
 
     private static String localFolder = "C:/temp/cc";
 
     @Override
-    public void saveFile(String fullPath, String content) {
-
-        String path = fullPath.substring(1);
+    public void saveFile(String path, String content) {
 
         try {
 

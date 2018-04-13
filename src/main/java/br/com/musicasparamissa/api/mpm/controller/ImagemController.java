@@ -19,7 +19,7 @@ public class ImagemController {
     @Autowired
     private ImagemService s3Service;
 
-    @Value("${mpm_api.aws.s3.mpm_static_bucket}")
+    @Value("${mpm_api.aws.s3.mpm.static_bucket}")
     private String bucket;
 
     @GetMapping
