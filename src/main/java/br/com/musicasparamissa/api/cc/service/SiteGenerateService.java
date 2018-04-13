@@ -61,6 +61,8 @@ public class SiteGenerateService {
 
         String content = renderTemplate(TEMPLATE_PATH + "sitemap.xml", context);
 
+        System.out.println("Sitemap content:" + content);
+
         siteStorage.saveFile("sitemap.xml", content, "text/xml");
     }
 
@@ -75,6 +77,8 @@ public class SiteGenerateService {
         context.put("artistas", artistaRepository.findAllByOrderByNome());
 
         String content = renderTemplate(TEMPLATE_PATH + "index.html", context);
+
+        System.out.println("Home content:" + content);
 
         siteStorage.saveFile("index.html", content);
     }
