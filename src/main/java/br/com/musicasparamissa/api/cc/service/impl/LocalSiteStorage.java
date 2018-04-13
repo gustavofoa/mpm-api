@@ -13,14 +13,25 @@ public class LocalSiteStorage implements SiteStorage {
     private static String localFolder = "C:/temp/cc";
 
     @Override
-    public void saveFile(String path, String content) {
+    public void saveFile(String fullPath, String content) {
+
+        String path = fullPath.substring(1);
 
         try {
 
             //create folders
-//            new File(localFolder).mkdir();
-//            new File(localFolder+"/"+(path.substring(0,path.indexOf("/"))));
-//            new File(localFolder+"/"+(path.substring(0,path.lastIndexOf("/"))));
+
+            File rootFolder = new File(localFolder);
+            if(!rootFolder.exists())
+                rootFolder.mkdir();
+
+            File artistaFolder = new File(localFolder+"/"+(path.substring(0,path.indexOf("/"))));
+            if(!artistaFolder.exists())
+                artistaFolder.mkdir();
+
+            File musicaFolder = new File(localFolder+"/"+(path.substring(0,path.lastIndexOf("/"))));
+            if(!musicaFolder.exists())
+                musicaFolder.mkdir();
 
 
 

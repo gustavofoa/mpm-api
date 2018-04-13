@@ -2,6 +2,7 @@ package br.com.musicasparamissa.api.cc.controller;
 
 import br.com.musicasparamissa.api.cc.entity.Musica;
 import br.com.musicasparamissa.api.cc.service.MusicaService;
+import br.com.musicasparamissa.api.cc.service.SiteGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,9 @@ public class MusicaController {
 
     @Autowired
     private MusicaService musicaService;
+
+    @Autowired
+    private SiteGenerateService siteGenerateService;
 
     @GetMapping(path = "/{artista}/{slug}/exists")
     public ResponseEntity<String> exists(@PathVariable("artista") String artista,
@@ -40,6 +44,9 @@ public class MusicaController {
     public ResponseEntity<String> save(@RequestBody Musica musica) {
 
         musicaService.save(musica);
+
+        siteGenerateService.generateMusica(musica.getSlug());
+
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
