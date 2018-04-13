@@ -17,10 +17,11 @@ public class MusicaController {
     @Autowired
     private MusicaService musicaService;
 
-    @GetMapping(path = "/{slug}/exists")
-    public ResponseEntity<String> exists(@PathVariable("slug") String slug) {
+    @GetMapping(path = "/{artista}/{slug}/exists")
+    public ResponseEntity<String> exists(@PathVariable("artista") String artista,
+                                         @PathVariable("slug") String slug) {
 
-        if(musicaService.exists(slug))
+        if(musicaService.exists(artista, slug))
             return new ResponseEntity<>("1", HttpStatus.OK);
 
         return new ResponseEntity<>("0", HttpStatus.OK);
@@ -43,10 +44,11 @@ public class MusicaController {
 
     }
 
-    @DeleteMapping("/{slug}")
-    public ResponseEntity<String> delete(@PathVariable("slug") String slug) {
+    @DeleteMapping("/{artista}/{slug}/exists")
+    public ResponseEntity<String> delete(@PathVariable("artista") String artista,
+                                         @PathVariable("slug") String slug) {
 
-        Musica musica = musicaService.getMusica(slug);
+        Musica musica = musicaService.getMusica(artista, slug);
         musicaService.delete(musica);
         return new ResponseEntity<>(HttpStatus.OK);
 

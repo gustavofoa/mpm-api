@@ -17,8 +17,8 @@ public class MusicaService {
 	@Autowired
 	private MusicaRepository musicaRepository;
 
-    public boolean exists(String slug) {
-        return musicaRepository.exists(slug);
+    public boolean exists(String artista, String slug) {
+        return musicaRepository.exists(artista, slug);
     }
 
 	public Page<Musica> search(String filter, Pageable pageable) {
@@ -40,8 +40,8 @@ public class MusicaService {
         musicaRepository.delete(musica);
     }
 
-    public Musica getMusica(String slug) {
-        return musicaRepository.findOne(slug);
+    public Musica getMusica(String artista, String slug) {
+        return musicaRepository.findOne(artista, slug);
     }
 
     public List<Musica> findByArtista(String slug) {
