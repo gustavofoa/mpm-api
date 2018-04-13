@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,9 +18,9 @@ public interface MusicaRepository extends CrudRepository<Musica, String> {
     List<Musica> findByArtistaSlug(String slug);
 
     @Query("select count(m.slug)>0 from cc_musica m where m.artista.slug = :artista and m.slug = :slug")
-    boolean exists(String artista, String slug);
+    boolean exists(@Param("artista") String artista, @Param("slug") String slug);
 
     @Query("select m from cc_musica m where m.artista.slug = :artista and m.slug = :slug")
-    Musica findOne(String artista, String slug);
+    Musica findOne(@Param("artista") String artista, @Param("slug") String slug);
 
 }
