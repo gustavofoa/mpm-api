@@ -3,7 +3,9 @@ package br.com.musicasparamissa.api.cc.repository;
 import br.com.musicasparamissa.api.cc.entity.Musica;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,5 +16,11 @@ public interface MusicaRepository extends CrudRepository<Musica, String> {
     Page<Musica> findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContaining(String slug, String nome, Pageable pageable);
 
     List<Musica> findByArtistaSlug(String slug);
+
+    @Query("select count(m.slug)>0 from cc_musica m where m.artista.slug = :artista and m.slug = :slug")
+    boolean exists(@Param("artista") String artista, @Param("slug") String slug);
+
+    @Query("select m from cc_musica m where m.artista.slug = :artista and m.slug = :slug")
+    Musica findOne(@Param("artista") String artista, @Param("slug") String slug);
 
 }

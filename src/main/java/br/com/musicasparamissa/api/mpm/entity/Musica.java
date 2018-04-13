@@ -31,6 +31,8 @@ public class Musica {
 
     @Column(name = "link_lpsalmo")
     private String linkLpSalmo;
+    @Column(name = "enviada_cc")
+    private Boolean enviadaCC;
 
     //Log
     private LocalDate dataCadastro;
