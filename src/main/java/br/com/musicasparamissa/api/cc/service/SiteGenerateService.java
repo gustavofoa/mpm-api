@@ -66,9 +66,6 @@ public class SiteGenerateService {
 
 	    generateOnlyArtista(artista, musicas);
 
-        for(Musica musica : musicas)
-            generateOnlyMusica(musica);
-
     }
 
     public void generateMusica(String slugMusica){
