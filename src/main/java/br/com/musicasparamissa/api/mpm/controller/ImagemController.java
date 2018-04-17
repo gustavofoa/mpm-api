@@ -1,6 +1,5 @@
 package br.com.musicasparamissa.api.mpm.controller;
 
-import br.com.musicasparamissa.api.mpm.dto.Imagem;
 import br.com.musicasparamissa.api.mpm.service.ImagemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +22,7 @@ public class ImagemController {
     private String bucket;
 
     @GetMapping
-    public ResponseEntity<Set<Imagem>> list(){
+    public ResponseEntity<Set<String>> list(){
         return new ResponseEntity<>(s3Service.list(bucket), HttpStatus.OK);
     }
 
