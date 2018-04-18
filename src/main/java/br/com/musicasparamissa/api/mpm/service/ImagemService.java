@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -38,7 +37,6 @@ public class ImagemService {
 
 
         ObjectListing images = s3client.listObjects(bucket, "images/diasLiturgicos");
-        List<S3ObjectSummary> summaries = images.getObjectSummaries();
 
         while (images.isTruncated()) {
             images = s3client.listNextBatchOfObjects(images);
