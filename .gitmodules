@@ -1,3 +1,6 @@
 [submodule "src/main/resources/static.cifrascatolicas.com.br"]
 	path = src/main/resources/static.cifrascatolicas.com.br
 	url = https://github.com/gustavofoa/static.cifrascatolicas.com.br
+[submodule "src/main/resources/static.musicasparamissa.com.br"]
+	path = src/main/resources/static.musicasparamissa.com.br
+	url = http://github.com/gustavofoa/static.musicasparamissa.com.br.git

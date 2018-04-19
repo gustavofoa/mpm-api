@@ -1,6 +1,6 @@
-package br.com.musicasparamissa.api.cc.service.impl;
+package br.com.musicasparamissa.api.mpm.service.impl;
 
-import br.com.musicasparamissa.api.cc.service.SiteStorage;
+import br.com.musicasparamissa.api.mpm.service.SiteStorage;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
@@ -15,12 +15,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
-@Component("ccSiteStorage")
+@Component("mpmSiteStorage")
 public class S3SiteStorage implements SiteStorage {
 
     @Value("${mpm_api.aws.client_id}")
@@ -28,9 +25,8 @@ public class S3SiteStorage implements SiteStorage {
     @Value("${mpm_api.aws.client_secret}")
     private String clientSecret;
 
-    @Value("${mpm_api.aws.s3.cc.bucket}")
+    @Value("${mpm_api.aws.s3.mpm.bucket}")
     private String bucketName;
-
 
     @Override
     public void saveFile(String path, String content, String contentType) {

@@ -1,16 +1,15 @@
-package br.com.musicasparamissa.api.cc.service.impl;
+package br.com.musicasparamissa.api.mpm.service.impl;
 
-import br.com.musicasparamissa.api.cc.service.SiteStorage;
-import org.springframework.stereotype.Component;
+import br.com.musicasparamissa.api.mpm.service.SiteStorage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
-//@Component("ccSiteStorage")
+//@Component("mpmSiteStorage")
 public class LocalSiteStorage implements SiteStorage {
 
-    private static String localFolder = "C:/temp/cc";
+    private static String localFolder = "C:/temp/mpm";
 
     @Override
     public void saveFile(String path, String content, String contentType) {
