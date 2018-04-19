@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 @RestController
 @RequestMapping("/musicas")
 public class MusicaController {
@@ -29,9 +32,11 @@ public class MusicaController {
 
     @GetMapping("/search")
     public Page<Musica> search(@RequestParam("filter") String filter,
-                               @PageableDefault(value = Integer.MAX_VALUE) Pageable pageable) {
+                               @PageableDefault(value = Integer.MAX_VALUE) Pageable pageable) throws UnsupportedEncodingException {
 
-        return musicaService.search(filter, pageable);
+        return musicaService.search(URLDecoder.decode(
+                filter,
+                java.nio.charset.StandardCharsets.UTF_8.toString()), pageable);
 
     }
 

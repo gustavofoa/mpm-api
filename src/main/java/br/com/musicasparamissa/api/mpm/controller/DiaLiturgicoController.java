@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Set;
 
 @RestController
@@ -43,9 +45,11 @@ public class DiaLiturgicoController {
 
     @GetMapping("/search")
     public Page<DiaLiturgico> search(@RequestParam("filter") String filter,
-                                     @PageableDefault(value = Integer.MAX_VALUE) Pageable pageable) {
+                                     @PageableDefault(value = Integer.MAX_VALUE) Pageable pageable) throws UnsupportedEncodingException {
 
-        return diaLiturgicoService.search(filter, pageable);
+        return diaLiturgicoService.search(URLDecoder.decode(
+                filter,
+                java.nio.charset.StandardCharsets.UTF_8.toString()), pageable);
 
     }
 
