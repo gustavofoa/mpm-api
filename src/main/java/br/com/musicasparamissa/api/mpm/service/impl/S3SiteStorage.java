@@ -45,7 +45,7 @@ public class S3SiteStorage implements SiteStorage {
             byte[] contentBytes = content.getBytes(StandardCharsets.UTF_8);
 
             ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentLength(contentBytes.length);;
+            metadata.setContentLength(contentBytes.length);
             metadata.setContentType(contentType);
 
             s3client.putObject(new PutObjectRequest(

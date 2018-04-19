@@ -1,9 +1,8 @@
 package br.com.musicasparamissa.api.mpm.service;
 
+import br.com.musicasparamissa.api.mpm.entity.Data;
 import br.com.musicasparamissa.api.mpm.entity.Musica;
-import br.com.musicasparamissa.api.mpm.repository.CategoriaRepository;
-import br.com.musicasparamissa.api.mpm.repository.DiaLiturgicoRepository;
-import br.com.musicasparamissa.api.mpm.repository.MusicaRepository;
+import br.com.musicasparamissa.api.mpm.repository.*;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
@@ -26,6 +26,8 @@ import java.util.Scanner;
 @Service("MpmSiteGenerateService")
 public class SiteGenerateService {
 
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
+
     private static final String TEMPLATE_PATH = "static.musicasparamissa.com.br/app/templates/";
 
     @Autowired
@@ -34,6 +36,10 @@ public class SiteGenerateService {
     private DiaLiturgicoRepository diaLiturgicoRepository;
     @Autowired
     private CategoriaRepository categoriaRepository;
+    @Autowired
+    private DataRepository dataRepository;
+    @Autowired
+    private PostRepository postRepository;
 
     @Autowired()
     private SiteStorage siteStorage;
@@ -44,9 +50,32 @@ public class SiteGenerateService {
 
         generateSitemap();
 
-//        for(Musica musica : musicaRepository.findAll())
+        Calendar tenDaysAgo = Calendar.getInstance();
+        tenDaysAgo.add(Calendar.DATE, -10);
+
+        Iterable<Data> datas = dataRepository.findAllByDataGreaterThanOrderByDataDesc(tenDaysAgo.getTime());
+
+        generateDatas(datas);
+
+        Iterable<Musica> musicas = musicaRepository.findAll();
+
+        generateStars(musicas);
+
+//        for(Musica musica : musicas)
 //            generateOnlyMusica(musica);
 
+    }
+
+    public void generateHome(){
+        log.info("[MpM] Generating Home.");
+
+        Map<String, Object> context = getContext();
+
+        String content = renderTemplate(TEMPLATE_PATH + "index.html", context);
+
+        System.out.println("Home content:" + content);
+
+        siteStorage.saveFile("index.html", content, "text/html");
     }
 
     private void generateSitemap() {
@@ -67,16 +96,48 @@ public class SiteGenerateService {
         siteStorage.saveFile("sitemap.xml", content, "text/xml");
     }
 
-    public void generateHome(){
-        log.info("[MpM] Generating Home.");
+    public void generateDatas(Iterable<Data> datas){
+        log.info("[MpM] Generating Stars.");
 
-        Map<String, Object> context = getContext();
+        StringBuilder content = new StringBuilder("{");
 
-        String content = renderTemplate(TEMPLATE_PATH + "index.html", context);
+        datas.forEach(d -> {
+            content.append("\"");
+            content.append(SDF.format(d.getData()));
+            content.append("\":{\"destaque\":");
+            content.append(d.getDestaque());
+            content.append(",\"title\":\"");
+            content.append(d.getLiturgia().getTitulo());
+            content.append("\",\"url\":\"/sugestoes-para/");
+            content.append(d.getLiturgia().getSlug());
+            content.append("\"},");
+        });
 
-        System.out.println("Home content:" + content);
+        content.replace(content.length()-1, content.length(),"");
+        content.append("}");
 
-        siteStorage.saveFile("index.html", content, "text/html");
+        siteStorage.saveFile("datas.json", content.toString(), "application/json");
+    }
+
+    public void generateStars(Iterable<Musica> musicas){
+        log.info("[MpM] Generating Stars.");
+
+        StringBuilder content = new StringBuilder("{");
+
+        musicas.forEach(m -> {
+            content.append("\"");
+            content.append(m.getSlug());
+            content.append("\":{\"r\":");
+            content.append(m.getRating());
+            content.append(",\"v\":");
+            content.append(m.getVotes());
+            content.append("},");
+        });
+
+        content.replace(content.length()-1, content.length(),"");
+        content.append("}");
+
+        siteStorage.saveFile("stars", content.toString(), "application/json");
     }
 
     public void generateMusica(String slugMusica){
@@ -103,8 +164,20 @@ public class SiteGenerateService {
         context.put("musica", musicaContext);
 
         musicaContext.put("slug", musica.getSlug());
-        musicaContext.put("titulo", musica.getNome());
+        musicaContext.put("nome", musica.getNome());
+        musicaContext.put("letra", musica.getLetra().replace("\n", "<br/>"));
         musicaContext.put("cifra", musica.getCifra());
+        musicaContext.put("info", musica.getInfo().replace("\n", "<br/>"));
+        musicaContext.put("get_absolute_url", String.format("/musica/%s/", musica.getSlug()));
+        musicaContext.put("get_video_code", musica.getLinkVideo().substring(
+                musica.getLinkVideo().lastIndexOf('/')).replace("embed","").replace("watch?v=","").replace("v=",""));
+        String plural = "";
+        if(musica.getVotes() > 1)
+            plural = "s";
+        musicaContext.put("get_legend", String.format("<span property='ratingValue'>%.2f</span> em <span property='ratingCount'>%d</span> voto%s",
+                musica.getRating() * 5 / 100.0, musica.getVotes(), plural));
+        musicaContext.put("tem_imagem", musica.getTemImagem());
+
 
 
         String content = renderTemplate(TEMPLATE_PATH + "musica.html", context);
@@ -121,7 +194,7 @@ public class SiteGenerateService {
         context.put("tempos", new ArrayList<>());
         context.put("solenidadesEFestas", new ArrayList<>());
         context.put("destaques", new ArrayList<>());
-        context.put("posts", new ArrayList<>());
+        context.put("posts", postRepository.findAll());
         context.put("current_year", Calendar.getInstance().get(Calendar.YEAR));
 
         return context;

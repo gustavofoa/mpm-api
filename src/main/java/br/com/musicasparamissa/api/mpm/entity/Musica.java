@@ -20,6 +20,8 @@ public class Musica {
     private String info;
     @Column(name = "link_video")
     private String linkVideo;
+    @Column(name = "tem_imagem")
+    private Boolean temImagem;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "mpm_musica_categorias", joinColumns = {@JoinColumn(name = "musica_id")}, inverseJoinColumns = {@JoinColumn(name = "categoria_id")})

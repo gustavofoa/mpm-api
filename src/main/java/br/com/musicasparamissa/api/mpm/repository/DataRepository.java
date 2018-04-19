@@ -11,6 +11,8 @@ import java.util.Date;
 @Repository
 public interface DataRepository extends CrudRepository<Data, Date> {
 
+    Iterable<Data> findAllByDataGreaterThanOrderByDataDesc(Date date);
+
     Page<Data> findAllByOrderByDataDesc(Pageable pageable);
 
 }
