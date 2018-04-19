@@ -42,12 +42,14 @@ public class S3SiteStorage implements SiteStorage {
         try {
             System.out.println("Uploading a new object to S3 from a file\n");
 
+            byte[] contentBytes = content.getBytes(StandardCharsets.UTF_8);
+
             ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentLength(content.length());;
+            metadata.setContentLength(contentBytes.length);;
             metadata.setContentType(contentType);
 
             s3client.putObject(new PutObjectRequest(
-                    bucketName, path, new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)), metadata));
+                    bucketName, path, new ByteArrayInputStream(contentBytes), metadata));
 
         } catch (AmazonServiceException ase) {
             System.out.println("Caught an AmazonServiceException, which " +

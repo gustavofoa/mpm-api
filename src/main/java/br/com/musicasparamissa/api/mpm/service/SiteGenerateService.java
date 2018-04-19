@@ -1,6 +1,8 @@
 package br.com.musicasparamissa.api.mpm.service;
 
 import br.com.musicasparamissa.api.mpm.entity.Musica;
+import br.com.musicasparamissa.api.mpm.repository.CategoriaRepository;
+import br.com.musicasparamissa.api.mpm.repository.DiaLiturgicoRepository;
 import br.com.musicasparamissa.api.mpm.repository.MusicaRepository;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
@@ -28,6 +30,11 @@ public class SiteGenerateService {
 
     @Autowired
     private MusicaRepository musicaRepository;
+    @Autowired
+    private DiaLiturgicoRepository diaLiturgicoRepository;
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
     @Autowired()
     private SiteStorage siteStorage;
 
@@ -35,8 +42,8 @@ public class SiteGenerateService {
 
 	    generateHome();
 
-//        generateSitemap();
-//
+        generateSitemap();
+
 //        for(Musica musica : musicaRepository.findAll())
 //            generateOnlyMusica(musica);
 
@@ -48,6 +55,10 @@ public class SiteGenerateService {
         Map<String, Object> context = getContext();
 
         context.put("musicas", musicaRepository.findAll());
+
+        context.put("diasLiturgicos", diaLiturgicoRepository.findAll());
+
+        context.put("categorias", categoriaRepository.findAll());
 
         String content = renderTemplate(TEMPLATE_PATH + "sitemap.xml", context);
 

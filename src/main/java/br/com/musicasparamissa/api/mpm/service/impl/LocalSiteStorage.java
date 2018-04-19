@@ -1,6 +1,7 @@
 package br.com.musicasparamissa.api.mpm.service.impl;
 
 import br.com.musicasparamissa.api.mpm.service.SiteStorage;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,14 +22,6 @@ public class LocalSiteStorage implements SiteStorage {
             File rootFolder = new File(localFolder);
             if(!rootFolder.exists())
                 rootFolder.mkdir();
-
-            File artistaFolder = new File(localFolder+"/"+(path.substring(0,path.indexOf("/"))));
-            if(!artistaFolder.exists())
-                artistaFolder.mkdir();
-
-            File musicaFolder = new File(localFolder+"/"+(path.substring(0,path.lastIndexOf("/"))));
-            if(!musicaFolder.exists())
-                musicaFolder.mkdir();
 
 
 
