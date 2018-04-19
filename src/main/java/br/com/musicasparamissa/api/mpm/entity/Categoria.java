@@ -22,6 +22,13 @@ public class Categoria implements Comparable<Categoria> {
     @OneToMany(mappedBy = "categoriaMae", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Categoria> children;
 
+    @ManyToOne
+    @JoinColumn(name = "banner_footer_id", referencedColumnName = "id")
+    private Banner bannerFooter;
+    @ManyToOne
+    @JoinColumn(name = "banner_lateral_id", referencedColumnName = "id")
+    private Banner bannerLateral;
+
     @Override
     public String toString() {
         return slug;

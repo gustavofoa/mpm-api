@@ -33,7 +33,7 @@ public class CategoriaService {
     }
 
     public Set<Categoria> getTree() {
-        Set<Categoria> root = categoriaRepository.findByCategoriaMae(null);
+        Set<Categoria> root = categoriaRepository.findByCategoriaMaeOrderByOrdem(null);
         root.forEach(c -> initializeChildren(c));
         return root;
     }

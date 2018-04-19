@@ -11,6 +11,7 @@ public interface CategoriaRepository extends CrudRepository<Categoria, String> {
 
     Set<Categoria> findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrDescricaoIgnoreCaseContaining(String slug, String nome, String descricao);
 
-    Set<Categoria> findByCategoriaMae(String slug);
+    Set<Categoria> findByCategoriaMaeOrderByOrdem(String slug);
 
+    Set<Categoria> findByCategoriaMaeAndSlugLikeOrderByOrdem(Categoria categoriaMae, String slug);
 }

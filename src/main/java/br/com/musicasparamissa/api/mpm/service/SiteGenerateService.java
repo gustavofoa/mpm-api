@@ -1,5 +1,6 @@
 package br.com.musicasparamissa.api.mpm.service;
 
+import br.com.musicasparamissa.api.mpm.entity.Categoria;
 import br.com.musicasparamissa.api.mpm.entity.Data;
 import br.com.musicasparamissa.api.mpm.entity.Musica;
 import br.com.musicasparamissa.api.mpm.repository.*;
@@ -17,10 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 @Slf4j
 @Service("MpmSiteGenerateService")
@@ -46,23 +44,23 @@ public class SiteGenerateService {
 
 	public void generateAll(){
 
+        Map<String, Object> context = getContext();
+
+        Calendar tenDaysAgo = Calendar.getInstance();
+        tenDaysAgo.add(Calendar.DATE, -10);
+        Iterable<Data> datas = dataRepository.findAllByDataGreaterThanOrderByDataDesc(tenDaysAgo.getTime());
+        Iterable<Musica> musicas = musicaRepository.findAll();
+
 	    generateHome();
 
         generateSitemap();
 
-        Calendar tenDaysAgo = Calendar.getInstance();
-        tenDaysAgo.add(Calendar.DATE, -10);
-
-        Iterable<Data> datas = dataRepository.findAllByDataGreaterThanOrderByDataDesc(tenDaysAgo.getTime());
-
         generateDatas(datas);
-
-        Iterable<Musica> musicas = musicaRepository.findAll();
 
         generateStars(musicas);
 
 //        for(Musica musica : musicas)
-//            generateOnlyMusica(musica);
+//            generateOnlyMusica(musica, context);
 
     }
 
@@ -71,9 +69,9 @@ public class SiteGenerateService {
 
         Map<String, Object> context = getContext();
 
-        String content = renderTemplate(TEMPLATE_PATH + "index.html", context);
+        context.put("banner_footer", categoriaRepository.findOne("outras-missas").getBannerFooter());
 
-        System.out.println("Home content:" + content);
+        String content = renderTemplate(TEMPLATE_PATH + "index.html", context);
 
         siteStorage.saveFile("index.html", content, "text/html");
     }
@@ -90,8 +88,6 @@ public class SiteGenerateService {
         context.put("categorias", categoriaRepository.findAll());
 
         String content = renderTemplate(TEMPLATE_PATH + "sitemap.xml", context);
-
-        System.out.println("Sitemap content:" + content);
 
         siteStorage.saveFile("sitemap.xml", content, "text/xml");
     }
@@ -146,7 +142,7 @@ public class SiteGenerateService {
 
         Musica musica = musicaRepository.findOne(slugMusica);
 
-        generateOnlyMusica(musica);
+        generateOnlyMusica(musica, getContext());
 
     }
 
@@ -156,9 +152,8 @@ public class SiteGenerateService {
     public void generateMusicasDe(String categoria) {
     }
 
-    private void generateOnlyMusica(Musica musica) {
+    private void generateOnlyMusica(Musica musica, Map<String, Object> context) {
 
-        Map<String, Object> context = getContext();
 
         Map<String, Object> musicaContext = Maps.newHashMap();
         context.put("musica", musicaContext);
@@ -178,6 +173,9 @@ public class SiteGenerateService {
                 musica.getRating() * 5 / 100.0, musica.getVotes(), plural));
         musicaContext.put("tem_imagem", musica.getTemImagem());
 
+        context.put("banner_footer", musica.getBannerFooter());
+        context.put("banner_lateral", musica.getBannerLateral());
+
 
 
         String content = renderTemplate(TEMPLATE_PATH + "musica.html", context);
@@ -187,14 +185,19 @@ public class SiteGenerateService {
     }
 
     private Map<String, Object> getContext() {
+
+        Set<Categoria> catPartesComuns = categoriaRepository.findByCategoriaMaeOrderByOrdem("partes-comuns-da-missa");
+        Set<Categoria> catSolenidadesEFestas = categoriaRepository.findByCategoriaMaeOrderByOrdem("solenidades-e-festas");
+        Set<Categoria> catTempos = categoriaRepository.findByCategoriaMaeAndSlugLikeOrderByOrdem(null, "tempo%");
+
         Map<String, Object> context = Maps.newHashMap();
         context.put("STATICPATH", "https://static.musicasparamissa.com.br");
 
-        context.put("partesComuns", new ArrayList<>());
-        context.put("tempos", new ArrayList<>());
-        context.put("solenidadesEFestas", new ArrayList<>());
-        context.put("destaques", new ArrayList<>());
-        context.put("posts", postRepository.findAll());
+        context.put("partesComuns", catPartesComuns);
+        context.put("tempos", catTempos);
+        context.put("solenidadesEFestas", catSolenidadesEFestas);
+        context.put("destaques", dataRepository.findAllByDataGreaterThanAndDestaqueOrderByDataDesc(new Date(), true));
+//        context.put("posts", postRepository.findAll());
         context.put("current_year", Calendar.getInstance().get(Calendar.YEAR));
 
         return context;

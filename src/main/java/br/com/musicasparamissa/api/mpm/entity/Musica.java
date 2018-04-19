@@ -36,6 +36,13 @@ public class Musica {
     @Column(name = "enviada_cc")
     private Boolean enviadaCC;
 
+    @ManyToOne
+    @JoinColumn(name = "banner_footer_id", referencedColumnName = "id")
+    private Banner bannerFooter;
+    @ManyToOne
+    @JoinColumn(name = "banner_lateral_id", referencedColumnName = "id")
+    private Banner bannerLateral;
+
     //Log
     private LocalDate dataCadastro;
     private LocalDate dataUltimaEdicao;
