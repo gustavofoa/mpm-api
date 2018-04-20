@@ -42,7 +42,7 @@ public class SiteGenerateService {
     @Autowired()
     private SiteStorage siteStorage;
 
-	public void generateAll(){
+    public void generateAll() {
 
         Map<String, Object> context = getContext();
 
@@ -51,7 +51,7 @@ public class SiteGenerateService {
         Iterable<Data> datas = dataRepository.findAllByDataGreaterThanOrderByDataDesc(tenDaysAgo.getTime());
         Iterable<Musica> musicas = musicaRepository.findAll();
 
-	    generateHome();
+        generateHome();
 
         generateSitemap();
 
@@ -62,9 +62,14 @@ public class SiteGenerateService {
 //        for(Musica musica : musicas)
 //            generateOnlyMusica(musica, context);
 
+
+        for (Categoria categoria : categoriaRepository.findAll())
+            generateOnlyCategoria(categoria, context);
+
+
     }
 
-    public void generateHome(){
+    public void generateHome() {
         log.info("[MpM] Generating Home.");
 
         Map<String, Object> context = getContext();
@@ -92,7 +97,7 @@ public class SiteGenerateService {
         siteStorage.saveFile("sitemap.xml", content, "text/xml");
     }
 
-    public void generateDatas(Iterable<Data> datas){
+    public void generateDatas(Iterable<Data> datas) {
         log.info("[MpM] Generating Stars.");
 
         StringBuilder content = new StringBuilder("{");
@@ -109,13 +114,13 @@ public class SiteGenerateService {
             content.append("\"},");
         });
 
-        content.replace(content.length()-1, content.length(),"");
+        content.replace(content.length() - 1, content.length(), "");
         content.append("}");
 
         siteStorage.saveFile("datas.json", content.toString(), "application/json");
     }
 
-    public void generateStars(Iterable<Musica> musicas){
+    public void generateStars(Iterable<Musica> musicas) {
         log.info("[MpM] Generating Stars.");
 
         StringBuilder content = new StringBuilder("{");
@@ -130,13 +135,13 @@ public class SiteGenerateService {
             content.append("},");
         });
 
-        content.replace(content.length()-1, content.length(),"");
+        content.replace(content.length() - 1, content.length(), "");
         content.append("}");
 
         siteStorage.saveFile("stars", content.toString(), "application/json");
     }
 
-    public void generateMusica(String slugMusica){
+    public void generateMusica(String slugMusica) {
 
         log.info("[MpM] Generating Musica page: " + slugMusica);
 
@@ -149,11 +154,40 @@ public class SiteGenerateService {
     public void generateSugestoesPara(String diaLiturgico) {
     }
 
-    public void generateMusicasDe(String categoria) {
+    public void generateMusicasDe(String slugCategoria) {
+
+        log.info("[MpM] Generating Categoria page: " + slugCategoria);
+
+        Categoria categoria = categoriaRepository.findOne(slugCategoria);
+
+        generateOnlyCategoria(categoria, getContext());
+
+    }
+
+    private void generateOnlyCategoria(Categoria categoria, Map<String, Object> context) {
+        log.info("Generating categoria: " + categoria.getSlug());
+
+        context.put("categoria", categoria);
+
+        if (categoria.getChildren() != null && !categoria.getChildren().isEmpty())
+            context.put("musicas", musicaRepository.findByCategoria(categoria));
+
+        if (categoria.getCategoriaMae() != null && categoria.getCategoriaMae().length() > 0)
+            context.put("categoriaMae", categoriaRepository.findOne(categoria.getCategoriaMae()));
+        else
+            context.put("categoriaMae", null);
+
+        context.put("banner_footer", categoria.getBannerFooter());
+        context.put("banner_lateral", categoria.getBannerLateral());
+
+
+        String content = renderTemplate(TEMPLATE_PATH + "musicas-de.html", context);
+
+        siteStorage.saveFile(String.format("musicas-de/%s/index.html", categoria.getSlug()), content, "text/html");
     }
 
     private void generateOnlyMusica(Musica musica, Map<String, Object> context) {
-
+        log.info("Generating musica: " + musica.getSlug());
 
         Map<String, Object> musicaContext = Maps.newHashMap();
         context.put("musica", musicaContext);
@@ -164,10 +198,19 @@ public class SiteGenerateService {
         musicaContext.put("cifra", musica.getCifra());
         musicaContext.put("info", musica.getInfo().replace("\n", "<br/>"));
         musicaContext.put("get_absolute_url", String.format("/musica/%s/", musica.getSlug()));
-        musicaContext.put("get_video_code", musica.getLinkVideo().substring(
-                musica.getLinkVideo().lastIndexOf('/')).replace("embed","").replace("watch?v=","").replace("v=",""));
+        if (musica.getLinkVideo() != null) {
+            int slashLastIndex = musica.getLinkVideo().lastIndexOf('/');
+            musicaContext.put("get_video_code", musica.getLinkVideo().substring(slashLastIndex < 0 ? 0 : slashLastIndex)
+                    .replace("embed", "")
+                    .replace("watch?v=", "")
+                    .replace("v=", ""));
+        }
         String plural = "";
-        if(musica.getVotes() > 1)
+        if (musica.getVotes() == null)
+            musica.setVotes(0);
+        if (musica.getRating() == null)
+            musica.setRating(0f);
+        if (musica.getVotes() > 1)
             plural = "s";
         musicaContext.put("get_legend", String.format("<span property='ratingValue'>%.2f</span> em <span property='ratingCount'>%d</span> voto%s",
                 musica.getRating() * 5 / 100.0, musica.getVotes(), plural));
@@ -175,7 +218,6 @@ public class SiteGenerateService {
 
         context.put("banner_footer", musica.getBannerFooter());
         context.put("banner_lateral", musica.getBannerLateral());
-
 
 
         String content = renderTemplate(TEMPLATE_PATH + "musica.html", context);
@@ -210,7 +252,7 @@ public class SiteGenerateService {
             @Override
             public String getString(String s, Charset charset, JinjavaInterpreter jinjavaInterpreter) throws IOException {
 
-                String filePath = TEMPLATE_PATH+s;
+                String filePath = TEMPLATE_PATH + s;
 
                 return getFile(filePath);
 

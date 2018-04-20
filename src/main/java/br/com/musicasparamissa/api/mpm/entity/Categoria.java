@@ -29,6 +29,10 @@ public class Categoria implements Comparable<Categoria> {
     @JoinColumn(name = "banner_lateral_id", referencedColumnName = "id")
     private Banner bannerLateral;
 
+    public String getAbsoluteUrl() {
+        return String.format("/musicas-de/%s/", this.slug);
+    }
+
     @Override
     public String toString() {
         return slug;

@@ -12,6 +12,11 @@ import java.util.Set;
 @Entity(name = "mpm_musica")
 public class Musica {
 
+    public Musica() {
+        this.votes = 0;
+        this.rating = 0f;
+    }
+
     @Id
     private String slug;
     private String nome;
@@ -47,21 +52,17 @@ public class Musica {
     private LocalDate dataCadastro;
     private LocalDate dataUltimaEdicao;
 
-
     @Override
     public String toString() {
         return nome;
     }
 
     public String getLetraInicio() {
-        if (letra == null) {
-            return "";
-        }
-        final int tamanho = 100;
-        if (letra.trim().length() < tamanho) {
-            return letra.trim();
-        }
-        return letra.trim().substring(0, tamanho) + " ...";
+        String retorno = this.letra.substring(0, this.letra.length() < 140 ? this.letra.length() : 140)
+                .replace("<strong>", "").replace("<strong", "").replace("<stron", "").replace("<stro", "").replace("<str", "").replace("<st", "").replace("<s", "")
+                .replace("</strong>", "").replace("</strong", "").replace("</stron", "").replace("</stro", "").replace("</str", "").replace("</st", "").replace("</s", "")
+                .replace("</", "").replace("<", "")+"...";
+        return retorno;
     }
 
     @Override

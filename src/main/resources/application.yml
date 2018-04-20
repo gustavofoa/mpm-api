@@ -18,12 +18,12 @@ spring:
     show-sql: true
     properties.hibernate.format_sql: false
 logging:
+  pattern.console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
   level:
     root: INFO
-    org.springframework:
-      web: INFO
-      security: INFO
-      cloud: INFO
+    org:
+      springframework: INFO
+      hibernate: ERROR
 
 security.basic.enable: false
 
