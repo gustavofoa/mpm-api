@@ -34,7 +34,7 @@ public class SiteGenerateController {
 
     }
 
-    @PostMapping("/sugestoes-para/{artista}")
+    @PostMapping("/sugestoes-para/{diaLiturgico}")
     public ResponseEntity<Void> generateSugestoesPara(@PathVariable("diaLiturgico") String diaLiturgico) {
 
         siteGenerateService.generateSugestoesPara(diaLiturgico);

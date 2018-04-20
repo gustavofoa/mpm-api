@@ -17,4 +17,8 @@ public class Leitura extends ItemLiturgia {
     private String marcacaoBiblia;
     private String texto;
 
+    @Override
+    public String getFormatedTexto() {
+        return this.texto.trim().replace("\n", "<br/>");
+    }
 }

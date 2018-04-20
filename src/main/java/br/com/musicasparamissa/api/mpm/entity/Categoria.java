@@ -1,5 +1,6 @@
 package br.com.musicasparamissa.api.mpm.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,11 @@ public class Categoria implements Comparable<Categoria> {
 
     @OneToMany(mappedBy = "categoriaMae", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Categoria> children;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "mpm_musica_categorias", joinColumns = {@JoinColumn(name = "categoria_id")}, inverseJoinColumns = {@JoinColumn(name = "musica_id")})
+    @JsonIgnore
+    private Set<Musica> musicas;
 
     @ManyToOne
     @JoinColumn(name = "banner_footer_id", referencedColumnName = "id")

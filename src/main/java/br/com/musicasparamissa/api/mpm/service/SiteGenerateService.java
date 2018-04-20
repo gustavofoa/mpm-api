@@ -2,6 +2,7 @@ package br.com.musicasparamissa.api.mpm.service;
 
 import br.com.musicasparamissa.api.mpm.entity.Categoria;
 import br.com.musicasparamissa.api.mpm.entity.Data;
+import br.com.musicasparamissa.api.mpm.entity.DiaLiturgico;
 import br.com.musicasparamissa.api.mpm.entity.Musica;
 import br.com.musicasparamissa.api.mpm.repository.*;
 import com.google.common.base.Charsets;
@@ -33,6 +34,8 @@ public class SiteGenerateService {
     @Autowired
     private DiaLiturgicoRepository diaLiturgicoRepository;
     @Autowired
+    private ItemLiturgiaRepository itemLiturgiaRepository;
+    @Autowired
     private CategoriaRepository categoriaRepository;
     @Autowired
     private DataRepository dataRepository;
@@ -59,12 +62,14 @@ public class SiteGenerateService {
 
         generateStars(musicas);
 
-//        for(Musica musica : musicas)
-//            generateOnlyMusica(musica, context);
-
+        for(Musica musica : musicas)
+            generateOnlyMusica(musica, context);
 
         for (Categoria categoria : categoriaRepository.findAll())
             generateOnlyCategoria(categoria, context);
+
+        for (DiaLiturgico diaLiturgico : diaLiturgicoRepository.findAll())
+            generateOnlyPaginaSugestao(diaLiturgico, context);
 
 
     }
@@ -98,7 +103,7 @@ public class SiteGenerateService {
     }
 
     public void generateDatas(Iterable<Data> datas) {
-        log.info("[MpM] Generating Stars.");
+        log.info("[MpM] Generating Datas.");
 
         StringBuilder content = new StringBuilder("{");
 
@@ -151,7 +156,14 @@ public class SiteGenerateService {
 
     }
 
-    public void generateSugestoesPara(String diaLiturgico) {
+    public void generateSugestoesPara(String slugDiaLiturgico) {
+
+        log.info("[MpM] Generating DiaLiturgico page: " + slugDiaLiturgico);
+
+        DiaLiturgico diaLiturgico = diaLiturgicoRepository.findOne(slugDiaLiturgico);
+
+        generateOnlyPaginaSugestao(diaLiturgico, getContext());
+
     }
 
     public void generateMusicasDe(String slugCategoria) {
@@ -170,7 +182,7 @@ public class SiteGenerateService {
         context.put("categoria", categoria);
 
         if (categoria.getChildren() != null && !categoria.getChildren().isEmpty())
-            context.put("musicas", musicaRepository.findByCategoria(categoria));
+            context.put("musicas", categoria.getMusicas());
 
         if (categoria.getCategoriaMae() != null && categoria.getCategoriaMae().length() > 0)
             context.put("categoriaMae", categoriaRepository.findOne(categoria.getCategoriaMae()));
@@ -184,6 +196,37 @@ public class SiteGenerateService {
         String content = renderTemplate(TEMPLATE_PATH + "musicas-de.html", context);
 
         siteStorage.saveFile(String.format("musicas-de/%s/index.html", categoria.getSlug()), content, "text/html");
+    }
+
+    private void generateOnlyPaginaSugestao(DiaLiturgico diaLiturgico, Map<String, Object> context) {
+        log.info("Generating paginaSugestao: " + diaLiturgico.getSlug());
+
+        context.put("diaLiturgico", diaLiturgico);
+
+        Calendar yesterday = Calendar.getInstance();
+        yesterday.add(Calendar.DATE, -1);
+        Set<Data> datas = dataRepository.findAllByDataGreaterThanAndLiturgiaOrderByDataDesc(yesterday.getTime(), diaLiturgico);
+
+        context.put("datas", datas);
+
+        context.put("items", itemLiturgiaRepository.findByDiaLiturgicoOrderByPosicao(diaLiturgico));
+
+        for (Data data : datas) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(data.getData());
+            if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
+                context.put("saturday", true);
+        }
+
+        if (diaLiturgico.getSlug().startsWith("vigilia-pascal"))
+            context.put("saturday", false);
+
+        context.put("banner_footer", diaLiturgico.getBannerFooter());
+        context.put("banner_lateral", diaLiturgico.getBannerLateral());
+
+        String content = renderTemplate(TEMPLATE_PATH + "sugestoes-para.html", context);
+
+        siteStorage.saveFile(String.format("sugestoes-para/%s/index.html", diaLiturgico.getSlug()), content, "text/html");
     }
 
     private void generateOnlyMusica(Musica musica, Map<String, Object> context) {

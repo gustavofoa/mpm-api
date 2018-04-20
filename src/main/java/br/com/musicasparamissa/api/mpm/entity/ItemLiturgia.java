@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,6 +32,14 @@ public abstract class ItemLiturgia implements Comparable<ItemLiturgia> {
     @JoinColumn(name = "dialiturgico_id", referencedColumnName = "slug")
     private DiaLiturgico diaLiturgico;
     private Integer posicao;
+
+    public String getFormatedTexto(){
+        return null;
+    }
+
+    public List<Musica> getMusicas(){
+        return null;
+    }
 
     @Override
     public String toString() {
