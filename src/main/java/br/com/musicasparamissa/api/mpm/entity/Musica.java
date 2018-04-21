@@ -57,6 +57,10 @@ public class Musica {
         return nome;
     }
 
+    public String getAbsoluteUrl() {
+        return String.format("/musica/%s/", this.slug);
+    }
+
     public String getLetraInicio() {
         String retorno = this.letra.substring(0, this.letra.length() < 140 ? this.letra.length() : 140)
                 .replace("<strong>", "").replace("<strong", "").replace("<stron", "").replace("<stro", "").replace("<str", "").replace("<st", "").replace("<s", "")
