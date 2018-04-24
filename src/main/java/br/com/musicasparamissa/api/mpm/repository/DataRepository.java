@@ -16,7 +16,7 @@ public interface DataRepository extends CrudRepository<Data, Date> {
 
     Iterable<Data> findAllByDataGreaterThanOrderByDataDesc(Date date);
 
-    Iterable<Data> findAllByDataGreaterThanAndDestaqueOrderByDataDesc(Date date, Boolean destaque);
+    Iterable<Data> findAllByDataGreaterThanAndDestaqueOrderByDataAsc(Date date, Boolean destaque);
 
     Page<Data> findAllByOrderByDataDesc(Pageable pageable);
 

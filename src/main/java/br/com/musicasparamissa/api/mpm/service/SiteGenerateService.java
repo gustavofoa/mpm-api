@@ -62,7 +62,7 @@ public class SiteGenerateService {
 
         generateStars(musicas);
 
-        for(Musica musica : musicas)
+        for (Musica musica : musicas)
             generateOnlyMusica(musica, context);
 
         for (Categoria categoria : categoriaRepository.findAll())
@@ -71,6 +71,14 @@ public class SiteGenerateService {
         for (DiaLiturgico diaLiturgico : diaLiturgicoRepository.findAll())
             generateOnlyPaginaSugestao(diaLiturgico, context);
 
+
+        //Single pages
+        generateFromTemplate("search", null);
+        generateFromTemplate("confirme-seu-email", "mail");
+        generateFromTemplate("assinatura-confirmada", "mail");
+        generateFromTemplate("desinscricao", "mail");
+        generateFromTemplate("politica-de-privacidade", "pages");
+        generateFromTemplate("404", null);
 
     }
 
@@ -281,7 +289,7 @@ public class SiteGenerateService {
         context.put("partesComuns", catPartesComuns);
         context.put("tempos", catTempos);
         context.put("solenidadesEFestas", catSolenidadesEFestas);
-        context.put("destaques", dataRepository.findAllByDataGreaterThanAndDestaqueOrderByDataDesc(new Date(), true));
+        context.put("destaques", dataRepository.findAllByDataGreaterThanAndDestaqueOrderByDataAsc(new Date(), true));
 //        context.put("posts", postRepository.findAll());
         context.put("current_year", Calendar.getInstance().get(Calendar.YEAR));
 
@@ -333,4 +341,14 @@ public class SiteGenerateService {
 
     }
 
+    public void generateFromTemplate(String template, String folder) {
+
+        Map<String, Object> context = getContext();
+
+        context.put("banner_footer", categoriaRepository.findOne("outras-missas").getBannerFooter());
+
+        String content = renderTemplate(TEMPLATE_PATH + (folder != null ? folder + "/" : "") + template + ".html", context);
+
+        siteStorage.saveFile(String.format("%s/index.html", template), content, "text/html");
+    }
 }
