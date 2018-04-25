@@ -5,6 +5,7 @@ import br.com.musicasparamissa.api.mpm.entity.ItemLiturgia;
 import br.com.musicasparamissa.api.mpm.entity.Musica;
 import br.com.musicasparamissa.api.mpm.entity.SugestaoMusica;
 import br.com.musicasparamissa.api.mpm.service.DiaLiturgicoService;
+import br.com.musicasparamissa.api.mpm.service.SiteGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,9 @@ public class DiaLiturgicoController {
 
     @Autowired
     private DiaLiturgicoService diaLiturgicoService;
+
+    @Autowired
+    private SiteGenerateService siteGenerateService;
 
     @GetMapping("/{slug}")
     public ResponseEntity<DiaLiturgico> getDiaLiturgico(@PathVariable("slug") String slug) {
@@ -88,6 +92,9 @@ public class DiaLiturgicoController {
     public ResponseEntity<String> save(@RequestBody DiaLiturgico diaLiturgico) {
 
         diaLiturgicoService.save(diaLiturgico);
+
+        siteGenerateService.generateOnlyPaginaSugestao(diaLiturgico, siteGenerateService.getContext());
+
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
@@ -114,6 +121,7 @@ public class DiaLiturgicoController {
 
         ItemLiturgia item = diaLiturgicoService.getItemLiturgia(id);
         diaLiturgicoService.delete(item);
+
         return new ResponseEntity<>(HttpStatus.OK);
 
     }

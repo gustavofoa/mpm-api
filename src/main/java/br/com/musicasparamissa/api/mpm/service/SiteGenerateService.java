@@ -184,7 +184,7 @@ public class SiteGenerateService {
 
     }
 
-    private void generateOnlyCategoria(Categoria categoria, Map<String, Object> context) {
+    public void generateOnlyCategoria(Categoria categoria, Map<String, Object> context) {
         log.info("Generating categoria: " + categoria.getSlug());
 
         context.put("categoria", categoria);
@@ -206,7 +206,7 @@ public class SiteGenerateService {
         siteStorage.saveFile(String.format("musicas-de/%s/index.html", categoria.getSlug()), content, "text/html");
     }
 
-    private void generateOnlyPaginaSugestao(DiaLiturgico diaLiturgico, Map<String, Object> context) {
+    public void generateOnlyPaginaSugestao(DiaLiturgico diaLiturgico, Map<String, Object> context) {
         log.info("Generating paginaSugestao: " + diaLiturgico.getSlug());
 
         context.put("diaLiturgico", diaLiturgico);
@@ -237,7 +237,7 @@ public class SiteGenerateService {
         siteStorage.saveFile(String.format("sugestoes-para/%s/index.html", diaLiturgico.getSlug()), content, "text/html");
     }
 
-    private void generateOnlyMusica(Musica musica, Map<String, Object> context) {
+    public void generateOnlyMusica(Musica musica, Map<String, Object> context) {
         log.info("Generating musica: " + musica.getSlug());
 
         Map<String, Object> musicaContext = Maps.newHashMap();
@@ -277,7 +277,7 @@ public class SiteGenerateService {
 
     }
 
-    private Map<String, Object> getContext() {
+    public Map<String, Object> getContext() {
 
         Set<Categoria> catPartesComuns = categoriaRepository.findByCategoriaMaeOrderByOrdem("partes-comuns-da-missa");
         Set<Categoria> catSolenidadesEFestas = categoriaRepository.findByCategoriaMaeOrderByOrdem("solenidades-e-festas");

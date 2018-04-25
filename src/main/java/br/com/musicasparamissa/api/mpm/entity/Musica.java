@@ -15,6 +15,7 @@ public class Musica {
     public Musica() {
         this.votes = 0;
         this.rating = 0f;
+        this.temImagem = false;
     }
 
     @Id
@@ -25,7 +26,7 @@ public class Musica {
     private String info;
     @Column(name = "link_video")
     private String linkVideo;
-    @Column(name = "tem_imagem")
+    @Column(name = "tem_imagem", nullable = false)
     private Boolean temImagem;
 
     @ManyToMany(fetch = FetchType.EAGER)

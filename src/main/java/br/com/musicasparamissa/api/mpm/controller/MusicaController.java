@@ -2,6 +2,7 @@ package br.com.musicasparamissa.api.mpm.controller;
 
 import br.com.musicasparamissa.api.mpm.entity.Musica;
 import br.com.musicasparamissa.api.mpm.service.MusicaService;
+import br.com.musicasparamissa.api.mpm.service.SiteGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/musicas")
@@ -19,6 +21,9 @@ public class MusicaController {
 
     @Autowired
     private MusicaService musicaService;
+
+    @Autowired
+    private SiteGenerateService siteGenerateService;
 
     @GetMapping(path = "/{slug}/exists")
     public ResponseEntity<String> exists(@PathVariable("slug") String slug) {
@@ -44,6 +49,9 @@ public class MusicaController {
     public ResponseEntity<String> save(@RequestBody Musica musica) {
 
         musicaService.save(musica);
+
+        siteGenerateService.generateOnlyMusica(musica, siteGenerateService.getContext());
+
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
@@ -53,6 +61,9 @@ public class MusicaController {
 
         Musica musica = musicaService.getMusica(slug);
         musicaService.delete(musica);
+
+        musica.getCategorias().forEach(c -> siteGenerateService.generateOnlyCategoria(c, siteGenerateService.getContext()));
+
         return new ResponseEntity<>(HttpStatus.OK);
 
     }

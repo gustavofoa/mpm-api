@@ -4,6 +4,7 @@ import br.com.musicasparamissa.api.mpm.entity.Categoria;
 import br.com.musicasparamissa.api.exception.InvalidEntityException;
 import br.com.musicasparamissa.api.exception.UnableToRemoveException;
 import br.com.musicasparamissa.api.mpm.service.CategoriaService;
+import br.com.musicasparamissa.api.mpm.service.SiteGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ public class CategoriaController {
 
     @Autowired
     private CategoriaService categoriaService;
+
+    @Autowired
+    private SiteGenerateService siteGenerateService;
 
     @GetMapping("/search")
     public ResponseEntity<Set<Categoria>> search(@RequestParam("filter") String filter) {
@@ -50,6 +54,9 @@ public class CategoriaController {
 
         try {
             categoriaService.save(categoria);
+
+            siteGenerateService.generateOnlyCategoria(categoria, siteGenerateService.getContext());
+
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (InvalidEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

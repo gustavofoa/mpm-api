@@ -1,15 +1,16 @@
 package br.com.musicasparamissa.api.mpm.controller;
 
+import br.com.musicasparamissa.api.exception.NotFoundException;
 import br.com.musicasparamissa.api.mpm.dto.Star;
 import br.com.musicasparamissa.api.mpm.dto.StarVote;
 import br.com.musicasparamissa.api.mpm.entity.Musica;
-import br.com.musicasparamissa.api.exception.NotFoundException;
+import br.com.musicasparamissa.api.mpm.repository.MusicaRepository;
+import br.com.musicasparamissa.api.mpm.service.SiteGenerateService;
 import br.com.musicasparamissa.api.mpm.service.StarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.Request;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,12 @@ public class StarController {
 
     @Autowired
     private StarService starService;
+
+    @Autowired
+    private MusicaRepository musicaRepository;
+
+    @Autowired
+    private SiteGenerateService siteGenerateService;
 
     @GetMapping
     public ResponseEntity<Map<String, Star>> list(){
@@ -44,6 +51,8 @@ public class StarController {
                     musica.getRating() * 5 / 100.0, musica.getVotes(), musica.getVotes() > 1 ? "s" : "");
 
             jsonObj.put(musicaSlug, new StarVote(musica.getRating(), legend));
+
+            siteGenerateService.generateStars(musicaRepository.findAll());
 
             return new ResponseEntity<>(jsonObj, HttpStatus.OK);
         } catch (NotFoundException e){

@@ -1,5 +1,6 @@
 package br.com.musicasparamissa.api.mpm.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
@@ -33,10 +34,12 @@ public abstract class ItemLiturgia implements Comparable<ItemLiturgia> {
     private DiaLiturgico diaLiturgico;
     private Integer posicao;
 
+    @JsonIgnore
     public String getFormatedTexto(){
         return null;
     }
 
+    @JsonIgnore
     public List<Musica> getMusicas(){
         return null;
     }
