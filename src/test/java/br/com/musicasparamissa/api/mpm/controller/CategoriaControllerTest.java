@@ -4,6 +4,7 @@ import br.com.musicasparamissa.api.mpm.entity.Categoria;
 import br.com.musicasparamissa.api.exception.InvalidEntityException;
 import br.com.musicasparamissa.api.exception.UnableToRemoveException;
 import br.com.musicasparamissa.api.mpm.service.CategoriaService;
+import br.com.musicasparamissa.api.mpm.service.SiteGenerateService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -26,6 +27,9 @@ public class CategoriaControllerTest {
 
     @Mock
     private CategoriaService categoriaService;
+
+    @Mock
+    private SiteGenerateService siteGenerateService;
 
     @Before
     public void setUp() throws Exception {

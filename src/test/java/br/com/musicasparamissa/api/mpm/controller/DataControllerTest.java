@@ -1,8 +1,10 @@
 package br.com.musicasparamissa.api.mpm.controller;
 
-import br.com.musicasparamissa.api.mpm.entity.Data;
 import br.com.musicasparamissa.api.exception.InvalidEntityException;
+import br.com.musicasparamissa.api.mpm.entity.Data;
+import br.com.musicasparamissa.api.mpm.repository.DataRepository;
 import br.com.musicasparamissa.api.mpm.service.DataService;
+import br.com.musicasparamissa.api.mpm.service.SiteGenerateService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -27,6 +29,12 @@ public class DataControllerTest {
 
     @Mock
     private DataService dataService;
+
+    @Mock
+    private DataRepository dataRepository;
+
+    @Mock
+    private SiteGenerateService siteGenerateService;
 
     @Before
     public void setUp() throws Exception {
