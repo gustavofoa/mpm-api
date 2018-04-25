@@ -322,22 +322,15 @@ public class SiteGenerateService {
 
     private String getFile(String fileName) {
 
-        StringBuilder result = new StringBuilder();
 
-        //Get file from resources folder
-        InputStream in = getClass().getClassLoader().getResourceAsStream(fileName);
-
-        Scanner scanner = new Scanner(in);
-
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            result.append(line).append("\n");
+        String template = null;
+        try {
+            template = Resources.toString(Resources.getResource(fileName), Charsets.UTF_8);
+        } catch (IOException e) {
+            log.error("Error on getting template page.");
         }
 
-        scanner.close();
-
-
-        return result.toString();
+        return template;
 
     }
 
