@@ -38,7 +38,7 @@ public class S3SiteStorage implements SiteStorage {
         AmazonS3 s3client = AmazonS3ClientBuilder
                 .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion(Regions.SA_EAST_1)
+                .withRegion(Regions.US_EAST_1)
                 .build();
 
         try {
