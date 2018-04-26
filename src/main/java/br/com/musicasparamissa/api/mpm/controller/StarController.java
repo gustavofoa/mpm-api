@@ -53,6 +53,7 @@ public class StarController {
             jsonObj.put(musicaSlug, new StarVote(musica.getRating(), legend));
 
             siteGenerateService.generateStars(musicaRepository.findAll());
+            siteGenerateService.generateOnlyMusica(musica, siteGenerateService.getContext());
 
             return new ResponseEntity<>(jsonObj, HttpStatus.OK);
         } catch (NotFoundException e){
