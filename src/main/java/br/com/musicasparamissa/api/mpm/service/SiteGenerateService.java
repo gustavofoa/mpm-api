@@ -350,5 +350,6 @@ public class SiteGenerateService {
         String content = renderTemplate(TEMPLATE_PATH + (folder != null ? folder + "/" : "") + template + ".html", context);
 
         siteStorage.saveFile(String.format("%s/index.html", template), content, "text/html");
+        clearCacheService.one("https://musicasparamissa.com.br/"+template);
     }
 }
