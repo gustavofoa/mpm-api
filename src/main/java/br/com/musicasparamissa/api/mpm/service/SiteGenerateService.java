@@ -42,6 +42,9 @@ public class SiteGenerateService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private ClearCacheService clearCacheService;
+
     @Autowired()
     private SiteStorage siteStorage;
 
@@ -92,6 +95,7 @@ public class SiteGenerateService {
         String content = renderTemplate(TEMPLATE_PATH + "index.html", context);
 
         siteStorage.saveFile("index.html", content, "text/html");
+        clearCacheService.one("https://musicasparamissa.com.br");
     }
 
     private void generateSitemap() {
@@ -108,6 +112,7 @@ public class SiteGenerateService {
         String content = renderTemplate(TEMPLATE_PATH + "sitemap.xml", context);
 
         siteStorage.saveFile("sitemap.xml", content, "text/xml");
+        clearCacheService.one("https://musicasparamissa.com.br/sitemap.xml");
     }
 
     public void generateDatas(Iterable<Data> datas) {
@@ -131,6 +136,7 @@ public class SiteGenerateService {
         content.append("}");
 
         siteStorage.saveFile("datas.json", content.toString(), "application/json");
+        clearCacheService.one("https://musicasparamissa.com.br/datas.json");
     }
 
     public void generateStars(Iterable<Musica> musicas) {
@@ -152,6 +158,7 @@ public class SiteGenerateService {
         content.append("}");
 
         siteStorage.saveFile("stars", content.toString(), "application/json");
+        clearCacheService.one("https://musicasparamissa.com.br/stars");
     }
 
     public void generateMusica(String slugMusica) {

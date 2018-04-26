@@ -4,6 +4,7 @@ import br.com.musicasparamissa.api.mpm.entity.DiaLiturgico;
 import br.com.musicasparamissa.api.mpm.entity.ItemLiturgia;
 import br.com.musicasparamissa.api.mpm.entity.Musica;
 import br.com.musicasparamissa.api.mpm.entity.SugestaoMusica;
+import br.com.musicasparamissa.api.mpm.service.ClearCacheService;
 import br.com.musicasparamissa.api.mpm.service.DiaLiturgicoService;
 import br.com.musicasparamissa.api.mpm.service.SiteGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class DiaLiturgicoController {
 
     @Autowired
     private SiteGenerateService siteGenerateService;
+
+    @Autowired
+    private ClearCacheService clearCacheService;
 
     @GetMapping("/{slug}")
     public ResponseEntity<DiaLiturgico> getDiaLiturgico(@PathVariable("slug") String slug) {
@@ -94,6 +98,7 @@ public class DiaLiturgicoController {
         diaLiturgicoService.save(diaLiturgico);
 
         siteGenerateService.generateOnlyPaginaSugestao(diaLiturgico, siteGenerateService.getContext());
+        clearCacheService.one("https://musicasparamissa.com.br/sugestoes-para/"+diaLiturgico.getSlug());
 
         return new ResponseEntity<>(HttpStatus.OK);
 

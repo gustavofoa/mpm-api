@@ -1,6 +1,7 @@
 package br.com.musicasparamissa.api.mpm.controller;
 
 import br.com.musicasparamissa.api.mpm.entity.Musica;
+import br.com.musicasparamissa.api.mpm.service.ClearCacheService;
 import br.com.musicasparamissa.api.mpm.service.MusicaService;
 import br.com.musicasparamissa.api.mpm.service.SiteGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class MusicaController {
 
     @Autowired
     private SiteGenerateService siteGenerateService;
+
+    @Autowired
+    private ClearCacheService clearCacheService;
 
     @GetMapping(path = "/{slug}/exists")
     public ResponseEntity<String> exists(@PathVariable("slug") String slug) {
@@ -51,6 +55,7 @@ public class MusicaController {
         musicaService.save(musica);
 
         siteGenerateService.generateOnlyMusica(musica, siteGenerateService.getContext());
+        clearCacheService.one("https://musicasparamissa.com.br/musica/"+musica.getSlug());
 
         return new ResponseEntity<>(HttpStatus.OK);
 

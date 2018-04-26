@@ -3,6 +3,7 @@ package br.com.musicasparamissa.api.mpm.controller;
 import br.com.musicasparamissa.api.exception.InvalidEntityException;
 import br.com.musicasparamissa.api.mpm.entity.Data;
 import br.com.musicasparamissa.api.mpm.repository.DataRepository;
+import br.com.musicasparamissa.api.mpm.service.ClearCacheService;
 import br.com.musicasparamissa.api.mpm.service.DataService;
 import br.com.musicasparamissa.api.mpm.service.SiteGenerateService;
 import org.junit.Before;
@@ -35,6 +36,9 @@ public class DataControllerTest {
 
     @Mock
     private SiteGenerateService siteGenerateService;
+
+    @Mock
+    private ClearCacheService clearCacheService;
 
     @Before
     public void setUp() throws Exception {

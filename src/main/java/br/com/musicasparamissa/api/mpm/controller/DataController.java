@@ -3,6 +3,7 @@ package br.com.musicasparamissa.api.mpm.controller;
 import br.com.musicasparamissa.api.mpm.entity.Data;
 import br.com.musicasparamissa.api.exception.InvalidEntityException;
 import br.com.musicasparamissa.api.mpm.repository.DataRepository;
+import br.com.musicasparamissa.api.mpm.service.ClearCacheService;
 import br.com.musicasparamissa.api.mpm.service.DataService;
 import br.com.musicasparamissa.api.mpm.service.SiteGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class DataController {
 
     @Autowired
     private SiteGenerateService siteGenerateService;
+
+    @Autowired
+    private ClearCacheService clearCacheService;
 
 
     @GetMapping
@@ -74,6 +78,7 @@ public class DataController {
         tenDaysAgo.add(Calendar.DATE, -10);
         Iterable<Data> datas = dataRepository.findAllByDataGreaterThanOrderByDataDesc(tenDaysAgo.getTime());
         siteGenerateService.generateDatas(datas);
+        clearCacheService.one("https://musicasparamissa.com.br/datas.json");
     }
 
     @DeleteMapping("/{date}")
