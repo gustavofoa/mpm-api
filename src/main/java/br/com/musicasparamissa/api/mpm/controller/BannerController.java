@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
+
 @RestController
 @RequestMapping("/banners")
 public class BannerController {
@@ -32,6 +34,14 @@ public class BannerController {
 
         bannerService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @GetMapping("/refresh")
+    public ResponseEntity<Void> refresh(){
+
+        bannerService.refresh();
+        return new ResponseEntity<Void>(HttpStatus.OK);
 
     }
 
