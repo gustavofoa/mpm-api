@@ -71,7 +71,12 @@ public class SiteGenerateService {
         for (Categoria categoria : categoriaRepository.findAll())
             generateOnlyCategoria(categoria, context);
 
-        for (DiaLiturgico diaLiturgico : diaLiturgicoRepository.findAll())
+//        for (DiaLiturgico diaLiturgico : diaLiturgicoRepository.findAll())
+
+        List<DiaLiturgico> diasLiturgicoWithData = new ArrayList<>();
+        datas.forEach(d -> diasLiturgicoWithData.add(d.getLiturgia()));
+        log.info("Refreshing {} diasLiturgicos.", diasLiturgicoWithData.size());
+        for (DiaLiturgico diaLiturgico : diasLiturgicoWithData)
             generateOnlyPaginaSugestao(diaLiturgico, context);
 
 
