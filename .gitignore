@@ -23,3 +23,6 @@ target/
 hs_err_pid*
 
 .idea/
+.classpath
+.project
+.settings
