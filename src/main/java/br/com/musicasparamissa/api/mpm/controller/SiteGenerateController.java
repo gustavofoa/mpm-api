@@ -1,5 +1,6 @@
 package br.com.musicasparamissa.api.mpm.controller;
 
+import br.com.musicasparamissa.api.mpm.service.BannerService;
 import br.com.musicasparamissa.api.mpm.service.SiteGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,8 +14,13 @@ public class SiteGenerateController {
     @Autowired
     private SiteGenerateService siteGenerateService;
 
+    @Autowired
+    private BannerService bannerService;
+
     @PostMapping
     public ResponseEntity<Void> generateAll() {
+
+        bannerService.refresh();
 
         siteGenerateService.generateAll();
 
