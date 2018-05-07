@@ -232,7 +232,8 @@ public class SiteGenerateService {
         context.put("items", itemLiturgiaRepository.findByDiaLiturgicoOrderByPosicao(diaLiturgico));
 
         Calendar aMonthAgo = Calendar.getInstance();
-        aMonthAgo.add(Calendar.DATE, -10);
+        aMonthAgo.add(Calendar.DATE, -30);
+        context.put("saturday", false);
 
         for (Data data : datas) {
             if(data.getData().getTime() < aMonthAgo.getTimeInMillis())
