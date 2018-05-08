@@ -231,7 +231,13 @@ public class SiteGenerateService {
 
         context.put("items", itemLiturgiaRepository.findByDiaLiturgicoOrderByPosicao(diaLiturgico));
 
+        Calendar aMonthAgo = Calendar.getInstance();
+        aMonthAgo.add(Calendar.DATE, -30);
+        context.put("saturday", false);
+
         for (Data data : datas) {
+            if(data.getData().getTime() < aMonthAgo.getTimeInMillis())
+                continue;
             Calendar cal = Calendar.getInstance();
             cal.setTime(data.getData());
             if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
