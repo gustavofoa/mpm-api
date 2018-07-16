@@ -201,7 +201,7 @@ public class SiteGenerateService {
 
         context.put("categoria", categoria);
 
-        if (categoria.getChildren() != null && !categoria.getChildren().isEmpty())
+        if (categoria.getChildren() == null || categoria.getChildren().isEmpty())
             context.put("musicas", categoria.getMusicas());
 
         if (categoria.getCategoriaMae() != null && categoria.getCategoriaMae().length() > 0)
