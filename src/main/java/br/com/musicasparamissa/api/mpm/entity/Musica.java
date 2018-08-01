@@ -67,7 +67,7 @@ public class Musica {
                 .replace("<strong>", "").replace("<strong", "").replace("<stron", "").replace("<stro", "").replace("<str", "").replace("<st", "").replace("<s", "")
                 .replace("</strong>", "").replace("</strong", "").replace("</stron", "").replace("</stro", "").replace("</str", "").replace("</st", "").replace("</s", "")
                 .replace("</", "").replace("<", "")+"...";
-        return retorno;
+        return retorno.trim();
     }
 
     @Override
