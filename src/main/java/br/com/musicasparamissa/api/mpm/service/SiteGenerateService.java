@@ -264,6 +264,7 @@ public class SiteGenerateService {
         musicaContext.put("slug", musica.getSlug());
         musicaContext.put("nome", musica.getNome());
         musicaContext.put("letra", musica.getLetra().replace("\n", "<br/>"));
+        musicaContext.put("letra_inicio", musica.getLetraInicio());
         musicaContext.put("cifra", musica.getCifra());
         musicaContext.put("info", musica.getInfo().replace("\n", "<br/>"));
         musicaContext.put("get_absolute_url", String.format("/musica/%s/", musica.getSlug()));
