@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -142,6 +141,7 @@ public class SiteGenerateService {
 
         siteStorage.saveFile("datas.json", content.toString(), "application/json");
         clearCacheService.one("https://musicasparamissa.com.br/datas.json");
+        clearCacheService.one("https://blog.musicasparamissa.com.br/datas.json");
     }
 
     public void generateStars(Iterable<Musica> musicas) {

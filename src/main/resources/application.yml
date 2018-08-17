@@ -57,4 +57,5 @@ mpm_api:
         bucket: ${MPMAPI_aws_s3_cc_bucket}
       mpm:
         static_bucket: ${MPMAPI_aws_s3_mpm_static_bucket}
+        blog_bucket: ${MPMAPI_aws_s3_mpm_blog_bucket}
         bucket: ${MPMAPI_aws_s3_mpm_bucket}

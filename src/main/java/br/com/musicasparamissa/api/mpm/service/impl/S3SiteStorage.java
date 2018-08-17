@@ -29,6 +29,8 @@ public class S3SiteStorage implements SiteStorage {
 
     @Value("${mpm_api.aws.s3.mpm.bucket}")
     private String bucketName;
+    @Value("${mpm_api.aws.s3.mpm.blog_bucket}")
+    private String bucketBlogName;
 
     @Override
     public void saveFile(String path, String content, String contentType) {
@@ -42,7 +44,7 @@ public class S3SiteStorage implements SiteStorage {
                 .build();
 
         try {
-            log.debug("Uploading "+ path+" to MPM S3.");
+            log.debug("Uploading "+ path + " to MPM S3.");
 
             byte[] contentBytes = content.getBytes(StandardCharsets.UTF_8);
 
@@ -52,6 +54,19 @@ public class S3SiteStorage implements SiteStorage {
 
             s3client.putObject(new PutObjectRequest(
                     bucketName, path, new ByteArrayInputStream(contentBytes), metadata));
+
+            if(path.equals("datas.json")) {
+
+                s3client = AmazonS3ClientBuilder
+                        .standard()
+                        .withCredentials(new AWSStaticCredentialsProvider(credentials))
+                        .withRegion(Regions.SA_EAST_1)
+                        .build();
+
+                s3client.putObject(new PutObjectRequest(
+                        bucketBlogName, path, new ByteArrayInputStream(contentBytes), metadata));
+            }
+
 
         } catch (AmazonServiceException ase) {
             log.error("Caught an AmazonServiceException, which " +
