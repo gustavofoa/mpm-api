@@ -8,13 +8,13 @@ deploy:
   env: $AWS_ELB_ENV
   bucket_name: $AWS_ELB_BUCKET
   zip_file: './target/mpm-api.jar'
-sudo: true
+sudo: false
 branches:
   only:
   - master
 language: java
 script:
-  - sudo mvn clean install
+  - mvn clean install
 notifications:
   email:
       on_failure: always
