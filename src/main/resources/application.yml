@@ -12,13 +12,14 @@ server:
   connection-timeout: -1
 spring:
   datasource:
-    url: jdbc:mysql://${MPMAPI_dbhost}/pympm?useSSL=false
+    url: jdbc:mysql://${MPMAPI_dbhost}/${MPMAPI_dbname}?useSSL=false
     username: ${MPMAPI_dbuser}
     password: ${MPMAPI_dbpass}
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     show-sql: true
     properties.hibernate.format_sql: false
+    database: mysql
 logging:
   pattern.console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
   level:
