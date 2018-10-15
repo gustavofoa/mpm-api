@@ -3,6 +3,7 @@ info:
   version: @project.version@
   description: @project.description@
   environment: ${MPMAPI_environment}
+  lastBuild: @build.timestamp@
 app:
   name: @project.name@
   version: @project.version@
