@@ -29,12 +29,14 @@ public class SugestaoMusica extends ItemLiturgia {
 
     public List<Musica> getMusicas() {
         List<Musica> musicas = new ArrayList<>();
-        for (Categoria categoria : categorias)
-            for (Musica musica : categoria.getMusicas())
-                musicas.add(musica);
 
         for (Musica avulsa : this.avulsas)
             musicas.add(avulsa);
+
+        if (musicas.isEmpty())
+            for (Categoria categoria : categorias)
+                for (Musica musica : categoria.getMusicas())
+                    musicas.add(musica);
 
         for (Musica aRemover : this.remover)
             if (musicas.contains(aRemover))
