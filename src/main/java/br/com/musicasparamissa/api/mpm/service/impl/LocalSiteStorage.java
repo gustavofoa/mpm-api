@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 
@@ -43,6 +44,11 @@ public class LocalSiteStorage implements SiteStorage {
     @Override
     public List<String> listMpmjadminFile(String path) {
         return null;
+    }
+
+    @Override
+    public byte[] getMpmjadminFile(String path) throws IOException {
+        return new byte[0];
     }
 
 }

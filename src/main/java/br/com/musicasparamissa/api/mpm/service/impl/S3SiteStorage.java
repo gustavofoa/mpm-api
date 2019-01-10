@@ -9,15 +9,14 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.amazonaws.services.s3.model.*;
+import com.amazonaws.util.IOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -140,6 +139,16 @@ public class S3SiteStorage implements SiteStorage {
         objectSummaries.forEach(s -> files.add(s.getKey().replace(path,"")));
 
         return files;
+    }
+
+    @Override
+    public byte[] getMpmjadminFile(String path) throws IOException {
+
+        AmazonS3 s3client = getAmazonS3Client();
+
+        S3Object object = s3client.getObject(bucketMpmjaminName, path);
+
+        return IOUtils.toByteArray(object.getObjectContent());
     }
 
     private AmazonS3 getAmazonS3Client() {

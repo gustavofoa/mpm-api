@@ -20,7 +20,6 @@ import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/musicas")
@@ -127,6 +126,36 @@ public class MusicaController {
         List<String> files = siteStorage.listMpmjadminFile(String.format("mpm/musicas/%s/audio/file/", slug));
 
         return new ResponseEntity<>(files, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{slug}/audio/project/{name}")
+    public ResponseEntity<byte[]> getAudioProject(@PathVariable("slug") String slug, @PathVariable("name") String name) {
+
+        try {
+            String path = String.format("mpm/musicas/%s/audio/project/%s.zip", slug, name);
+            System.out.println(path);
+            byte[] file = siteStorage.getMpmjadminFile(path);
+            return new ResponseEntity<>(file, HttpStatus.OK);
+        }catch(IOException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @GetMapping("/{slug}/audio/file/{name}")
+    public ResponseEntity<byte[]> getAudioFile(@PathVariable("slug") String slug, @PathVariable("name") String name) {
+
+        try {
+            String path = String.format("mpm/musicas/%s/audio/file/%s.mp3", slug, name);
+            System.out.println(path);
+            byte[] file = siteStorage.getMpmjadminFile(path);
+            return new ResponseEntity<>(file, HttpStatus.OK);
+        }catch(IOException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 

@@ -1,5 +1,6 @@
 package br.com.musicasparamissa.api.mpm.service;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface SiteStorage {
@@ -9,5 +10,7 @@ public interface SiteStorage {
     void saveMpmjadminFile(String path, byte[] contentBytes);
 
     List<String> listMpmjadminFile(String path);
+
+    byte[] getMpmjadminFile(String path) throws IOException;
 
 }
