@@ -102,24 +102,8 @@
         </plugins>
         <resources>
             <resource>
-                <directory>src/main/resources/.ebextensions/**</directory>
-                <targetPath>.ebextensions</targetPath>
+                <directory>src/main/resources</directory>
                 <filtering>true</filtering>
-            </resource>
-            <resource>
-                <directory>${basedir}/src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>**/application.yml</include>
-                    <include>**/banner.txt</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>${basedir}/src/main/resources</directory>
-                <excludes>
-                    <exclude>**/application*.yml</exclude>
-                    <exclude>**/application*.properties</exclude>
-                </excludes>
             </resource>
         </resources>
     </build>
