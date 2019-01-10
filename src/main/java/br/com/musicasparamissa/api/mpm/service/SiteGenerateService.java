@@ -44,7 +44,7 @@ public class SiteGenerateService {
     @Autowired
     private ClearCacheService clearCacheService;
 
-    @Autowired()
+    @Autowired
     private SiteStorage siteStorage;
 
     public void generateAll() {

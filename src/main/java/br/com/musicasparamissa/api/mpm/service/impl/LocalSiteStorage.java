@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.List;
 
 //@Component("mpmSiteStorage")
 public class LocalSiteStorage implements SiteStorage {
@@ -32,6 +33,16 @@ public class LocalSiteStorage implements SiteStorage {
             throw new RuntimeException("Fail to write file.", e);
         }
 
+    }
+
+    @Override
+    public void saveMpmjadminFile(String path, byte[] contentBytes) {
+
+    }
+
+    @Override
+    public List<String> listMpmjadminFile(String path) {
+        return null;
     }
 
 }

@@ -21,6 +21,10 @@ spring:
     show-sql: true
     properties.hibernate.format_sql: false
     database: mysql
+  http:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
 logging:
   pattern.console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
   level:
@@ -61,3 +65,5 @@ mpm_api:
         static_bucket: ${MPMAPI_aws_s3_mpm_static_bucket}
         blog_bucket: ${MPMAPI_aws_s3_mpm_blog_bucket}
         bucket: ${MPMAPI_aws_s3_mpm_bucket}
+      mpmjadmin:
+        bucket: ${MPMAPI_aws_s3_mpmjadmin_bucket}
