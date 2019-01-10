@@ -15,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -142,13 +143,14 @@ public class S3SiteStorage implements SiteStorage {
     }
 
     @Override
-    public byte[] getMpmjadminFile(String path) throws IOException {
+    public void getMpmjadminFile(String path, HttpServletResponse response) throws IOException {
 
         AmazonS3 s3client = getAmazonS3Client();
 
         S3Object object = s3client.getObject(bucketMpmjaminName, path);
 
-        return IOUtils.toByteArray(object.getObjectContent());
+        IOUtils.copy(object.getObjectContent(), response.getOutputStream());
+
     }
 
     private AmazonS3 getAmazonS3Client() {

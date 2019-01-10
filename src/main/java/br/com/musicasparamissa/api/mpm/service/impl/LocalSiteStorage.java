@@ -1,8 +1,8 @@
 package br.com.musicasparamissa.api.mpm.service.impl;
 
 import br.com.musicasparamissa.api.mpm.service.SiteStorage;
-import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -47,8 +47,8 @@ public class LocalSiteStorage implements SiteStorage {
     }
 
     @Override
-    public byte[] getMpmjadminFile(String path) throws IOException {
-        return new byte[0];
+    public void getMpmjadminFile(String path, HttpServletResponse response) throws IOException {
+
     }
 
 }

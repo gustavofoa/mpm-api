@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -130,32 +131,18 @@ public class MusicaController {
     }
 
     @GetMapping("/{slug}/audio/project/{name}")
-    public ResponseEntity<byte[]> getAudioProject(@PathVariable("slug") String slug, @PathVariable("name") String name) {
-
-        try {
-            String path = String.format("mpm/musicas/%s/audio/project/%s.zip", slug, name);
-            System.out.println(path);
-            byte[] file = siteStorage.getMpmjadminFile(path);
-            return new ResponseEntity<>(file, HttpStatus.OK);
-        }catch(IOException e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+    public void getAudioProject(@PathVariable("slug") String slug, @PathVariable("name") String name, HttpServletResponse response) throws IOException {
+        String path = String.format("mpm/musicas/%s/audio/project/%s.zip", slug, name);
+        System.out.println(path);
+        siteStorage.getMpmjadminFile(path, response);
     }
 
     @GetMapping("/{slug}/audio/file/{name}")
-    public ResponseEntity<byte[]> getAudioFile(@PathVariable("slug") String slug, @PathVariable("name") String name) {
+    public void getAudioFile(@PathVariable("slug") String slug, @PathVariable("name") String name, HttpServletResponse response) throws IOException {
 
-        try {
-            String path = String.format("mpm/musicas/%s/audio/file/%s.mp3", slug, name);
-            System.out.println(path);
-            byte[] file = siteStorage.getMpmjadminFile(path);
-            return new ResponseEntity<>(file, HttpStatus.OK);
-        }catch(IOException e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        String path = String.format("mpm/musicas/%s/audio/file/%s.mp3", slug, name);
+        System.out.println(path);
+        siteStorage.getMpmjadminFile(path, response);
 
     }
 
