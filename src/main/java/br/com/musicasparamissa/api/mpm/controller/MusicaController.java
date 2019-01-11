@@ -146,4 +146,65 @@ public class MusicaController {
 
     }
 
+
+    @PostMapping("/{slug}/video/project")
+    public ResponseEntity<String> postVideoProject(@PathVariable("slug") String slug, @RequestParam("file") MultipartFile file) {
+
+        try {
+            siteStorage.saveMpmjadminFile(String.format("mpm/musicas/%s/video/project/%s.zip", slug, sdf.format(new Date())), file.getBytes());
+        } catch (IOException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @PostMapping("/{slug}/video/file")
+    public ResponseEntity<String> postVideoFile(@PathVariable("slug") String slug, @RequestParam("file") MultipartFile file) {
+
+        try {
+            siteStorage.saveMpmjadminFile(String.format("mpm/musicas/%s/video/file/%s.mp4", slug, sdf.format(new Date())), file.getBytes());
+        } catch (IOException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{slug}/video/project")
+    public ResponseEntity<List<String>> getVideoProject(@PathVariable("slug") String slug) {
+
+        List<String> files = siteStorage.listMpmjadminFile(String.format("mpm/musicas/%s/video/project/", slug));
+
+        return new ResponseEntity<>(files, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{slug}/video/file")
+    public ResponseEntity<List<String>> getVideoFile(@PathVariable("slug") String slug) {
+
+        List<String> files = siteStorage.listMpmjadminFile(String.format("mpm/musicas/%s/video/file/", slug));
+
+        return new ResponseEntity<>(files, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{slug}/video/project/{name}")
+    public void getVideoProject(@PathVariable("slug") String slug, @PathVariable("name") String name, HttpServletResponse response) throws IOException {
+        String path = String.format("mpm/musicas/%s/video/project/%s.zip", slug, name);
+        System.out.println(path);
+        siteStorage.getMpmjadminFile(path, response);
+    }
+
+    @GetMapping("/{slug}/video/file/{name}")
+    public void getVideoFile(@PathVariable("slug") String slug, @PathVariable("name") String name, HttpServletResponse response) throws IOException {
+
+        String path = String.format("mpm/musicas/%s/video/file/%s.mp4", slug, name);
+        System.out.println(path);
+        siteStorage.getMpmjadminFile(path, response);
+
+    }
+
 }
