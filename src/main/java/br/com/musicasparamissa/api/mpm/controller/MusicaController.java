@@ -90,7 +90,7 @@ public class MusicaController {
     public ResponseEntity<String> postAudioProject(@PathVariable("slug") String slug, @RequestParam("file") MultipartFile file) {
 
         try {
-            siteStorage.saveMpmjadminFile(String.format("mpm/musicas/%s/audio/project/%s.zip", slug, sdf.format(new Date())), file.getBytes());
+            siteStorage.saveMpmjadminFile(String.format("mpm/musicas/%s/audio/project/%s.zip", slug, sdf.format(new Date())), file.getInputStream(), file.getSize());
         } catch (IOException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -103,7 +103,7 @@ public class MusicaController {
     public ResponseEntity<String> postAudioFile(@PathVariable("slug") String slug, @RequestParam("file") MultipartFile file) {
 
         try {
-            siteStorage.saveMpmjadminFile(String.format("mpm/musicas/%s/audio/file/%s.mp3", slug, sdf.format(new Date())), file.getBytes());
+            siteStorage.saveMpmjadminFile(String.format("mpm/musicas/%s/audio/file/%s.mp3", slug, sdf.format(new Date())), file.getInputStream(), file.getSize());
         } catch (IOException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -151,7 +151,7 @@ public class MusicaController {
     public ResponseEntity<String> postVideoProject(@PathVariable("slug") String slug, @RequestParam("file") MultipartFile file) {
 
         try {
-            siteStorage.saveMpmjadminFile(String.format("mpm/musicas/%s/video/project/%s.zip", slug, sdf.format(new Date())), file.getBytes());
+            siteStorage.saveMpmjadminFile(String.format("mpm/musicas/%s/video/project/%s.zip", slug, sdf.format(new Date())), file.getInputStream(), file.getSize());
         } catch (IOException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -164,7 +164,7 @@ public class MusicaController {
     public ResponseEntity<String> postVideoFile(@PathVariable("slug") String slug, @RequestParam("file") MultipartFile file) {
 
         try {
-            siteStorage.saveMpmjadminFile(String.format("mpm/musicas/%s/video/file/%s.mp4", slug, sdf.format(new Date())), file.getBytes());
+            siteStorage.saveMpmjadminFile(String.format("mpm/musicas/%s/video/file/%s.mp4", slug, sdf.format(new Date())), file.getInputStream(), file.getSize());
         } catch (IOException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -3,10 +3,7 @@ package br.com.musicasparamissa.api.mpm.service.impl;
 import br.com.musicasparamissa.api.mpm.service.SiteStorage;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.List;
 
 //@Component("mpmSiteStorage")
@@ -37,7 +34,7 @@ public class LocalSiteStorage implements SiteStorage {
     }
 
     @Override
-    public void saveMpmjadminFile(String path, byte[] contentBytes) {
+    public void saveMpmjadminFile(String path, InputStream in, long size) {
 
     }
 

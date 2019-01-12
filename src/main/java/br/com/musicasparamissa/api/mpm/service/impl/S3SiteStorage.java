@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +93,7 @@ public class S3SiteStorage implements SiteStorage {
     }
 
     @Override
-    public void saveMpmjadminFile(String path, byte[] contentBytes) {
+    public void saveMpmjadminFile(String path, InputStream in, long size) {
 
         AmazonS3 s3client = getAmazonS3Client();
 
@@ -100,9 +101,9 @@ public class S3SiteStorage implements SiteStorage {
             log.info("Uploading "+ path + " to MPM S3.");
 
             ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentLength(contentBytes.length);
+            metadata.setContentLength(size);
 
-            s3client.putObject(new PutObjectRequest(bucketMpmjaminName, path, new ByteArrayInputStream(contentBytes), metadata));
+            s3client.putObject(new PutObjectRequest(bucketMpmjaminName, path, in, metadata));
 
             log.info("File "+ path + " sent to S3.");
 
