@@ -112,6 +112,19 @@ public class MusicaController {
 
     }
 
+    @PostMapping("/{slug}/audio/playback")
+    public ResponseEntity<String> postAudioPlayback(@PathVariable("slug") String slug, @RequestParam("file") MultipartFile file) {
+
+        try {
+            siteStorage.saveMpmjadminFile(String.format("mpm/musicas/%s/audio/playback/%s.mp3", slug, sdf.format(new Date())), file.getInputStream(), file.getSize());
+        } catch (IOException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
     @GetMapping("/{slug}/audio/project")
     public ResponseEntity<List<String>> getAudioProject(@PathVariable("slug") String slug) {
 
@@ -130,6 +143,15 @@ public class MusicaController {
 
     }
 
+    @GetMapping("/{slug}/audio/playback")
+    public ResponseEntity<List<String>> getAudioPlayback(@PathVariable("slug") String slug) {
+
+        List<String> files = siteStorage.listMpmjadminFile(String.format("mpm/musicas/%s/audio/playback/", slug));
+
+        return new ResponseEntity<>(files, HttpStatus.OK);
+
+    }
+
     @GetMapping("/{slug}/audio/project/{name}")
     public void getAudioProject(@PathVariable("slug") String slug, @PathVariable("name") String name, HttpServletResponse response) throws IOException {
         String path = String.format("mpm/musicas/%s/audio/project/%s.zip", slug, name);
@@ -141,6 +163,15 @@ public class MusicaController {
     public void getAudioFile(@PathVariable("slug") String slug, @PathVariable("name") String name, HttpServletResponse response) throws IOException {
 
         String path = String.format("mpm/musicas/%s/audio/file/%s.mp3", slug, name);
+        System.out.println(path);
+        siteStorage.getMpmjadminFile(path, response);
+
+    }
+
+    @GetMapping("/{slug}/audio/playback/{name}")
+    public void getAudioPlayback(@PathVariable("slug") String slug, @PathVariable("name") String name, HttpServletResponse response) throws IOException {
+
+        String path = String.format("mpm/musicas/%s/audio/playback/%s.mp3", slug, name);
         System.out.println(path);
         siteStorage.getMpmjadminFile(path, response);
 
