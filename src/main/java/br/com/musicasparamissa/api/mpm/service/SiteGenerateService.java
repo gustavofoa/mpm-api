@@ -45,6 +45,9 @@ public class SiteGenerateService {
     private ClearCacheService clearCacheService;
 
     @Autowired
+    private BannerService bannerService;
+
+    @Autowired
     private SiteStorage siteStorage;
 
     public void generateAll() {
@@ -55,6 +58,8 @@ public class SiteGenerateService {
         tenDaysAgo.add(Calendar.DATE, -10);
         Iterable<Data> datas = dataRepository.findAllByDataGreaterThanOrderByDataDesc(tenDaysAgo.getTime());
         Iterable<Musica> musicas = musicaRepository.findAll();
+
+        bannerService.refresh();
 
         generateHome();
 
