@@ -64,6 +64,7 @@ mpm_api:
       mpm:
         static_bucket: ${MPMAPI_aws_s3_mpm_static_bucket}
         blog_bucket: ${MPMAPI_aws_s3_mpm_blog_bucket}
+        mympm_bucket: ${MPMAPI_aws_s3_mpm_mympm_bucket}
         bucket: ${MPMAPI_aws_s3_mpm_bucket}
       mpmjadmin:
         bucket: ${MPMAPI_aws_s3_mpmjadmin_bucket}

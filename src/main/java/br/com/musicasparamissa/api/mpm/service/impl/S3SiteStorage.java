@@ -38,6 +38,8 @@ public class S3SiteStorage implements SiteStorage {
     private String bucketMpmjaminName;
     @Value("${mpm_api.aws.s3.mpm.blog_bucket}")
     private String bucketBlogName;
+    @Value("${mpm_api.aws.s3.mpm.mympm_bucket}")
+    private String bucketMyMpMName;
 
     @Override
     public void saveFile(String path, String content, String contentType) {
@@ -68,6 +70,9 @@ public class S3SiteStorage implements SiteStorage {
 
                 s3client.putObject(new PutObjectRequest(
                         bucketBlogName, path, new ByteArrayInputStream(contentBytes), metadata));
+                
+				s3client.putObject(new PutObjectRequest(
+                        bucketMyMpMName, path, new ByteArrayInputStream(contentBytes), metadata));
             }
 
 
