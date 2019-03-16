@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BannerRepository extends CrudRepository<Banner, Integer> {
 
+    Iterable<Banner> findByAtivo(boolean b);
+
 }

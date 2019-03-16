@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
-
 @RestController
 @RequestMapping("/banners")
 public class BannerController {
@@ -19,6 +17,11 @@ public class BannerController {
     @GetMapping
     public ResponseEntity<Iterable<Banner>> list(){
         return new ResponseEntity<>(bannerService.list(), HttpStatus.OK);
+    }
+
+    @GetMapping("/ativos")
+    public ResponseEntity<Iterable<Banner>> listActive(){
+        return new ResponseEntity<>(bannerService.listAtivos(), HttpStatus.OK);
     }
 
     @PostMapping

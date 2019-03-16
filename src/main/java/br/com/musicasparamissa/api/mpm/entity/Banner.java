@@ -16,6 +16,7 @@ public class Banner {
     private String url;
     private String titulo;
     private String img;
+	private Boolean ativo;
 
     @Override
     public boolean equals(Object o) {

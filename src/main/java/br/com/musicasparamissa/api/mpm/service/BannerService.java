@@ -1,7 +1,6 @@
 package br.com.musicasparamissa.api.mpm.service;
 
 import br.com.musicasparamissa.api.mpm.entity.Banner;
-import br.com.musicasparamissa.api.mpm.entity.DiaLiturgico;
 import br.com.musicasparamissa.api.mpm.repository.BannerRepository;
 import br.com.musicasparamissa.api.mpm.repository.CategoriaRepository;
 import br.com.musicasparamissa.api.mpm.repository.DiaLiturgicoRepository;
@@ -46,7 +45,7 @@ public class BannerService {
     }
 
     public void refresh() {
-		List<Banner> banners = Lists.newArrayList(bannerRepository.findAll());
+		List<Banner> banners = Lists.newArrayList(this.listAtivos());
 
 		log.info("Updating banners.");
 		categoriaRepository.findAll().forEach(categoria -> {
@@ -74,5 +73,9 @@ public class BannerService {
 			diaLiturgicoRepository.save(diaLiturgico);
 		});
 
+    }
+
+    public Iterable<Banner> listAtivos() {
+        return bannerRepository.findByAtivo(true);
     }
 }
