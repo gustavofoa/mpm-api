@@ -238,4 +238,24 @@ public class MusicaController {
 
     }
 
+    @PostMapping("/{slug}/audio/file/{name}/copy-to-mympm")
+    public void copyAudioFileToMympm(@PathVariable("slug") String slug, @PathVariable("name") String name, HttpServletResponse response) throws IOException {
+
+        String pathFrom = String.format("mpm/musicas/%s/audio/file/%s", slug, name);
+        String pathTo = String.format("musicas/%s/audio.mp3", slug, name);
+        siteStorage.copyToMympm(pathFrom, pathTo);
+        clearCacheService.all();
+
+    }
+
+    @PostMapping("/{slug}/audio/playback/{name}/copy-to-mympm")
+    public void copyAudioPlaybackToMympm(@PathVariable("slug") String slug, @PathVariable("name") String name, HttpServletResponse response) throws IOException {
+
+        String pathFrom = String.format("mpm/musicas/%s/audio/playback/%s", slug, name);
+        String pathTo = String.format("musicas/%s/playback.mp3", slug, name);
+        siteStorage.copyToMympm(pathFrom, pathTo);
+        clearCacheService.all();
+
+    }
+
 }

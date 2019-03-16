@@ -48,4 +48,9 @@ public class LocalSiteStorage implements SiteStorage {
 
     }
 
+    @Override
+    public void copyToMympm(String pathFrom, String pathTo) throws IOException {
+
+    }
+
 }

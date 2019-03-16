@@ -15,4 +15,6 @@ public interface SiteStorage {
 
     void getMpmjadminFile(String path, HttpServletResponse response) throws IOException;
 
+    void copyToMympm(String pathFrom, String pathTo) throws IOException;
+
 }
