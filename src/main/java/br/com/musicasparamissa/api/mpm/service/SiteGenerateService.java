@@ -313,7 +313,7 @@ public class SiteGenerateService {
         context.put("partesComuns", catPartesComuns);
         context.put("tempos", catTempos);
         context.put("solenidadesEFestas", catSolenidadesEFestas);
-        context.put("destaques", dataRepository.findAllByDataGreaterThanAndDestaqueOrderByDataAsc(new Date(), true));
+        context.put("destaques", dataRepository.findAllByDataGreaterThanAndDestaqueOrderByDataAsc(Calendar.getInstance(TimeZone.getTimeZone("America/Sao_Paulo")).getTime(), true));
 //        context.put("posts", postRepository.findAll());
         context.put("current_year", Calendar.getInstance().get(Calendar.YEAR));
 
