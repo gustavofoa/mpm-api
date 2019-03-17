@@ -1,12 +1,14 @@
 package br.com.musicasparamissa.api.mympm.entity;
 
+import br.com.musicasparamissa.api.util.DateTimeJsonDeserializer;
+import br.com.musicasparamissa.api.util.DateTimeJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.time.LocalDate;
+import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -24,9 +26,13 @@ public class Usuario {
     private String cpf;
 
     @Column(name = "dt_compra")
-    private LocalDate dataCompra;
+    @JsonSerialize(using = DateTimeJsonSerializer.class)
+    @JsonDeserialize(using = DateTimeJsonDeserializer.class)
+    private Date dataCompra;
     @Column(name = "dt_expiracao")
-    private LocalDate dataExpiracao;
+    @JsonSerialize(using = DateTimeJsonSerializer.class)
+    @JsonDeserialize(using = DateTimeJsonDeserializer.class)
+    private Date dataExpiracao;
 
     private Double valorPago;
     private String plano;
@@ -64,4 +70,5 @@ public class Usuario {
     public int hashCode() {
         return Objects.hash(id, email, senha, nome, imagem, cpf, dataCompra, dataExpiracao, valorPago, plano, facebook, twitter, instagram);
     }
+
 }
