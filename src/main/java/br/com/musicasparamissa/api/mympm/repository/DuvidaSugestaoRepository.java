@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository("MyMpMDuvidaSugestaoRepository")
 public interface DuvidaSugestaoRepository extends CrudRepository<DuvidaSugestao, Integer> {
 
-    Page<DuvidaSugestao> findByTituloIgnoreCaseContainingOrTextoIgnoreCaseContaining(String titulo, String texto, Pageable pageable);
+    Page<DuvidaSugestao> findByTituloIgnoreCaseContainingOrTextoIgnoreCaseContainingOrderByDataDesc(String titulo, String texto, Pageable pageable);
 
 }

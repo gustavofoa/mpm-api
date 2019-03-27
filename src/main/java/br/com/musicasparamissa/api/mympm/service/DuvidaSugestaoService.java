@@ -14,7 +14,7 @@ public class DuvidaSugestaoService {
 	private DuvidaSugestaoRepository duvidaSugestaoRepository;
 
 	public Page<DuvidaSugestao> search(String filter, Pageable pageable) {
-		return duvidaSugestaoRepository.findByTituloIgnoreCaseContainingOrTextoIgnoreCaseContaining(filter, filter, pageable);
+		return duvidaSugestaoRepository.findByTituloIgnoreCaseContainingOrTextoIgnoreCaseContainingOrderByDataDesc(filter, filter, pageable);
 	}
 
 }

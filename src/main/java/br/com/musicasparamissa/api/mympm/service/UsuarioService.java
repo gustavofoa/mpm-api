@@ -7,8 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.List;
 
 @Service("MyMpMUsuarioService")
@@ -18,7 +16,7 @@ public class UsuarioService {
 	private UsuarioRepository usuarioRepository;
 
 	public Page<Usuario> search(String filter, Pageable pageable) {
-		return usuarioRepository.findByEmailIgnoreCaseContainingOrNomeIgnoreCaseContaining(filter, filter, pageable);
+		return usuarioRepository.findByEmailIgnoreCaseContainingOrNomeIgnoreCaseContainingOrderByDataCompraDesc(filter, filter, pageable);
 	}
 
     public List<Usuario> list() {

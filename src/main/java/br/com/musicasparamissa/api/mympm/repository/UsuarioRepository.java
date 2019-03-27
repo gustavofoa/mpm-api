@@ -11,7 +11,7 @@ import java.util.List;
 @Repository("MyMpMUsuarioRepository")
 public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
 
-    Page<Usuario> findByEmailIgnoreCaseContainingOrNomeIgnoreCaseContaining(String email, String nome, Pageable pageable);
+    Page<Usuario> findByEmailIgnoreCaseContainingOrNomeIgnoreCaseContainingOrderByDataCompraDesc(String email, String nome, Pageable pageable);
 
     List<Usuario> findAllByOrderByNome();
 }

@@ -1,5 +1,9 @@
 package br.com.musicasparamissa.api.mympm.entity;
 
+import br.com.musicasparamissa.api.util.DateTimeJsonDeserializer;
+import br.com.musicasparamissa.api.util.DateTimeJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -17,17 +22,16 @@ public class DuvidaSugestao {
 
     @Id
     private Integer id;
-    private LocalDate data;
-    private DuvidaSugestaoTipo tipo;
-    private DuvidaSugestaoStatus status;
+    @JsonSerialize(using = DateTimeJsonSerializer.class)
+    @JsonDeserialize(using = DateTimeJsonDeserializer.class)
+    private Date data;
+    private String tipo;
+    private String status;
     private String titulo;
     private String texto;
     @ManyToOne
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private Usuario usuario;
-    @ManyToOne
-    @JoinColumn(name = "resposta_a", referencedColumnName = "id")
-    DuvidaSugestao respostaA;
 
 
     @Override
@@ -46,12 +50,11 @@ public class DuvidaSugestao {
                 Objects.equals(status, that.status) &&
                 Objects.equals(titulo, that.titulo) &&
                 Objects.equals(texto, that.texto) &&
-                Objects.equals(usuario, that.usuario) &&
-                Objects.equals(respostaA, that.respostaA);
+                Objects.equals(usuario, that.usuario);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, data, tipo, status, titulo, texto, usuario, respostaA);
+        return Objects.hash(id, data, tipo, status, titulo, texto, usuario);
     }
 }
