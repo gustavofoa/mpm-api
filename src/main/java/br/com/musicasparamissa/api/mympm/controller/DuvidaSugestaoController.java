@@ -25,4 +25,17 @@ public class DuvidaSugestaoController {
 
     }
 
+    @PostMapping("/answer")
+    public ResponseEntity<String> answer(@RequestBody DuvidaSugestao duvidaSugestao) {
+
+        try {
+            duvidaSugestaoService.answer(duvidaSugestao);
+            return new ResponseEntity<String>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 }
