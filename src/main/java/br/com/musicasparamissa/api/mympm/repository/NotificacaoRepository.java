@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository("MyMpMNotificacaoRepository")
 public interface NotificacaoRepository extends CrudRepository<Notificacao, Integer> {
 
-    Page<Notificacao> findByTituloIgnoreCaseContainingOrTextoIgnoreCaseContainingOrderByDataDesc(String titulo, String texto, Pageable pageable);
+    Page<Notificacao> findByTituloIgnoreCaseContainingOrTextoIgnoreCaseContainingOrDestinatarioNomeIgnoreCaseContainingOrderByDataDesc(String titulo, String texto, String destinatario, Pageable pageable);
 
 }
