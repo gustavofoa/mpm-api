@@ -24,15 +24,20 @@ public class DuvidaSugestaoService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
+	@Autowired
+	private EmailService emailService;
+
 	public Page<DuvidaSugestao> search(String filter, Pageable pageable) {
 		return duvidaSugestaoRepository.findByTituloIgnoreCaseContainingOrTextoIgnoreCaseContainingOrderByDataDesc(filter, filter, pageable);
 	}
 
 	public void answer(DuvidaSugestao duvidaSugestao) {
+
 		DuvidaSugestao dbDuvidaSugestao = duvidaSugestaoRepository.findOne(duvidaSugestao.getId());
 		dbDuvidaSugestao.setResposta(duvidaSugestao.getResposta());
 		dbDuvidaSugestao.setStatus("respondida");
 		duvidaSugestaoRepository.save(dbDuvidaSugestao);
+
 		//Notificação
 		Notificacao notificacao = new Notificacao();
 		notificacao.setDestinatario(dbDuvidaSugestao.getUsuario());
@@ -45,5 +50,13 @@ public class DuvidaSugestaoService {
 		notificacaoRepository.save(notificacao);
 
 		//E-mail
+		emailService.send(dbDuvidaSugestao.getUsuario().getEmail(),
+				"Respondemos a sua "+tituloNotificacao,
+				"<p>Olá " + dbDuvidaSugestao.getUsuario().getNome() + ", estamos passando só pra avisar que respondemos a " + tituloNotificacao +
+						" que você nos enviou pela plataforma.</p> <p>Para visualizar a nossa resposta acesse a plataforma em " +
+						"<a href='http://minhas.musicasparamissa.com.br/duvidas-e-sugestoes'>http://minhas.musicasparamissa.com.br/duvidas-e-sugestoes</a></p>" +
+						"<p>Att,</p> <p>Equipe Músicas para Missa</p>"
+		);
+
 	}
 }
