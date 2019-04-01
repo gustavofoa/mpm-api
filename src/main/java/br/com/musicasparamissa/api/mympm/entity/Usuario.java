@@ -22,6 +22,7 @@ public class Usuario {
     private String senha;
     private String nome;
     private String imagem;
+    private String gateway;
 
     private String cpf;
 
