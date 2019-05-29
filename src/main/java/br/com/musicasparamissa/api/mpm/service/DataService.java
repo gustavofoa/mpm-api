@@ -18,6 +18,12 @@ public class DataService {
 	@Autowired
 	private DataRepository dataRepository;
 
+	@Autowired
+	private BannerService bannerService;
+
+	@Autowired
+	private SiteGenerateService siteGenerateService;
+
 	public Page<Data> listDatas(Pageable pageable){
 		return dataRepository.findAllByOrderByDataDesc(pageable);
 	}
@@ -45,6 +51,11 @@ public class DataService {
 		data.setDataUltimaEdicao(LocalDate.now());
 
 		dataRepository.save(data);
+
+		bannerService.refresh();
+
+		siteGenerateService.generateOnlyPaginaSugestao(data.getLiturgia(), siteGenerateService.getContext());
+
     }
 
 	private void validate(Data data) throws InvalidEntityException {
