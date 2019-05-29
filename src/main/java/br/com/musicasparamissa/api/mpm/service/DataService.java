@@ -52,7 +52,7 @@ public class DataService {
 
 		dataRepository.save(data);
 
-		bannerService.refresh();
+		bannerService.refreshOne(data.getLiturgia());
 
 		siteGenerateService.generateOnlyPaginaSugestao(data.getLiturgia(), siteGenerateService.getContext());
 
