@@ -52,14 +52,14 @@ public class SiteGenerateService {
 
     public void generateAll() {
 
+        bannerService.refresh();
+
         Map<String, Object> context = getContext();
 
         Calendar tenDaysAgo = Calendar.getInstance();
         tenDaysAgo.add(Calendar.DATE, -10);
         Iterable<Data> datas = dataRepository.findAllByDataGreaterThanOrderByDataDesc(tenDaysAgo.getTime());
         Iterable<Musica> musicas = musicaRepository.findAll();
-
-        bannerService.refresh();
 
         generateHome();
 
