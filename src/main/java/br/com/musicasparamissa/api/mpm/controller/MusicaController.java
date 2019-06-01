@@ -62,6 +62,13 @@ public class MusicaController {
 
     }
 
+    @GetMapping("/withoutvideo")
+    public List<Musica> listWithoutVideo() {
+
+        return musicaService.listWithoutVideo();
+
+    }
+
     @PostMapping
     public ResponseEntity<String> save(@RequestBody Musica musica) {
 

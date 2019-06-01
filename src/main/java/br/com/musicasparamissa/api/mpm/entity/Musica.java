@@ -95,4 +95,14 @@ public class Musica {
         return true;
     }
 
+    public String getVideoCode(){
+        if(this.getLinkVideo() == null)
+            return null;
+        int slashLastIndex = this.getLinkVideo().lastIndexOf('/');
+        return this.getLinkVideo().substring(slashLastIndex < 0 ? 0 : slashLastIndex+1)
+                .replace("embed", "")
+                .replace("watch?v=", "")
+                .replace("v=", "");
+    }
+
 }

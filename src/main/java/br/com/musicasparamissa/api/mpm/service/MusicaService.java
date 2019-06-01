@@ -10,7 +10,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -53,5 +60,31 @@ public class MusicaService {
 
     public Musica getMusica(String slug) {
         return musicaRepository.findOne(slug);
+    }
+
+    public List<Musica> listWithoutVideo() {
+        Iterable<Musica> musicas = musicaRepository.findAll();
+        List<Musica> musicasWithoutVideo = new ArrayList<>();
+        musicas.forEach(musica -> {
+            if(musica.getVideoCode() == null) {
+                musicasWithoutVideo.add(musica);
+                return;
+            }
+            try{
+                URL url = new URL(String.format("http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=%s&format=json",musica.getVideoCode()));
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("GET");
+                System.out.println(String.format("Verificando video %s de %s (%d)", musica.getVideoCode(), musica.getSlug(), con.getResponseCode()));
+                if(con.getResponseCode() == 404)
+                    musicasWithoutVideo.add(musica);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        return musicasWithoutVideo;
     }
 }

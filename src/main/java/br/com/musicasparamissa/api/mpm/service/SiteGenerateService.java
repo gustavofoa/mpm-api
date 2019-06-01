@@ -274,11 +274,7 @@ public class SiteGenerateService {
         musicaContext.put("info", musica.getInfo().replace("\n", "<br/>"));
         musicaContext.put("get_absolute_url", String.format("/musica/%s/", musica.getSlug()));
         if (musica.getLinkVideo() != null) {
-            int slashLastIndex = musica.getLinkVideo().lastIndexOf('/');
-            musicaContext.put("get_video_code", musica.getLinkVideo().substring(slashLastIndex < 0 ? 0 : slashLastIndex)
-                    .replace("embed", "")
-                    .replace("watch?v=", "")
-                    .replace("v=", ""));
+            musicaContext.put("get_video_code", musica.getVideoCode());
         }
         String plural = "";
         if (musica.getVotes() == null)
