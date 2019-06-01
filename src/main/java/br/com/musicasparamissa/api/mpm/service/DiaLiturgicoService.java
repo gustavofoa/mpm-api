@@ -82,6 +82,12 @@ public class DiaLiturgicoService {
 			diaLiturgico.setDataCadastro(LocalDate.now());
 		diaLiturgico.setDataUltimaEdicao(LocalDate.now());
 
+		DiaLiturgico diaLiturgicoFromDb = diaLiturgicoRepository.findOne(diaLiturgico.getSlug());
+		if(diaLiturgicoFromDb != null){
+			diaLiturgico.setBannerFooter(diaLiturgicoFromDb.getBannerFooter());
+			diaLiturgico.setBannerLateral(diaLiturgicoFromDb.getBannerLateral());
+		}
+
 		diaLiturgicoRepository.save(diaLiturgico);
 	}
 
