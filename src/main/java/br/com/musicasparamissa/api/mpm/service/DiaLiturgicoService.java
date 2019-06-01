@@ -1,9 +1,11 @@
 package br.com.musicasparamissa.api.mpm.service;
 
 import br.com.musicasparamissa.api.mpm.entity.*;
+import br.com.musicasparamissa.api.mpm.repository.BannerRepository;
 import br.com.musicasparamissa.api.mpm.repository.DiaLiturgicoRepository;
 import br.com.musicasparamissa.api.mpm.repository.ItemLiturgiaRepository;
 import br.com.musicasparamissa.api.mpm.repository.MusicaRepository;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -26,6 +30,9 @@ public class DiaLiturgicoService {
 
 	@Autowired
 	private MusicaRepository musicaRepository;
+
+	@Autowired
+	private BannerService bannerService;
 
     public boolean exists(String slug) {
         return diaLiturgicoRepository.exists(slug);
@@ -82,11 +89,11 @@ public class DiaLiturgicoService {
 			diaLiturgico.setDataCadastro(LocalDate.now());
 		diaLiturgico.setDataUltimaEdicao(LocalDate.now());
 
-		DiaLiturgico diaLiturgicoFromDb = diaLiturgicoRepository.findOne(diaLiturgico.getSlug());
-		if(diaLiturgicoFromDb != null){
-			diaLiturgico.setBannerFooter(diaLiturgicoFromDb.getBannerFooter());
-			diaLiturgico.setBannerLateral(diaLiturgicoFromDb.getBannerLateral());
-		}
+		List<Banner> banners = Lists.newArrayList(bannerService.listAtivos());
+		Collections.shuffle(banners);
+		diaLiturgico.setBannerFooter(banners.get(0));
+		Collections.shuffle(banners);
+		diaLiturgico.setBannerLateral(banners.get(0));
 
 		diaLiturgicoRepository.save(diaLiturgico);
 	}
