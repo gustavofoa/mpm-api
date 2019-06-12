@@ -23,8 +23,8 @@ spring:
     database: mysql
   http:
     multipart:
-      max-file-size: -1
-      max-request-size: -1
+      max-file-size: 1GB
+      max-request-size: 1GB
 logging:
   pattern.console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
   level:
