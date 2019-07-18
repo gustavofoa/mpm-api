@@ -56,16 +56,12 @@ public class CategoriaController {
     @PostMapping
     public ResponseEntity<String> save(@RequestBody Categoria categoria) {
 
-        try {
-            categoriaService.save(categoria);
+        categoriaService.save(categoria);
 
-            siteGenerateService.generateOnlyCategoria(categoria, siteGenerateService.getContext());
-            clearCacheService.one("https://musicasparamissa.com.br/musicas-de/"+categoria.getSlug());
+        siteGenerateService.generateOnlyCategoria(categoria, siteGenerateService.getContext());
+        clearCacheService.one("https://musicasparamissa.com.br/musicas-de/"+categoria.getSlug());
 
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (InvalidEntityException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 

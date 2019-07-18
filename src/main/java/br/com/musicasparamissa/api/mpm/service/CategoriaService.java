@@ -47,10 +47,20 @@ public class CategoriaService {
     }
 
     @Transactional
-    public void save(Categoria categoria) throws InvalidEntityException {
+    public void save(Categoria categoria) {
         if(StringUtils.isEmpty(categoria.getCategoriaMae()))
             categoria.setCategoriaMae(null);
-        categoriaRepository.save(categoria);
+
+        Categoria categoriaBD = categoriaRepository.findOne(categoria.getSlug());
+        if(categoriaBD == null)
+            categoriaRepository.save(categoria);
+        else {
+            categoriaBD.setNome(categoria.getNome());
+            categoriaBD.setCategoriaMae(categoria.getCategoriaMae());
+            categoriaBD.setDescricao(categoria.getDescricao());
+            categoriaBD.setOrdem(categoria.getOrdem());
+            categoriaRepository.save(categoriaBD);
+        }
     }
 
     @Transactional
