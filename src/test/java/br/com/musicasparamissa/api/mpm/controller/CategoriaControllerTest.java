@@ -87,28 +87,12 @@ public class CategoriaControllerTest {
 
         Categoria categoria = new Categoria();
 
-        Mockito.doNothing().when(categoriaService).save(categoria);
+        Mockito.doNothing().when(categoriaService).save(Mockito.any(Categoria.class));
 
         ResponseEntity<String> response = controller.save(categoria);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertSame(null, response.getBody());
-
-    }
-
-    @Test
-    public void testErrorOnSave() throws InvalidEntityException {
-
-        Categoria categoria = new Categoria();
-
-        InvalidEntityException invalidEntityException = new InvalidEntityException("erro");
-
-        Mockito.doThrow(invalidEntityException).when(categoriaService).save(categoria);
-
-        ResponseEntity<String> response = controller.save(categoria);
-
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertSame("erro", response.getBody());
 
     }
 
