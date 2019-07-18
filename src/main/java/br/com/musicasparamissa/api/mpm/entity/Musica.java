@@ -53,6 +53,9 @@ public class Musica {
     private LocalDate dataCadastro;
     private LocalDate dataUltimaEdicao;
 
+    @Column(name = "disponivel_download")
+    private Boolean disponivelDownload;
+
     @Override
     public String toString() {
         return nome;

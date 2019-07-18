@@ -251,6 +251,9 @@ public class MusicaController {
         String pathFrom = String.format("mpm/musicas/%s/audio/file/%s", slug, name);
         String pathTo = String.format("musicas/%s/audio.mp3", slug, name);
         siteStorage.copyToMympm(pathFrom, pathTo);
+        Musica musica = musicaService.getMusica(slug);
+        musica.setDisponivelDownload(true);
+        musicaService.save(musica);
         clearCacheService.all();
 
     }
@@ -261,6 +264,9 @@ public class MusicaController {
         String pathFrom = String.format("mpm/musicas/%s/audio/playback/%s", slug, name);
         String pathTo = String.format("musicas/%s/playback.mp3", slug, name);
         siteStorage.copyToMympm(pathFrom, pathTo);
+        Musica musica = musicaService.getMusica(slug);
+        musica.setDisponivelDownload(true);
+        musicaService.save(musica);
         clearCacheService.all();
 
     }
