@@ -21,6 +21,6 @@ public interface MusicaRepository extends CrudRepository<Musica, String> {
     Set<Musica> findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrLetraIgnoreCaseContaining(String slug,
                                                                                                     String nome, String letra);
 
-    Page<Musica> findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrLetraIgnoreCaseContaining(String slug, String nome, String letra, Pageable pageable);
+    Page<Musica> findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrLetraIgnoreCaseContainingOrInfoIgnoreCaseContaining(String slug, String nome, String letra, String info, Pageable pageable);
 
 }

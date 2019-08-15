@@ -34,7 +34,7 @@ public class MusicaService {
     }
 
 	public Page<Musica> search(String filter, Pageable pageable) {
-		return musicaRepository.findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrLetraIgnoreCaseContaining(filter, filter, filter, pageable);
+		return musicaRepository.findBySlugIgnoreCaseContainingOrNomeIgnoreCaseContainingOrLetraIgnoreCaseContainingOrInfoIgnoreCaseContaining(filter, filter, filter, filter, pageable);
 	}
 
     @Transactional
