@@ -301,27 +301,12 @@ public class SiteGenerateService {
 
         Set<Categoria> catPartesComuns = categoriaRepository.findByCategoriaMaeOrderByOrdem("partes-comuns-da-missa");
         Set<Categoria> catTempos = categoriaRepository.findByCategoriaMaeAndSlugLikeOrderByOrdem(null, "tempo%");
-        //Set<Categoria> catSolenidadesEFestas = categoriaRepository.findByCategoriaMaeOrderByOrdem("solenidades-e-festas");
-        Set<Categoria> catSolenidadesFestasOutras = new HashSet<>();
-        Categoria catSolenidades = new Categoria();
-        catSolenidades.setSlug("solenidades");
-        catSolenidades.setNome("SOLENIDADES");
-        catSolenidadesFestasOutras.add(catSolenidades);
-        Categoria catFestas = new Categoria();
-        catFestas.setSlug("festas-liturgicas");
-        catFestas.setNome("FESTAS LITÚRGICAS");
-        catSolenidadesFestasOutras.add(catFestas);
-        Categoria catOutras = new Categoria();
-        catOutras.setSlug("outras-missas");
-        catOutras.setNome("OUTRAS SUGESTÕES");
-        catSolenidadesFestasOutras.add(catOutras);
         
         Map<String, Object> context = Maps.newHashMap();
         context.put("STATICPATH", "https://static.musicasparamissa.com.br");
 
         context.put("partesComuns", catPartesComuns);
         context.put("tempos", catTempos);
-        context.put("solenidadesFestasOutras", catSolenidadesFestasOutras);
         context.put("destaques", dataRepository.findAllByDataGreaterThanAndDestaqueOrderByDataAsc(Calendar.getInstance(TimeZone.getTimeZone("America/Sao_Paulo")).getTime(), true));
 //        context.put("posts", postRepository.findAll());
         context.put("current_year", Calendar.getInstance().get(Calendar.YEAR));
