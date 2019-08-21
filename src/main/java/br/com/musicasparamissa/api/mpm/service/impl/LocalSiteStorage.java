@@ -39,17 +39,17 @@ public class LocalSiteStorage implements SiteStorage {
     }
 
     @Override
+    public void saveMympmFile(String path, InputStream in, long size) {
+
+    }
+
+    @Override
     public List<String> listMpmjadminFile(String path) {
         return null;
     }
 
     @Override
     public void getMpmjadminFile(String path, HttpServletResponse response) throws IOException {
-
-    }
-
-    @Override
-    public void copyToMympm(String pathFrom, String pathTo) throws IOException {
 
     }
 
