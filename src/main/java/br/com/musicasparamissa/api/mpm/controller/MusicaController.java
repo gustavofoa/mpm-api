@@ -110,7 +110,13 @@ public class MusicaController {
     public ResponseEntity<String> postAudioFile(@PathVariable("slug") String slug, @RequestParam("file") MultipartFile file) {
 
         try {
-            siteStorage.saveMpmjadminFile(String.format("mpm/musicas/%s/audio/file/%s.mp3", slug, sdf.format(new Date())), file.getInputStream(), file.getSize());
+            String pathFrom = String.format("mpm/musicas/%s/audio/file/%s.mp3", slug, sdf.format(new Date()));
+            siteStorage.saveMpmjadminFile(pathFrom, file.getInputStream(), file.getSize());
+
+            //copy to mympm
+            String pathTo = String.format("musicas/%s/audio.mp3", slug);
+            siteStorage.copyToMympm(pathFrom, pathTo);
+
         } catch (IOException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -123,7 +129,19 @@ public class MusicaController {
     public ResponseEntity<String> postAudioPlayback(@PathVariable("slug") String slug, @RequestParam("file") MultipartFile file) {
 
         try {
-            siteStorage.saveMpmjadminFile(String.format("mpm/musicas/%s/audio/playback/%s.mp3", slug, sdf.format(new Date())), file.getInputStream(), file.getSize());
+            String pathFrom = String.format("mpm/musicas/%s/audio/playback/%s.mp3", slug, sdf.format(new Date()));
+            siteStorage.saveMpmjadminFile(pathFrom, file.getInputStream(), file.getSize());
+
+            //copy to mympm
+            String pathTo = String.format("musicas/%s/playback.mp3", slug);
+            siteStorage.copyToMympm(pathFrom, pathTo);
+            //Mark music as available
+            Musica musica = musicaService.getMusica(slug);
+            musica.setDisponivelDownload(true);
+            musicaService.save(musica);
+            clearCacheService.all();
+
+
         } catch (IOException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -184,7 +202,6 @@ public class MusicaController {
 
     }
 
-
     @PostMapping("/{slug}/video/project")
     public ResponseEntity<String> postVideoProject(@PathVariable("slug") String slug, @RequestParam("file") MultipartFile file) {
 
@@ -242,32 +259,6 @@ public class MusicaController {
         String path = String.format("mpm/musicas/%s/video/file/%s.mp4", slug, name);
         System.out.println(path);
         siteStorage.getMpmjadminFile(path, response);
-
-    }
-
-    @PostMapping("/{slug}/audio/file/{name}/copy-to-mympm")
-    public void copyAudioFileToMympm(@PathVariable("slug") String slug, @PathVariable("name") String name, HttpServletResponse response) throws IOException {
-
-        String pathFrom = String.format("mpm/musicas/%s/audio/file/%s", slug, name);
-        String pathTo = String.format("musicas/%s/audio.mp3", slug, name);
-        siteStorage.copyToMympm(pathFrom, pathTo);
-        Musica musica = musicaService.getMusica(slug);
-        musica.setDisponivelDownload(true);
-        musicaService.save(musica);
-        clearCacheService.all();
-
-    }
-
-    @PostMapping("/{slug}/audio/playback/{name}/copy-to-mympm")
-    public void copyAudioPlaybackToMympm(@PathVariable("slug") String slug, @PathVariable("name") String name, HttpServletResponse response) throws IOException {
-
-        String pathFrom = String.format("mpm/musicas/%s/audio/playback/%s", slug, name);
-        String pathTo = String.format("musicas/%s/playback.mp3", slug, name);
-        siteStorage.copyToMympm(pathFrom, pathTo);
-        Musica musica = musicaService.getMusica(slug);
-        musica.setDisponivelDownload(true);
-        musicaService.save(musica);
-        clearCacheService.all();
 
     }
 
