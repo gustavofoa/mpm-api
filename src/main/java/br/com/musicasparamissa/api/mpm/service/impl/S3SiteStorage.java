@@ -46,7 +46,7 @@ public class S3SiteStorage implements SiteStorage {
 
         AWSCredentials credentials = new BasicAWSCredentials(clientId, clientSecret);
 
-        AmazonS3 s3client = getAmazonS3Client();
+        AmazonS3 s3client = getAmazonS3ClientUsEast();
 
         try {
             log.debug("Uploading "+ path + " to MPM S3.");
@@ -100,20 +100,18 @@ public class S3SiteStorage implements SiteStorage {
     @Override
     public void saveMpmjadminFile(String path, InputStream in, long size) {
 
-        saveFile(bucketMpmjaminName, path, in, size);
+        saveFile(bucketMpmjaminName, getAmazonS3ClientUsEast(), path, in, size);
 
     }
 
     @Override
     public void saveMympmFile(String path, InputStream in, long size) {
 
-        saveFile(bucketMyMpMName, path, in, size);
+        saveFile(bucketMyMpMName, getAmazonS3ClientSaEast(), path, in, size);
 
     }
 
-    public void saveFile(String bucket, String path, InputStream in, long size) {
-
-        AmazonS3 s3client = getAmazonS3Client();
+    public void saveFile(String bucket, AmazonS3 s3client, String path, InputStream in, long size) {
 
         try {
             log.info("Uploading "+ path + " to MPM S3.");
@@ -149,7 +147,7 @@ public class S3SiteStorage implements SiteStorage {
     @Override
     public List<String> listMpmjadminFile(String path) {
 
-        AmazonS3 s3client = getAmazonS3Client();
+        AmazonS3 s3client = getAmazonS3ClientUsEast();
 
         ObjectListing objectListing = s3client.listObjects(bucketMpmjaminName, path);
 
@@ -164,7 +162,7 @@ public class S3SiteStorage implements SiteStorage {
     @Override
     public void getMpmjadminFile(String path, HttpServletResponse response) throws IOException {
 
-        AmazonS3 s3client = getAmazonS3Client();
+        AmazonS3 s3client = getAmazonS3ClientUsEast();
 
         S3Object object = s3client.getObject(bucketMpmjaminName, path);
 
@@ -172,7 +170,7 @@ public class S3SiteStorage implements SiteStorage {
 
     }
 
-    private AmazonS3 getAmazonS3Client() {
+    private AmazonS3 getAmazonS3ClientUsEast() {
         AWSCredentials credentials = new BasicAWSCredentials(clientId, clientSecret);
 
         return AmazonS3ClientBuilder
