@@ -114,6 +114,7 @@ public class MusicaController {
             siteStorage.saveMpmjadminFile(pathFrom, file.getInputStream(), file.getSize());
 
             //copy to mympm
+            file.getInputStream().reset();
             String pathTo = String.format("musicas/%s/audio.mp3", slug);
             siteStorage.saveMympmFile(pathTo, file.getInputStream(), file.getSize());
 
@@ -133,6 +134,7 @@ public class MusicaController {
             siteStorage.saveMpmjadminFile(pathFrom, file.getInputStream(), file.getSize());
 
             //copy to mympm
+            file.getInputStream().reset();
             String pathTo = String.format("musicas/%s/playback.mp3", slug);
             siteStorage.saveMympmFile(pathTo, file.getInputStream(), file.getSize());
             //Mark music as available
@@ -260,6 +262,14 @@ public class MusicaController {
         System.out.println(path);
         siteStorage.getMpmjadminFile(path, response);
 
+    }
+
+    @PutMapping("/{slug}/download-available")
+    public void setDownloadAvailable(@PathVariable String slug){
+        Musica musica = musicaService.getMusica(slug);
+        musica.setDisponivelDownload(true);
+        musicaService.save(musica);
+        clearCacheService.all();
     }
 
 }
