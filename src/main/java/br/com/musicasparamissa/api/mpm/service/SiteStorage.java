@@ -11,10 +11,10 @@ public interface SiteStorage {
 
     void saveMpmjadminFile(String path, InputStream contentBytes, long size);
 
+    void saveMympmFile(String path, InputStream in, long size);
+
     List<String> listMpmjadminFile(String path);
 
     void getMpmjadminFile(String path, HttpServletResponse response) throws IOException;
-
-    void copyToMympm(String pathFrom, String pathTo) throws IOException;
 
 }

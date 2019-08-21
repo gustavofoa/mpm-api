@@ -115,7 +115,7 @@ public class MusicaController {
 
             //copy to mympm
             String pathTo = String.format("musicas/%s/audio.mp3", slug);
-            siteStorage.copyToMympm(pathFrom, pathTo);
+            siteStorage.saveMympmFile(pathTo, file.getInputStream(), file.getSize());
 
         } catch (IOException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -134,7 +134,7 @@ public class MusicaController {
 
             //copy to mympm
             String pathTo = String.format("musicas/%s/playback.mp3", slug);
-            siteStorage.copyToMympm(pathFrom, pathTo);
+            siteStorage.saveMympmFile(pathTo, file.getInputStream(), file.getSize());
             //Mark music as available
             Musica musica = musicaService.getMusica(slug);
             musica.setDisponivelDownload(true);
