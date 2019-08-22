@@ -40,6 +40,10 @@ public class MusicaService {
     @Transactional
 	public void save(Musica musica) {
 
+        Musica musicaBD = musicaRepository.findOne(musica.getSlug());
+
+        musica.setDisponivelDownload(musicaBD.getDisponivelDownload());
+
         if(musica.getDataCadastro() == null)
             musica.setDataCadastro(LocalDate.now());
         musica.setDataUltimaEdicao(LocalDate.now());
