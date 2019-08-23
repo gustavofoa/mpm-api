@@ -42,7 +42,8 @@ public class MusicaService {
 
         Musica musicaBD = musicaRepository.findOne(musica.getSlug());
 
-        musica.setDisponivelDownload(musicaBD.getDisponivelDownload());
+        if(musicaBD != null)
+            musica.setDisponivelDownload(musicaBD.getDisponivelDownload());
 
         if(musica.getDataCadastro() == null)
             musica.setDataCadastro(LocalDate.now());
