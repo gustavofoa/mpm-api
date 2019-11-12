@@ -17,7 +17,7 @@ import java.util.Objects;
 public class Usuario {
 
     @Id
-    private Integer id;
+    private Long id;
     private String email;
     private String senha;
     private String nome;
@@ -41,6 +41,7 @@ public class Usuario {
     private String facebook;
     private String twitter;
     private String instagram;
+    private Boolean premium;
 
     @Override
     public String toString() {

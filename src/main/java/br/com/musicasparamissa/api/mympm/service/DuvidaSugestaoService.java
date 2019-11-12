@@ -41,7 +41,7 @@ public class DuvidaSugestaoService {
 		//Notificação
 		Notificacao notificacao = new Notificacao();
 		notificacao.setDestinatario(dbDuvidaSugestao.getUsuario());
-		notificacao.setRemetente(usuarioRepository.findOne(1));
+		notificacao.setRemetente(usuarioRepository.findOne(1L));
 		notificacao.setData(new Date());
 		notificacao.setLink("/duvidas-e-sugestoes");
 		String tituloNotificacao = dbDuvidaSugestao.getTipo().equals("duvida") ? "Dúvida" : "Sugestão";

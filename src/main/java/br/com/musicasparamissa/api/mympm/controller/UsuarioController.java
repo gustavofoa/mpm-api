@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,9 +26,19 @@ public class UsuarioController {
 
     @GetMapping("/search")
     public Page<Usuario> search(@RequestParam("filter") String filter,
+                                @RequestParam("premium") Boolean premium,
                                 @PageableDefault(value = Integer.MAX_VALUE) Pageable pageable) {
 
-        return usuarioService.search(filter, pageable);
+        return usuarioService.search(filter, premium, pageable);
+
+    }
+
+    @PutMapping("/{id}/premium/{premium}")
+    public void setProcessed(
+            @PathVariable("id") Long id,
+            @PathVariable("premium") Boolean premium) {
+
+        usuarioService.updatePremium(id, premium);
 
     }
 

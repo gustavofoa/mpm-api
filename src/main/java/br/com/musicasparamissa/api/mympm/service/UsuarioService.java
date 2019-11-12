@@ -15,12 +15,18 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	public Page<Usuario> search(String filter, Pageable pageable) {
-		return usuarioRepository.findByEmailIgnoreCaseContainingOrNomeIgnoreCaseContainingOrderByDataCompraDesc(filter, filter, pageable);
+	public Page<Usuario> search(String filter, Boolean premium, Pageable pageable) {
+		return usuarioRepository.search(filter, premium, pageable);
 	}
 
     public List<Usuario> list() {
         return usuarioRepository.findAllByOrderByNome();
+    }
+
+    public void updatePremium(Long id, Boolean premium) {
+        Usuario usuario = usuarioRepository.findOne(id);
+        usuario.setPremium(premium);
+        usuarioRepository.save(usuario);
     }
 
 }
