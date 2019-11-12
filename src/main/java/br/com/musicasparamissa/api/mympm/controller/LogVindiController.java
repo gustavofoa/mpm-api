@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController("MyMpMLogVindiController")
 @RequestMapping("/mympm/logs-vindi")
@@ -24,6 +21,15 @@ public class LogVindiController {
                                  @PageableDefault(value = Integer.MAX_VALUE) Pageable pageable) {
 
         return logVindiService.search(filter, processed, pageable);
+
+    }
+
+    @PutMapping("/{id}/processed/{processed}")
+    public void setProcessed(
+            @PathVariable("id") Long id,
+            @PathVariable("processed") Boolean processed) {
+
+        logVindiService.updateProcessed(id, processed);
 
     }
 

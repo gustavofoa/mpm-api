@@ -17,4 +17,9 @@ public class LogVindiService {
 		return logVindiRepository.search(filter, processed, pageable);
 	}
 
+	public void updateProcessed(Long id, Boolean processed) {
+		LogVindi logVindi = logVindiRepository.findOne(id);
+		logVindi.setProcessed(processed);
+		logVindiRepository.save(logVindi);
+	}
 }
