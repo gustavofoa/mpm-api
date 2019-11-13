@@ -24,6 +24,13 @@ public class UsuarioController {
 
     }
 
+    @PutMapping("/update-mautic-segments")
+    public void updateMauticSegments() {
+
+        usuarioService.updateMauticSegments();
+
+    }
+
     @GetMapping("/search")
     public Page<Usuario> search(@RequestParam("filter") String filter,
                                 @RequestParam("premium") Boolean premium,

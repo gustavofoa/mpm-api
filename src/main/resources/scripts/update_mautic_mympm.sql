@@ -1,8 +1,8 @@
-DROP procedure IF EXISTS `update_mautic_mympm`;
+DROP procedure IF EXISTS `updateMauticSegments`;
 
 DELIMITER $$
 USE `mpm`$$
-CREATE DEFINER=`mpm`@`%` PROCEDURE `update_mautic_mympm`()
+CREATE DEFINER=`mpm`@`%` PROCEDURE `updateMauticSegments`()
 BEGIN
 
 #1. Inserir no mautic emails não cadastrados

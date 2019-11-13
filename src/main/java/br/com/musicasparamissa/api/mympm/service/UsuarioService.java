@@ -29,4 +29,9 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
 
+    public void updateMauticSegments() {
+
+	    usuarioRepository.updateMauticSegments();
+
+    }
 }
