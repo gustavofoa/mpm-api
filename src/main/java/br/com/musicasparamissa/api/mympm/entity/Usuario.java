@@ -41,6 +41,10 @@ public class Usuario {
     private String facebook;
     private String twitter;
     private String instagram;
+    private String whatsapp;
+    @Column(name = "email_facebook")
+    private String emailFacebook;
+
     private Boolean premium;
 
     @Override
