@@ -24,6 +24,13 @@ public class UsuarioController {
 
     }
 
+    @PutMapping("/{id}")
+    public void save(@PathVariable Long id, @RequestBody Usuario usuario) {
+
+        usuarioService.save(id, usuario);
+
+    }
+
     @PutMapping("/update-mautic-segments")
     public void updateMauticSegments() {
 

@@ -77,4 +77,16 @@ public class Usuario {
         return Objects.hash(id, email, senha, nome, imagem, cpf, dataCompra, dataExpiracao, valorPago, plano, facebook, twitter, instagram);
     }
 
+    public void update(Usuario usuario) {
+        this.setEmail(usuario.getEmail());
+        this.setNome(usuario.getNome());
+        this.setCpf(usuario.getCpf());
+        this.setWhatsapp(usuario.getWhatsapp());
+        this.setEmailFacebook(usuario.getEmailFacebook());
+        this.setPremium(usuario.getPremium());
+        this.setPlano(usuario.getPlano());
+        this.setDataExpiracao(usuario.getDataExpiracao());
+        this.setValorPago(usuario.getValorPago());
+        this.setGateway(usuario.getGateway());
+    }
 }

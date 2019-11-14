@@ -34,4 +34,10 @@ public class UsuarioService {
 	    usuarioRepository.updateMauticSegments();
 
     }
+
+    public void save(Long id, Usuario usuario) {
+        Usuario usuarioDb = usuarioRepository.findOne(id);
+        usuarioDb.update(usuario);
+        usuarioRepository.save(usuarioDb);
+    }
 }
