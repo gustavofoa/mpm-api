@@ -1,5 +1,6 @@
 package br.com.musicasparamissa.api.mympm.controller;
 
+import br.com.musicasparamissa.api.mympm.entity.Compra;
 import br.com.musicasparamissa.api.mympm.entity.Usuario;
 import br.com.musicasparamissa.api.mympm.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,13 @@ public class UsuarioController {
     public List<Usuario> list() {
 
         return usuarioService.list();
+
+    }
+
+    @GetMapping("/{id}/compras")
+    public List<Compra> getCompras(@PathVariable("id") Long idUsuario) {
+
+        return usuarioService.listCompras(idUsuario);
 
     }
 
