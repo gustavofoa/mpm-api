@@ -49,4 +49,13 @@ public class UsuarioService {
     public List<Compra> listCompras(Long idUsuario) {
 	    return compraRepository.findByIdUsuarioOrderByDataExpiracaoDesc(idUsuario);
     }
+
+    public void saveCompra(Long idUsuario, Compra compra) {
+	    compra.setIdUsuario(idUsuario);
+	    compraRepository.save(compra);
+    }
+
+    public void deleteCompra(Long idUsuario, Long idCompra) {
+	    compraRepository.delete(idCompra);
+    }
 }

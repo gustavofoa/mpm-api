@@ -25,13 +25,6 @@ public class UsuarioController {
 
     }
 
-    @GetMapping("/{id}/compras")
-    public List<Compra> getCompras(@PathVariable("id") Long idUsuario) {
-
-        return usuarioService.listCompras(idUsuario);
-
-    }
-
     @PutMapping("/{id}")
     public void save(@PathVariable Long id, @RequestBody Usuario usuario) {
 
@@ -61,6 +54,28 @@ public class UsuarioController {
             @PathVariable("premium") Boolean premium) {
 
         usuarioService.updatePremium(id, premium);
+
+    }
+
+    @GetMapping("/{id}/compras")
+    public List<Compra> getCompras(@PathVariable("id") Long idUsuario) {
+
+        return usuarioService.listCompras(idUsuario);
+
+    }
+
+    @PostMapping("/{id}/compras")
+    public void saveCompra(@PathVariable Long id, @RequestBody Compra compra) {
+
+        usuarioService.saveCompra(id, compra);
+
+    }
+
+
+    @DeleteMapping("/{idUsuario}/compras/{idCompra}")
+    public void deleteCompra(@PathVariable("idUsuario") Long idUsuario, @PathVariable("idCompra") Long idCompra) {
+
+        usuarioService.deleteCompra(idUsuario, idCompra);
 
     }
 
