@@ -20,6 +20,8 @@ public class PdfController {
         System.out.println(html);
         System.out.println("Generate PDF");
 
+        response.setHeader("Content-type", "application/pdf");
+
         PdfRendererBuilder builder = new PdfRendererBuilder();
         builder.useFastMode();
         builder.withHtmlContent(html, "https://musicasparamissa.com.br/");
