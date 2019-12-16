@@ -18,6 +18,10 @@ public class CorsConfig {
                         .allowedMethods("GET", "POST", "OPTIONS")
                         .allowedOrigins("*")
                         .allowedHeaders("*");
+                registry.addMapping("/mympm/pdf")
+                        .allowedMethods("POST", "OPTIONS")
+                        .allowedOrigins("*")
+                        .allowedHeaders("*");
             }
         };
     }
