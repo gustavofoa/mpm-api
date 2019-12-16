@@ -24,9 +24,24 @@
         <java.version>1.8</java.version>
         <build.timestamp>${maven.build.timestamp}</build.timestamp>
         <maven.build.timestamp.format>yyyy-MM-dd-HH:mm</maven.build.timestamp.format>
+        <openhtml.version>1.0.1</openhtml.version>
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <!-- ALWAYS required. -->
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-core</artifactId>
+            <version>${openhtml.version}</version>
+        </dependency>
+
+        <dependency>
+            <!-- Required for PDF output. -->
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-pdfbox</artifactId>
+            <version>${openhtml.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
