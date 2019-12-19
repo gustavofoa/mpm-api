@@ -11,6 +11,6 @@ import java.util.List;
 @Repository("MyMpMRepertorioRepository")
 public interface RepertorioRepository extends CrudRepository<Repertorio, Long> {
 
-    Page<Repertorio> findByTituloIgnoreCaseContainingOrderByDataDesc(String filter, Pageable pageable);
+    Page<Repertorio> findByTituloIgnoreCaseContainingOrderByIdDesc(String filter, Pageable pageable);
 
 }
