@@ -56,6 +56,8 @@ public class Musica {
     @Column(name = "disponivel_download")
     private Boolean disponivelDownload;
 
+    private Boolean revisada;
+
     @Override
     public String toString() {
         return nome;
