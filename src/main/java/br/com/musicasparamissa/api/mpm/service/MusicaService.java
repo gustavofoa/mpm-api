@@ -4,13 +4,21 @@ import br.com.musicasparamissa.api.mpm.entity.Musica;
 import br.com.musicasparamissa.api.mpm.entity.SugestaoMusica;
 import br.com.musicasparamissa.api.mpm.repository.ItemLiturgiaRepository;
 import br.com.musicasparamissa.api.mpm.repository.MusicaRepository;
+import nu.validator.messages.MessageEmitter;
+import nu.validator.messages.MessageEmitterAdapter;
+import nu.validator.messages.TextMessageEmitter;
+import nu.validator.servlet.imagereview.ImageCollector;
+import nu.validator.source.SourceCode;
+import nu.validator.validation.SimpleDocumentValidator;
+import nu.validator.xml.SystemErrErrorHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.xml.sax.InputSource;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -25,6 +33,9 @@ public class MusicaService {
 	
 	@Autowired
 	private MusicaRepository musicaRepository;
+
+    @Autowired
+    private HtmlValidationService htmlValidationService;
 
 	@Autowired
 	private ItemLiturgiaRepository itemLiturgiaRepository;
@@ -91,5 +102,20 @@ public class MusicaService {
             }
         });
         return musicasWithoutVideo;
+    }
+
+    public List<Musica> listInvalidHtml() {
+        Iterable<Musica> musicas = musicaRepository.findAll();
+        List<Musica> musicasWithInvalidHtml = new ArrayList<>();
+
+        String htmlTemplate = "<html><head><title></title></head><body>%s</body></html>";
+
+        musicas.forEach(musica -> {
+            if(!htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getLetra())) &&
+               !htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getCifra())))
+                musicasWithInvalidHtml.add(musica);
+        });
+        return musicasWithInvalidHtml;
+
     }
 }

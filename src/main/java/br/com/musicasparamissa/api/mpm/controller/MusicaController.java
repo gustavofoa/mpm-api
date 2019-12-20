@@ -69,6 +69,13 @@ public class MusicaController {
 
     }
 
+    @GetMapping("/invalid-html")
+    public List<Musica> listWithInvalidHtml() {
+
+        return musicaService.listInvalidHtml();
+
+    }
+
     @PostMapping
     public ResponseEntity<String> save(@RequestBody Musica musica) {
 
