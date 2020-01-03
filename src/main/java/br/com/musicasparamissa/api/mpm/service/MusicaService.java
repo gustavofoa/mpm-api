@@ -57,7 +57,8 @@ public class MusicaService {
 	public void save(Musica musica) throws InvalidEntityException {
 
         if(!htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getLetra())) ||
-           !htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getCifra())))
+           !htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getCifra())) ||
+           !htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getInfo())))
             throw new InvalidEntityException("HTML inválido!");
 
         Musica musicaBD = musicaRepository.findOne(musica.getSlug());
@@ -119,7 +120,8 @@ public class MusicaService {
 
         musicas.forEach(musica -> {
             if(!htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getLetra())) ||
-               !htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getCifra())))
+               !htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getCifra())) ||
+                    !htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getInfo())))
                 musicasWithInvalidHtml.add(musica);
         });
         return musicasWithInvalidHtml;
