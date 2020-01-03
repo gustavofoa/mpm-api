@@ -1,5 +1,6 @@
 package br.com.musicasparamissa.api.mpm.service;
 
+import br.com.musicasparamissa.api.exception.InvalidEntityException;
 import br.com.musicasparamissa.api.mpm.entity.Musica;
 import br.com.musicasparamissa.api.mpm.entity.SugestaoMusica;
 import br.com.musicasparamissa.api.mpm.repository.ItemLiturgiaRepository;
@@ -30,8 +31,12 @@ import java.util.Set;
 
 @Service
 public class MusicaService {
-	
-	@Autowired
+
+
+    private String htmlTemplate = "<html><head><title></title></head><body>%s</body></html>";
+
+
+    @Autowired
 	private MusicaRepository musicaRepository;
 
     @Autowired
@@ -49,7 +54,11 @@ public class MusicaService {
 	}
 
     @Transactional
-	public void save(Musica musica) {
+	public void save(Musica musica) throws InvalidEntityException {
+
+        if(!htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getLetra())) ||
+           !htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getCifra())))
+            throw new InvalidEntityException("HTML inválido!");
 
         Musica musicaBD = musicaRepository.findOne(musica.getSlug());
 
@@ -108,10 +117,8 @@ public class MusicaService {
         Iterable<Musica> musicas = musicaRepository.findAll();
         List<Musica> musicasWithInvalidHtml = new ArrayList<>();
 
-        String htmlTemplate = "<html><head><title></title></head><body>%s</body></html>";
-
         musicas.forEach(musica -> {
-            if(!htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getLetra())) &&
+            if(!htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getLetra())) ||
                !htmlValidationService.validateHtml(String.format(htmlTemplate, musica.getCifra())))
                 musicasWithInvalidHtml.add(musica);
         });

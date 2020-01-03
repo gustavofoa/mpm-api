@@ -1,5 +1,6 @@
 package br.com.musicasparamissa.api.mpm.controller;
 
+import br.com.musicasparamissa.api.exception.InvalidEntityException;
 import br.com.musicasparamissa.api.mpm.entity.Musica;
 import br.com.musicasparamissa.api.mpm.service.ClearCacheService;
 import br.com.musicasparamissa.api.mpm.service.MusicaService;
@@ -79,12 +80,17 @@ public class MusicaController {
     @PostMapping
     public ResponseEntity<String> save(@RequestBody Musica musica) {
 
-        musicaService.save(musica);
+        try {
+            musicaService.save(musica);
 
-        siteGenerateService.generateOnlyMusica(musica, siteGenerateService.getContext());
-        clearCacheService.one("https://musicasparamissa.com.br/musica/"+musica.getSlug());
+            siteGenerateService.generateOnlyMusica(musica, siteGenerateService.getContext());
+            clearCacheService.one("https://musicasparamissa.com.br/musica/"+musica.getSlug());
 
-        return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        } catch (InvalidEntityException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 
@@ -151,7 +157,7 @@ public class MusicaController {
             clearCacheService.all();
 
 
-        } catch (IOException e) {
+        } catch (IOException | InvalidEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -272,7 +278,7 @@ public class MusicaController {
     }
 
     @PutMapping("/{slug}/download-available")
-    public void setDownloadAvailable(@PathVariable String slug){
+    public void setDownloadAvailable(@PathVariable String slug) throws InvalidEntityException {
         Musica musica = musicaService.getMusica(slug);
         musica.setDisponivelDownload(true);
         musicaService.save(musica);
