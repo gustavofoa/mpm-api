@@ -1,7 +1,9 @@
 package br.com.musicasparamissa.api.mympm.controller;
 
 import br.com.musicasparamissa.api.mympm.entity.Compra;
+import br.com.musicasparamissa.api.mympm.entity.Repertorio;
 import br.com.musicasparamissa.api.mympm.entity.Usuario;
+import br.com.musicasparamissa.api.mympm.service.RepertorioService;
 import br.com.musicasparamissa.api.mympm.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private RepertorioService repertorioService;
 
     @GetMapping
     public List<Usuario> list() {
@@ -76,6 +81,13 @@ public class UsuarioController {
     public void deleteCompra(@PathVariable("idUsuario") Long idUsuario, @PathVariable("idCompra") Long idCompra) {
 
         usuarioService.deleteCompra(idUsuario, idCompra);
+
+    }
+
+    @GetMapping("/{idUsuario}/repertorios")
+    public List<Repertorio> listByUser(@PathVariable("idUsuario") Long idUsuario) {
+
+        return repertorioService.listByUser(idUsuario);
 
     }
 

@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("MyMpMRepertorioService")
 public class RepertorioService {
 	
@@ -17,4 +19,7 @@ public class RepertorioService {
         return repertorioRepository.findByTituloIgnoreCaseContainingOrderByIdDesc(filter, pageable);
     }
 
+    public List<Repertorio> listByUser(Long idUsuario) {
+        return repertorioRepository.findByUsuarioId(idUsuario);
+    }
 }

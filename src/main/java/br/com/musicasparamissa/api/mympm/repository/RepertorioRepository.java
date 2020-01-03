@@ -13,4 +13,6 @@ public interface RepertorioRepository extends CrudRepository<Repertorio, Long> {
 
     Page<Repertorio> findByTituloIgnoreCaseContainingOrderByIdDesc(String filter, Pageable pageable);
 
+    List<Repertorio> findByUsuarioId(Long idUsuario);
+
 }
