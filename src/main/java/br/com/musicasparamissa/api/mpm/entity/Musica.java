@@ -71,7 +71,10 @@ public class Musica {
         String retorno = this.letra.substring(0, this.letra.length() < 140 ? this.letra.length() : 140)
                 .replace("<strong>", "").replace("<strong", "").replace("<stron", "").replace("<stro", "").replace("<str", "").replace("<st", "").replace("<s", "")
                 .replace("</strong>", "").replace("</strong", "").replace("</stron", "").replace("</stro", "").replace("</str", "").replace("</st", "").replace("</s", "")
-                .replace("</", "").replace("<", "")+"...";
+                .replace("<STRONG>", "").replace("<STRONG", "").replace("<STRON", "").replace("<STRO", "").replace("<STR", "").replace("<ST", "").replace("<S", "")
+                .replace("</STRONG>", "").replace("</STRONG", "").replace("</STRON", "").replace("</STRO", "").replace("</STR", "").replace("</ST", "").replace("</S", "")
+                .replace("</", "").replace("<", "")
+                .replace("\"", "'")+"...";
         return retorno.trim();
     }
 
