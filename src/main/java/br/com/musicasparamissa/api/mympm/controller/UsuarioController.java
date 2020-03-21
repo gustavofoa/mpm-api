@@ -1,8 +1,8 @@
 package br.com.musicasparamissa.api.mympm.controller;
 
-import br.com.musicasparamissa.api.mympm.entity.Compra;
-import br.com.musicasparamissa.api.mympm.entity.Repertorio;
-import br.com.musicasparamissa.api.mympm.entity.Usuario;
+import br.com.musicasparamissa.api.mympm.entity.*;
+import br.com.musicasparamissa.api.mympm.service.DuvidaSugestaoService;
+import br.com.musicasparamissa.api.mympm.service.MinhaMusicaService;
 import br.com.musicasparamissa.api.mympm.service.RepertorioService;
 import br.com.musicasparamissa.api.mympm.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,12 @@ public class UsuarioController {
 
     @Autowired
     private RepertorioService repertorioService;
+
+    @Autowired
+    private MinhaMusicaService minhaMusicaService;
+
+    @Autowired
+    private DuvidaSugestaoService duvidaSugestaoService;
 
     @GetMapping
     public List<Usuario> list() {
@@ -85,9 +91,23 @@ public class UsuarioController {
     }
 
     @GetMapping("/{idUsuario}/repertorios")
-    public List<Repertorio> listByUser(@PathVariable("idUsuario") Long idUsuario) {
+    public List<Repertorio> listRepertoriosByUser(@PathVariable("idUsuario") Long idUsuario) {
 
         return repertorioService.listByUser(idUsuario);
+
+    }
+
+    @GetMapping("/{idUsuario}/minhas-musicas")
+    public List<MinhaMusica> listMinhasMusicasByUser(@PathVariable("idUsuario") Long idUsuario) {
+
+        return minhaMusicaService.listByUser(idUsuario);
+
+    }
+
+    @GetMapping("/{idUsuario}/duvidas-sugestoes")
+    public List<DuvidaSugestao> listDuvidasSugestoesByUser(@PathVariable("idUsuario") Long idUsuario) {
+
+        return duvidaSugestaoService.listByUser(idUsuario);
 
     }
 

@@ -1,6 +1,7 @@
 package br.com.musicasparamissa.api.mympm.service;
 
 import br.com.musicasparamissa.api.mympm.entity.DuvidaSugestao;
+import br.com.musicasparamissa.api.mympm.entity.MinhaMusica;
 import br.com.musicasparamissa.api.mympm.entity.Notificacao;
 import br.com.musicasparamissa.api.mympm.repository.DuvidaSugestaoRepository;
 import br.com.musicasparamissa.api.mympm.repository.NotificacaoRepository;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service("MyMpMDuvidaSugestaoService")
 public class DuvidaSugestaoService {
@@ -59,4 +61,9 @@ public class DuvidaSugestaoService {
 		);
 
 	}
+
+	public List<DuvidaSugestao> listByUser(Long idUsuario) {
+		return duvidaSugestaoRepository.findByUsuarioId(idUsuario);
+	}
+
 }
