@@ -1,10 +1,13 @@
 package br.com.musicasparamissa.api.mpm.service;
 
 import br.com.musicasparamissa.api.exception.InvalidEntityException;
+import br.com.musicasparamissa.api.mpm.entity.Banner;
 import br.com.musicasparamissa.api.mpm.entity.Musica;
 import br.com.musicasparamissa.api.mpm.entity.SugestaoMusica;
+import br.com.musicasparamissa.api.mpm.repository.BannerRepository;
 import br.com.musicasparamissa.api.mpm.repository.ItemLiturgiaRepository;
 import br.com.musicasparamissa.api.mpm.repository.MusicaRepository;
+import com.google.common.collect.Lists;
 import nu.validator.messages.MessageEmitter;
 import nu.validator.messages.MessageEmitterAdapter;
 import nu.validator.messages.TextMessageEmitter;
@@ -26,6 +29,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -35,6 +39,9 @@ public class MusicaService {
 
     private String htmlTemplate = "<html><head><title></title></head><body>%s</body></html>";
 
+
+    @Autowired
+    private BannerRepository bannerRepository;
 
     @Autowired
 	private MusicaRepository musicaRepository;
@@ -69,6 +76,12 @@ public class MusicaService {
         if(musica.getDataCadastro() == null)
             musica.setDataCadastro(LocalDate.now());
         musica.setDataUltimaEdicao(LocalDate.now());
+
+        List<Banner> banners = Lists.newArrayList(bannerRepository.findByAtivo(true));
+        Collections.shuffle(banners);
+        musica.setBannerFooter(banners.get(0));
+        Collections.shuffle(banners);
+        musica.setBannerLateral(banners.get(0));
 
         musicaRepository.save(musica);
 	}
