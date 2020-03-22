@@ -104,6 +104,8 @@ public class SiteGenerateService {
 
         String content = renderTemplate(TEMPLATE_PATH + "index.html", context);
 
+        content = compressor.compress(content);
+
         siteStorage.saveFile("index.html", content, "text/html");
         clearCacheService.one("https://musicasparamissa.com.br");
     }
