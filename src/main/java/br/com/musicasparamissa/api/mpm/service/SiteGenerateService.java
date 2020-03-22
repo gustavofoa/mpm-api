@@ -8,6 +8,7 @@ import br.com.musicasparamissa.api.mpm.repository.*;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
+import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 import com.hubspot.jinjava.Jinjava;
 import com.hubspot.jinjava.interpret.JinjavaInterpreter;
 import com.hubspot.jinjava.loader.ResourceLocator;
@@ -25,6 +26,7 @@ import java.util.*;
 public class SiteGenerateService {
 
     private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
+    private HtmlCompressor compressor = new HtmlCompressor();
 
     private static final String TEMPLATE_PATH = "static.musicasparamissa.com.br/app/templates/";
 
@@ -166,7 +168,7 @@ public class SiteGenerateService {
         content.replace(content.length() - 1, content.length(), "");
         content.append("}");
 
-        siteStorage.saveFile("stars", content.toString(), "application/json");
+        siteStorage.saveFile("stars", compressor.compress(content.toString()), "application/json");
         clearCacheService.one("https://musicasparamissa.com.br/stars");
     }
 
@@ -219,6 +221,8 @@ public class SiteGenerateService {
 
         String content = renderTemplate(TEMPLATE_PATH + "musicas-de.html", context);
 
+        content = compressor.compress(content);
+
         siteStorage.saveFile(String.format("musicas-de/%s/index.html", categoria.getSlug()), content, "text/html");
     }
 
@@ -256,6 +260,8 @@ public class SiteGenerateService {
 
         String content = renderTemplate(TEMPLATE_PATH + "sugestoes-para.html", context);
 
+        content = compressor.compress(content);
+
         siteStorage.saveFile(String.format("sugestoes-para/%s/index.html", diaLiturgico.getSlug()), content, "text/html");
     }
 
@@ -291,6 +297,8 @@ public class SiteGenerateService {
 
 
         String content = renderTemplate(TEMPLATE_PATH + "musica.html", context);
+
+        content = compressor.compress(content);
 
         siteStorage.saveFile(String.format("musica/%s/index.html", musica.getSlug()), content, "text/html");
 
@@ -358,6 +366,8 @@ public class SiteGenerateService {
         context.put("banner_footer", categoriaRepository.findOne("outras-missas").getBannerFooter());
 
         String content = renderTemplate(TEMPLATE_PATH + (folder != null ? folder + "/" : "") + template + ".html", context);
+
+        content = compressor.compress(content);
 
         siteStorage.saveFile(String.format("%s/index.html", template), content, "text/html");
         clearCacheService.one("https://musicasparamissa.com.br/"+template);
