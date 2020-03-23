@@ -83,6 +83,11 @@ public class MusicaService {
         Collections.shuffle(banners);
         musica.setBannerLateral(banners.get(0));
 
+        if(musica.getRating() == null)
+            musica.setRating(100F);
+        if(musica.getVotes() == null)
+            musica.setVotes(1);
+
         musicaRepository.save(musica);
 	}
 
