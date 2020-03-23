@@ -83,9 +83,9 @@ public class MusicaService {
         Collections.shuffle(banners);
         musica.setBannerLateral(banners.get(0));
 
-        if(musica.getRating() == null)
+        if(musica.getRating() == null || musica.getRating().equals(0F))
             musica.setRating(100F);
-        if(musica.getVotes() == null)
+        if(musica.getVotes() == null || musica.getVotes().equals(0))
             musica.setVotes(1);
 
         musicaRepository.save(musica);
