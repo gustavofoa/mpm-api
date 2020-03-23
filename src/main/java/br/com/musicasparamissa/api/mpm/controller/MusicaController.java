@@ -84,7 +84,12 @@ public class MusicaController {
             musicaService.save(musica);
 
             siteGenerateService.generateOnlyMusica(musica, siteGenerateService.getContext());
+
+            Iterable<Musica> musicas = musicaService.listAll();
+            siteGenerateService.generateStars(musicas);
+
             clearCacheService.one("https://musicasparamissa.com.br/musica/"+musica.getSlug());
+            clearCacheService.one("https://musicasparamissa.com.br/stars"+musica.getSlug());
 
             return new ResponseEntity<>(HttpStatus.OK);
 

@@ -145,4 +145,8 @@ public class MusicaService {
         return musicasWithInvalidHtml;
 
     }
+
+    public Iterable<Musica> listAll() {
+        return musicaRepository.findAll();
+    }
 }
