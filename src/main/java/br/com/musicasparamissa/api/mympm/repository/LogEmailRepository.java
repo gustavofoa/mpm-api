@@ -6,9 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository("MyMpMLogEmailRepository")
 public interface LogEmailRepository extends CrudRepository<LogEmail, Integer> {
 
     Page<LogEmail> findByEmailIgnoreCaseContainingOrTitleIgnoreCaseContainingOrderByDataDesc(String email, String title, Pageable pageable);
+
+    List<LogEmail> findByEmailOrderByDataDesc(String email);
 
 }

@@ -17,8 +17,15 @@ public class LogEmailService {
 	@Autowired
 	private LogEmailRepository logEmailRepository;
 
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+
 	public Page<LogEmail> search(String filter, Pageable pageable) {
 		return logEmailRepository.findByEmailIgnoreCaseContainingOrTitleIgnoreCaseContainingOrderByDataDesc(filter, filter, pageable);
 	}
 
+    public List<LogEmail> listByUser(Long idUsuario) {
+		Usuario usuario = usuarioRepository.findOne(idUsuario);
+		return logEmailRepository.findByEmailOrderByDataDesc(usuario.getEmail());
+    }
 }

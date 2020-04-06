@@ -1,10 +1,7 @@
 package br.com.musicasparamissa.api.mympm.controller;
 
 import br.com.musicasparamissa.api.mympm.entity.*;
-import br.com.musicasparamissa.api.mympm.service.DuvidaSugestaoService;
-import br.com.musicasparamissa.api.mympm.service.MinhaMusicaService;
-import br.com.musicasparamissa.api.mympm.service.RepertorioService;
-import br.com.musicasparamissa.api.mympm.service.UsuarioService;
+import br.com.musicasparamissa.api.mympm.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +25,9 @@ public class UsuarioController {
 
     @Autowired
     private DuvidaSugestaoService duvidaSugestaoService;
+
+    @Autowired
+    private LogEmailService logEmailService;
 
     @GetMapping
     public List<Usuario> list() {
@@ -108,6 +108,13 @@ public class UsuarioController {
     public List<DuvidaSugestao> listDuvidasSugestoesByUser(@PathVariable("idUsuario") Long idUsuario) {
 
         return duvidaSugestaoService.listByUser(idUsuario);
+
+    }
+
+    @GetMapping("/{idUsuario}/emails")
+    public List<LogEmail> listEmailsByUser(@PathVariable("idUsuario") Long idUsuario) {
+
+        return logEmailService.listByUser(idUsuario);
 
     }
 
