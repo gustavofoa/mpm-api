@@ -29,6 +29,9 @@ public class UsuarioController {
     @Autowired
     private LogEmailService logEmailService;
 
+    @Autowired
+    private AulaService aulaService;
+
     @GetMapping
     public List<Usuario> list() {
 
@@ -115,6 +118,13 @@ public class UsuarioController {
     public List<LogEmail> listEmailsByUser(@PathVariable("idUsuario") Long idUsuario) {
 
         return logEmailService.listByUser(idUsuario);
+
+    }
+
+    @GetMapping("/{idUsuario}/aulas-assistidas")
+    public List<Aula> listAulasAssistidasByUser(@PathVariable("idUsuario") Long idUsuario) {
+
+        return aulaService.listByUser(idUsuario);
 
     }
 
