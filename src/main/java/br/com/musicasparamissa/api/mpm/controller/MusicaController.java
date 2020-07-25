@@ -266,6 +266,22 @@ public class MusicaController {
 
     }
 
+    @GetMapping("/{slug}/partituras")
+    public ResponseEntity<List<String>> getPartituras(@PathVariable("slug") String slug) {
+
+        List<String> files = siteStorage.listMpmjadminFile(String.format("mpm/musicas/%s/partituras/", slug));
+
+        return new ResponseEntity<>(files, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{slug}/partituras/{name}")
+    public void getPartitura(@PathVariable("slug") String slug, @PathVariable("name") String name, HttpServletResponse response) throws IOException {
+        String path = String.format("mpm/musicas/%s/partituras/%s.pdf", slug, name);
+        System.out.println(path);
+        siteStorage.getMpmjadminFile(path, response);
+    }
+
     @GetMapping("/{slug}/video/project/{name}")
     public void getVideoProject(@PathVariable("slug") String slug, @PathVariable("name") String name, HttpServletResponse response) throws IOException {
         String path = String.format("mpm/musicas/%s/video/project/%s.zip", slug, name);
