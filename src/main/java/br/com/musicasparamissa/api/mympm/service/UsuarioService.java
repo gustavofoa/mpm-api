@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service("MyMpMUsuarioService")
@@ -20,8 +21,10 @@ public class UsuarioService {
     @Autowired
     private CompraRepository compraRepository;
 
-	public Page<Usuario> search(String filter, Boolean premium, Pageable pageable) {
-		return usuarioRepository.search(filter, premium, pageable);
+	public Page<Usuario> search(String filter, Boolean premium, Boolean expired, Pageable pageable) {
+	    if(expired)
+		    return usuarioRepository.searchExpired(filter, premium, new Date(), pageable);
+        return usuarioRepository.search(filter, premium, pageable);
 	}
 
     public List<Usuario> list() {

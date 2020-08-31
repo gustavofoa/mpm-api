@@ -56,9 +56,10 @@ public class UsuarioController {
     @GetMapping("/search")
     public Page<Usuario> search(@RequestParam("filter") String filter,
                                 @RequestParam("premium") Boolean premium,
+                                @RequestParam("expired") Boolean expired,
                                 @PageableDefault(value = Integer.MAX_VALUE) Pageable pageable) {
 
-        return usuarioService.search(filter, premium, pageable);
+        return usuarioService.search(filter, premium, expired, pageable);
 
     }
 
