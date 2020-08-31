@@ -51,14 +51,15 @@ public class DuvidaSugestaoService {
 		notificacao.setTexto("Acabamos de responder a sua "+ tituloNotificacao + ".");
 		notificacaoRepository.save(notificacao);
 
-		//E-mail
-		emailService.send(dbDuvidaSugestao.getUsuario().getEmail(),
-				"Respondemos a sua "+tituloNotificacao,
-				"<p>Olá " + dbDuvidaSugestao.getUsuario().getNome() + ", estamos passando só pra avisar que respondemos a " + tituloNotificacao +
-						" que você nos enviou pela plataforma.</p> <p>Para visualizar a nossa resposta acesse a plataforma em " +
-						"<a href='http://minhas.musicasparamissa.com.br/duvidas-e-sugestoes'>http://minhas.musicasparamissa.com.br/duvidas-e-sugestoes</a></p>" +
-						"<p>Att,</p> <p>Equipe Músicas para Missa</p>"
-		);
+		if(dbDuvidaSugestao.getUsuario().getPremium())
+			//E-mail
+			emailService.send(dbDuvidaSugestao.getUsuario().getEmail(),
+					"Respondemos a sua "+tituloNotificacao,
+					"<p>Olá " + dbDuvidaSugestao.getUsuario().getNome() + ", estamos passando só pra avisar que respondemos a " + tituloNotificacao +
+							" que você nos enviou pela plataforma.</p> <p>Para visualizar a nossa resposta acesse a plataforma em " +
+							"<a href='http://minhas.musicasparamissa.com.br/duvidas-e-sugestoes'>http://minhas.musicasparamissa.com.br/duvidas-e-sugestoes</a></p>" +
+							"<p>Att,</p> <p>Equipe Músicas para Missa</p>"
+			);
 
 	}
 
