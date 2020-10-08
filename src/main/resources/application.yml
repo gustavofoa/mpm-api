@@ -13,7 +13,7 @@ server:
   connection-timeout: -1
 spring:
   datasource:
-    url: jdbc:mysql://${MPMAPI_dbhost}/${MPMAPI_dbname}?useSSL=false
+    url: jdbc:mysql://${MPMAPI_dbhost}/${MPMAPI_dbname}?useSSL=false&useTimezone=true&serverTimezone=UTC
     username: ${MPMAPI_dbuser}
     password: ${MPMAPI_dbpass}
     driver-class-name: com.mysql.jdbc.Driver
