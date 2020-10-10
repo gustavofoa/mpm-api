@@ -92,4 +92,14 @@ public class DataController {
 
     }
 
+    @GetMapping(path = "/{date}/exists")
+    public ResponseEntity<String> exists(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+
+        if(dataService.exists(date))
+            return new ResponseEntity<>("1", HttpStatus.OK);
+
+        return new ResponseEntity<>("0", HttpStatus.OK);
+
+    }
+
 }

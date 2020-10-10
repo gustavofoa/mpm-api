@@ -72,4 +72,7 @@ public class DataService {
         dataRepository.delete(date);
     }
 
+    public boolean exists(Date date) {
+		return dataRepository.exists(date);
+    }
 }
