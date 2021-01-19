@@ -6,6 +6,7 @@ phases:
   pre_build:
     commands:
       - echo In the pre_build phase...
+      - git submodule update --init
   build:
     commands:
       - echo Build started on `date`
