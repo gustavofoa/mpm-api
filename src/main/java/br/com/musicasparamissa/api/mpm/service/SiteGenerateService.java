@@ -211,6 +211,8 @@ public class SiteGenerateService {
 
         if (categoria.getChildren() == null || categoria.getChildren().isEmpty())
             context.put("musicas", categoria.getMusicas());
+        else
+            Collections.sort(categoria.getChildren());
 
         if (categoria.getCategoriaMae() != null && categoria.getCategoriaMae().length() > 0)
             context.put("categoriaMae", categoriaRepository.findOne(categoria.getCategoriaMae()));

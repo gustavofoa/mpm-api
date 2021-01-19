@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -21,7 +22,7 @@ public class Categoria implements Comparable<Categoria> {
     private String categoriaMae;
 
     @OneToMany(mappedBy = "categoriaMae", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Categoria> children;
+    private List<Categoria> children;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "mpm_musica_categorias", joinColumns = {@JoinColumn(name = "categoria_id")}, inverseJoinColumns = {@JoinColumn(name = "musica_id")})
