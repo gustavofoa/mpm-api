@@ -16,7 +16,7 @@ spring:
     url: jdbc:mysql://${MPMAPI_dbhost}/${MPMAPI_dbname}?useSSL=false&useTimezone=true&serverTimezone=UTC
     username: ${MPMAPI_dbuser}
     password: ${MPMAPI_dbpass}
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: false
     properties.hibernate.format_sql: false
