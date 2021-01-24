@@ -2,6 +2,7 @@ package br.com.musicasparamissa.api.mpm.controller;
 
 import br.com.musicasparamissa.api.mpm.service.BannerService;
 import br.com.musicasparamissa.api.mpm.service.SiteGenerateService;
+import br.com.musicasparamissa.api.mympm.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +18,17 @@ public class SiteGenerateController {
     @Autowired
     private BannerService bannerService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @PostMapping
     public ResponseEntity<Void> generateAll() {
 
         bannerService.refresh();
 
         siteGenerateService.generateAll();
+
+        usuarioService.updateMauticSegments();
 
         return new ResponseEntity<>(HttpStatus.OK);
 
