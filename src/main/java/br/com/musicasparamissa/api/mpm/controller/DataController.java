@@ -31,10 +31,6 @@ public class DataController {
     @Autowired
     private SiteGenerateService siteGenerateService;
 
-    @Autowired
-    private ClearCacheService clearCacheService;
-
-
     @GetMapping
     public Page<Data> listDatas(Pageable pageable){
 
@@ -78,7 +74,6 @@ public class DataController {
         tenDaysAgo.add(Calendar.DATE, -10);
         Iterable<Data> datas = dataRepository.findAllByDataGreaterThanOrderByDataDesc(tenDaysAgo.getTime());
         siteGenerateService.generateDatas(datas);
-        clearCacheService.one("https://musicasparamissa.com.br/datas.json");
     }
 
     @DeleteMapping("/{date}")

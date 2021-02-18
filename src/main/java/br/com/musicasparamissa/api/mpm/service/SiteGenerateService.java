@@ -1,9 +1,6 @@
 package br.com.musicasparamissa.api.mpm.service;
 
-import br.com.musicasparamissa.api.mpm.entity.Categoria;
-import br.com.musicasparamissa.api.mpm.entity.Data;
-import br.com.musicasparamissa.api.mpm.entity.DiaLiturgico;
-import br.com.musicasparamissa.api.mpm.entity.Musica;
+import br.com.musicasparamissa.api.mpm.entity.*;
 import br.com.musicasparamissa.api.mpm.repository.*;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
@@ -16,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.lang.model.util.SimpleAnnotationValueVisitor6;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
@@ -150,6 +148,74 @@ public class SiteGenerateService {
         siteStorage.saveFile("datas.json", content.toString(), "application/json");
         clearCacheService.one("https://musicasparamissa.com.br/datas.json");
         clearCacheService.one("https://blog.musicasparamissa.com.br/datas.json");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //Save datas/yyyy-mm-dd.json
+        datas.forEach(d -> {
+            StringBuilder pageContent = new StringBuilder("{");
+            pageContent.append("\"slug\":\"");
+            pageContent.append(d.getLiturgia().getSlug());
+            pageContent.append("\",\"titulo\":\"");
+            pageContent.append(d.getLiturgia().getTitulo());
+            pageContent.append("\",\"img\":\"");
+            pageContent.append(d.getLiturgia().getImg());
+            pageContent.append("\",\"img80\":\"");
+            pageContent.append(d.getLiturgia().getImg80x80url());
+            pageContent.append("\",\"img300\":\"");
+            pageContent.append(d.getLiturgia().getImg300url());
+            pageContent.append("\",\"imgUrl\":\"");
+            pageContent.append(d.getLiturgia().getImgUrl());
+            pageContent.append("\",\"introducao\":\"");
+            pageContent.append(d.getLiturgia().getIntroducao());
+            pageContent.append("\",\"items\":[");
+            itemLiturgiaRepository.findByDiaLiturgicoOrderByPosicao(d.getLiturgia()).forEach(item -> {
+                pageContent.append("{\"posicao\":\"");
+                pageContent.append(item.getPosicao());
+                pageContent.append("\",\"titulo\":\"");
+                pageContent.append(item.getTitulo());
+                pageContent.append("\",\"descricao\":\"");
+                pageContent.append(item.getDescricao());
+                pageContent.append("\"");
+                if(item instanceof Leitura) {
+                    pageContent.append(",\"texto\":\"");
+                    pageContent.append(item.getFormatedTexto());
+                    pageContent.append("\"");
+                } else {
+                    pageContent.append(",\"musicas\":[");
+                    item.getMusicas().forEach(musica -> {
+                        pageContent.append("{\"nome\":\"");
+                        pageContent.append(musica.getNome());
+                        pageContent.append("\",\"slug\":\"");
+                        pageContent.append(musica.getSlug());
+                        pageContent.append("\",\"info\":\"");
+                        pageContent.append(musica.getInfo());
+                        pageContent.append("\",\"votes\":\"");
+                        pageContent.append(musica.getVotes());
+                        pageContent.append("\",\"rating\":\"");
+                        pageContent.append(musica.getRating());
+                        pageContent.append("\",\"videoCode\":\"");
+                        pageContent.append(musica.getVideoCode());
+                        pageContent.append("\",\"linkVideo\":\"");
+                        pageContent.append(musica.getLinkVideo());
+                        pageContent.append("\",\"letraInicio\":\"");
+                        pageContent.append(musica.getLetraInicio());
+                        pageContent.append("\",\"letra\":\"");
+                        pageContent.append(musica.getLetra());
+                        pageContent.append("\",\"cifra\":\"");
+                        pageContent.append(musica.getCifra());
+                        pageContent.append("\",\"disponivelDownload\":\"");
+                        pageContent.append(musica.getDisponivelDownload());
+                        pageContent.append("\"},");
+                    });
+                    pageContent.replace(pageContent.length() - 1, pageContent.length(), "]");
+                }
+                pageContent.append("\"},");
+            });
+            pageContent.replace(pageContent.length() - 1, pageContent.length(), "]}");
+
+            siteStorage.saveFile("datas/"+sdf.format(d.getData())+".json", pageContent.toString(), "application/json");
+        });
+
     }
 
     public void generateStars(Iterable<Musica> musicas) {
