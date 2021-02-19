@@ -156,7 +156,7 @@ public class SiteGenerateService {
             pageContent.append("\"slug\":\"");
             pageContent.append(d.getLiturgia().getSlug());
             pageContent.append("\",\"titulo\":\"");
-            pageContent.append(d.getLiturgia().getTitulo());
+            pageContent.append(d.getLiturgia().getTitulo().replaceAll("\"", "'"));
             pageContent.append("\",\"img\":\"");
             pageContent.append(d.getLiturgia().getImg());
             pageContent.append("\",\"img80\":\"");
@@ -172,19 +172,19 @@ public class SiteGenerateService {
                 pageContent.append("{\"posicao\":\"");
                 pageContent.append(item.getPosicao());
                 pageContent.append("\",\"titulo\":\"");
-                pageContent.append(item.getTitulo());
+                pageContent.append(item.getTitulo().replaceAll("\"", "'"));
                 pageContent.append("\",\"descricao\":\"");
                 pageContent.append(item.getDescricao());
                 pageContent.append("\"");
                 if(item instanceof Leitura) {
                     pageContent.append(",\"texto\":\"");
-                    pageContent.append(item.getFormatedTexto());
+                    pageContent.append(item.getFormatedTexto().replaceAll("\"", "'"));
                     pageContent.append("\"");
                 } else {
                     pageContent.append(",\"musicas\":[");
                     item.getMusicas().forEach(musica -> {
                         pageContent.append("{\"nome\":\"");
-                        pageContent.append(musica.getNome());
+                        pageContent.append(musica.getNome().replaceAll("\"", "'"));
                         pageContent.append("\",\"slug\":\"");
                         pageContent.append(musica.getSlug());
                         pageContent.append("\",\"votes\":\"");
@@ -209,7 +209,7 @@ public class SiteGenerateService {
                     });
                     pageContent.replace(pageContent.length() - 1, pageContent.length(), "]");
                 }
-                pageContent.append("\"},");
+                pageContent.append("},");
             });
             pageContent.replace(pageContent.length() - 1, pageContent.length(), "]}");
 
