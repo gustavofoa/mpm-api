@@ -187,14 +187,12 @@ public class SiteGenerateService {
                         pageContent.append(musica.getNome());
                         pageContent.append("\",\"slug\":\"");
                         pageContent.append(musica.getSlug());
-                        pageContent.append("\",\"info\":\"");
-                        pageContent.append(musica.getInfo());
                         pageContent.append("\",\"votes\":\"");
                         pageContent.append(musica.getVotes());
                         pageContent.append("\",\"rating\":\"");
                         pageContent.append(musica.getRating());
                         pageContent.append("\",\"videoCode\":\"");
-                        pageContent.append(musica.getVideoCode());
+                        pageContent.append(musica.getVideoCode());/*
                         pageContent.append("\",\"linkVideo\":\"");
                         pageContent.append(musica.getLinkVideo());
                         pageContent.append("\",\"letraInicio\":\"");
@@ -203,8 +201,10 @@ public class SiteGenerateService {
                         pageContent.append(musica.getLetra());
                         pageContent.append("\",\"cifra\":\"");
                         pageContent.append(musica.getCifra());
+                        pageContent.append("\",\"info\":\"");
+                        pageContent.append(musica.getInfo());
                         pageContent.append("\",\"disponivelDownload\":\"");
-                        pageContent.append(musica.getDisponivelDownload());
+                        pageContent.append(musica.getDisponivelDownload());*/
                         pageContent.append("\"},");
                     });
                     pageContent.replace(pageContent.length() - 1, pageContent.length(), "]");
