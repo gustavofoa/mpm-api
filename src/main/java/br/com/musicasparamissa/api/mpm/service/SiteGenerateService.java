@@ -167,7 +167,7 @@ public class SiteGenerateService {
             pageContent.append(d.getLiturgia().getImgUrl());
             pageContent.append("\",\"introducao\":\"");
             pageContent.append(d.getLiturgia().getIntroducao());
-            pageContent.append("\",\"items\":[");
+            pageContent.append("\",\"items\":[ ");
             itemLiturgiaRepository.findByDiaLiturgicoOrderByPosicao(d.getLiturgia()).forEach(item -> {
                 pageContent.append("{\"posicao\":\"");
                 pageContent.append(item.getPosicao());
@@ -181,7 +181,7 @@ public class SiteGenerateService {
                     pageContent.append(item.getFormatedTexto().replaceAll("\"", "'"));
                     pageContent.append("\"");
                 } else {
-                    pageContent.append(",\"musicas\":[");
+                    pageContent.append(",\"musicas\":[ ");
                     item.getMusicas().forEach(musica -> {
                         pageContent.append("{\"nome\":\"");
                         pageContent.append(musica.getNome().replaceAll("\"", "'"));
