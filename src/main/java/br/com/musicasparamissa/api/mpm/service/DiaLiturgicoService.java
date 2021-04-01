@@ -5,6 +5,8 @@ import br.com.musicasparamissa.api.mpm.repository.BannerRepository;
 import br.com.musicasparamissa.api.mpm.repository.DiaLiturgicoRepository;
 import br.com.musicasparamissa.api.mpm.repository.ItemLiturgiaRepository;
 import br.com.musicasparamissa.api.mpm.repository.MusicaRepository;
+import br.com.musicasparamissa.api.mympm.repository.RepertorioItemRepository;
+import br.com.musicasparamissa.api.mympm.repository.RepertorioRepository;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,9 @@ public class DiaLiturgicoService {
 
 	@Autowired
 	private ItemLiturgiaRepository itemLiturgiaRepository;
+
+	@Autowired
+	private RepertorioItemRepository repertorioItemRepository;
 
 	@Autowired
 	private MusicaRepository musicaRepository;
@@ -111,6 +116,10 @@ public class DiaLiturgicoService {
 
 	@Transactional
 	public void delete(ItemLiturgia item) {
+    	repertorioItemRepository.findByItemLiturgia(item).forEach(itemRepertorio -> {
+    		itemRepertorio.setItemLiturgia(null);
+    		repertorioItemRepository.save(itemRepertorio);
+		});
 		itemLiturgiaRepository.delete(item);
 	}
 
