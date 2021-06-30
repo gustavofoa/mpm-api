@@ -42,11 +42,6 @@ mpm_api:
       client_secret: ${MPMAPI_mpmjadmin_client_secret}
       grant_type: ${MPMAPI_mpmjadmin_grant_type}
       role: ${MPMAPI_mpmjadmin_role}
-    mpmMobile:
-      client_id: ${MPMAPI_mpmMobile_client_id}
-      client_secret: ${MPMAPI_mpmMobile_client_secret}
-      grant_type: ${MPMAPI_mpmMobile_grant_type}
-      role: ${MPMAPI_mpmMobile_role}
     mympm:
       sendgrid_api_key: ${SENDGRID_API_KEY}
   cache:

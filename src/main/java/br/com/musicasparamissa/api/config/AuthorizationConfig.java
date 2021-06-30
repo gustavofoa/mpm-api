@@ -29,15 +29,6 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Value("${mpm_api.apps.mpmjadmin.role}")
     private String mpmjadminAppRole;
 
-    @Value("${mpm_api.apps.mpmMobile.client_id}")
-    private String mpmMobileAppClientId;
-    @Value("${mpm_api.apps.mpmMobile.client_secret}")
-    private String mpmMobileAppSecret;
-    @Value("${mpm_api.apps.mpmMobile.grant_type}")
-    private String mpmMobileAppGrantType;
-    @Value("${mpm_api.apps.mpmMobile.role}")
-    private String mpmMobileAppRole;
-
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager);
@@ -54,13 +45,6 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
                 .scopes(SCOPE_READ, SCOPE_WRITE)
                 .accessTokenValiditySeconds(expiration)
 
-                .and()
-
-                .withClient(mpmMobileAppClientId)
-                .secret(mpmMobileAppSecret)
-                .authorizedGrantTypes(mpmMobileAppGrantType)
-                .authorities(mpmMobileAppRole)
-                .scopes(SCOPE_READ)
 
         ;
     }
