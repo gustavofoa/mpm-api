@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    {%- for musica in musicas %}
+    <url>
+        <loc>https://musicasparamissa.com.br/musica/{{ musica.slug }}/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    {% endfor %}
+
+    {%- for diaLiturgico in diasLiturgicos %}
+    <url>
+        <loc>https://musicasparamissa.com.br/sugestoes-para/{{ diaLiturgico.slug }}/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    {% endfor %}
+
+    {%- for categoria in categorias %}
+    <url>
+        <loc>https://musicasparamissa.com.br/musicas-de/{{ categoria.slug }}/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    {% endfor %}
+
+</urlset>

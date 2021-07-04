@@ -1,0 +1,29 @@
+.nav-center
+{
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: auto;
+}
+.top-text{
+	font:"Helvetica,Arial,sans-serif";
+    color: rgb(255,255,255);
+    font-weight:bold;
+    font-size:large;
+}
+
+p {
+	font-family: "Open Sans","Tahoma","Verdana","Arial", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+	line-height: 1.7;
+	color: #535353;
+    text-align: justify;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #317eac;
+}

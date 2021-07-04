@@ -1,0 +1,80 @@
+html,
+body,
+.wrapper-table {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper-table-opacity {
+    color: white;
+    background-color: rgba(0, 0, 0, .68);
+}
+
+.wrapper-table {
+    display: table;
+}
+
+.wrapper-table-cell {
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.content-coming-soon {
+    width: 80%;
+    height: auto;
+    margin: auto;
+}
+
+.coming-soon-wrapper {
+    display: inline-block;
+    padding: 20px;
+    text-align: center;
+    background-color: #ecf0f1;
+}
+
+.coming-soon-wrapper-transparent {
+    display: inline-block;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, .6);
+}
+
+.coming-soon-wrapper + .coming-soon-wrapper,
+.coming-soon-wrapper-transparent + .coming-soon-wrapper-transparent {
+    margin-left: 16px;
+}
+
+.coming-soon-time {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.coming-soon-date {
+    font-size: 16px;
+    display: block;
+}
+
+@media (max-width: 767px) {
+    .coming-soon-wrapper,
+    .coming-soon-wrapper-transparent {
+        padding: 10px;
+    }
+    .coming-soon-wrapper + .coming-soon-wrapper,
+    .coming-soon-wrapper-transparent + .coming-soon-wrapper-transparent {
+        margin-left: 8px;
+    }
+    .coming-soon-time {
+        font-size: 22px;
+        font-weight: 700;
+    }
+    .coming-soon-date {
+        font-size: 13px;
+        display: block;
+    }
+}

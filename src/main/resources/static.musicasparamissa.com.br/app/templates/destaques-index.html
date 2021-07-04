@@ -1,0 +1,25 @@
+<div class="section section-both section-sm section-dark">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h3 class="text-theme title-xl title-section text-uppercase hr">Próximas Semanas</h3>
+        <p class="text-theme lead lead-section">Abaixo você pode acessar as missas em destaque nas próximas semanas.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2">
+        <div id="owl-our-work" class="owl-carousel">
+          {% for d in destaques %}
+            <div class="item">
+              <a href="{{d.liturgia.absoluteUrl }}" class="img-wrapper rounded">
+                <img class="img-responsive img-rounded" src="{{ STATICPATH }}{{ d.liturgia.img300url }}" alt="theme-img">
+              </a>
+              <a href="{{d.liturgia.absoluteUrl }}" class="category">{{ d.liturgia.titulo }}</a>
+              <p class="meta hidden-md hidden-sm">{{ d.data | datetimeformat('%d/%m/%Y') }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

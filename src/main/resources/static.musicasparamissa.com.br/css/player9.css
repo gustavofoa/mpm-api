@@ -1,0 +1,82 @@
+body.player-9 {
+    padding-top: 61px !important;
+}
+#nprogress .spinner {
+    height: 55px;
+    width: 55px;
+    line-height: 55px;
+}
+#nprogress .spinner-icon {
+    margin: 18px auto 0 auto;
+}
+.rf-player.player-9 {
+    height: 55px;
+}
+.rf-player.player-9,
+.rf-player .mobile-apps-store {
+    /*background: #e9eff2;*/
+}
+.rf-player.player-9 .rf-padding-control {
+    padding-left: 147px;
+}
+.rf-player.player-9 .rf-playing-now {
+    color: #000;
+    font-size: 12px;
+    height: 55px;
+    line-height: 55px;
+}
+.rf-player.player-9 .rf-twitter {
+    left: 116px;
+    top: 16px;
+}
+.rf-player.player-9 .rf-facebook {
+    left: 90px;
+    top: 16px;
+}
+.rf-player.player-9 .rf-player-container {
+    width: 85px;
+    height: 55px;
+}
+/*.rf-player.player-9 .rf-player-container .rf-player-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 85px;
+    z-index: 0;
+    background-image: url("../images/player/9/background.png");
+}*/
+
+.rf-player.player-9 .rf-player-container .rf-player-play-pause {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 35px;
+	cursor: pointer;
+	visibility: hidden;
+	z-index: 0;
+}
+.rf-player.player-9 .rf-player-container .rf-player-play { background-image: url("../images/player/9/playButton.png"); }
+.rf-player.player-9 .rf-player-container .rf-player-play:hover { background-image: url("../images/player/9/playButtonOver.png"); }
+.rf-player.player-9 .rf-player-container .rf-player-pause { background-image: url("../images/player/9/pauseButton.png"); }
+.rf-player.player-9 .rf-player-container .rf-player-pause:hover { background-image: url("../images/player/9/pauseButtonOver.png"); }
+.rf-player.player-9 .rf-player-container .rf-player-play-pause.active { visibility: visible; z-index: 10; }
+
+.rf-player.player-9 .rf-player-container .rf-player-volume {
+	position: absolute;
+	top: 0;
+	left: 41px;
+}
+.rf-player.player-9 .rf-player-container .rf-player-volume-background {
+	width: 39px;
+	z-index: 1;
+	background-image: url("../images/player/9/volumeSliderRail.png");
+}
+.rf-player.player-9 .rf-player-container .rf-player-volume-meter {
+	z-index: 2;
+	background-image: url("../images/player/9/volumeSliderProgress.png");
+}
+.rf-player.player-9 .rf-player-container .rf-player-volume-area {
+	width: 39px;
+	z-index: 3;
+	cursor: pointer;
+}

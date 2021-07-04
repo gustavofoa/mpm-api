@@ -1,0 +1,67 @@
+<!-- NAVBAR -->
+    <!--===============================================================-->
+    <div id="header">
+      <nav id="nav" class="navbar navbar-default navbar-fixed-top">
+
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><img class="img-responsive" src="{{ STATICPATH }}/images/logo/logoMpM-300x223.png" alt="theme-img"></a>
+          </div>
+
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+
+              <!-- PARTES COMUNS DA MISSA -->
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">PARTES FIXAS DA MISSA</a>
+                  <ul class="dropdown-menu dropdown-menu-left" role="menu">
+                  {% for categoria in partesComuns %}
+                    <li><a href="/musicas-de/{{ categoria.slug }}">{{ categoria.nome }}</a></li>
+                  {% endfor %}
+                  </ul>
+                </li>
+
+
+            <!-- TEMPOS LITÚRGICOS -->
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tempos Litúrgicos</a>
+                <ul class="dropdown-menu dropdown-menu-left" role="menu">
+                {% for categoria in tempos %}
+                  <li><a href="/musicas-de/{{ categoria.slug }}">{{ categoria.nome }}</a></li>
+                {% endfor %}
+                </ul>
+              </li>
+
+              <!-- SUGESTÕES SOLENIDADES, FESTAS E OUTRAS -->
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">SOLENIDADES, FESTAS E OUTRAS</a>
+                <ul class="dropdown-menu dropdown-menu-left" role="menu">
+                  <li><a href="/musicas-de/solenidades">SOLENIDADES</a></li>
+                  <li><a href="/musicas-de/festas-liturgicas">FESTAS LITÚRGICAS</a></li>
+                  <li><a href="/musicas-de/semana-santa">SEMANA SANTA</a></li>
+                  <li><a href="/musicas-de/domingo-de-pascoa">DOMINGO DE PÁSCOA</a></li>
+                  <li><a href="/musicas-de/outras-missas">OUTRAS SUGESTÕES</a></li>
+                </ul>
+              </li>
+
+
+              <!-- LOGIN -->
+              <li>
+                <a href="https://minhas.musicasparamissa.com.br/" role="button">LOGIN</a>
+              </li>
+
+              {% include 'search-field.html' %}
+
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+    <!-- NAVBAR END -->

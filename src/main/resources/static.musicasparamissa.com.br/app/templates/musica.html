@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block title %}{{ musica.nome }} - Músicas para Missa{% endblock %}
+
+{% block imageTag %}
+{% if musica.tem_imagem %}
+<meta property="og:image" content="{{ STATICPATH }}/images/musicas/{{ musica.slug }}.png" />
+<meta property="og:image:type" content="image/png">
+{% else %}
+<meta property="og:image" content="{{ STATICPATH }}/images/MpMFace.png" />
+<meta property="og:image:type" content="image/png">
+{% endif %}
+{% endblock %}
+
+{% block urlTag %}
+<link rel="canonical" href="https://musicasparamissa.com.br{{musica.get_absolute_url}}" />
+<meta property="og:url" content="https://musicasparamissa.com.br{{musica.get_absolute_url}}" />
+{% endblock %}
+
+{% block titleTag %}<meta property="og:title" content="{{ musica.nome }} - Músicas para Missa" />{% endblock %}
+{% block descriptionTag %}<meta property="og:description" content="{{ musica.letra_inicio }}" />{% endblock %}
+
+
+{% block content %}
+
+{% include 'banners/banner-adsense-top.html' %}
+
+{% include 'email-header.html' %}
+
+{% include 'container-default.html' %}
+
+
+<h1 id='titulo-musica'>{{ musica.nome }}</h1>
+{% if musica.get_video_code %}
+<iframe type="text/html" width="100%" height="350" frameborder="0" src="https://www.youtube.com/embed/{{ musica.get_video_code }}">
+</iframe>
+{% endif %}
+
+
+<div class="row row-tabs" role="tabpanel">
+
+  <div class="star-ratings top-right rgt" data-id="{{ musica.slug }}">
+      <div class="sr-stars sr-star gray">
+          <div class="sr-fuel sr-star yellow"></div>
+          <!-- sr-fuel --><a href="#1"></a><a href="#2"></a><a href="#3"></a><a href="#4"></a><a href="#5"></a>
+      </div>
+      <!-- sr-stars -->
+      <div class="sr-legend">
+        <div vocab="https://schema.org/" typeof="Blog">
+          <div property="aggregateRating" typeof="AggregateRating">
+            {{ musica.get_legend | safe }}
+            <meta property="bestRating" content="5"/>
+            <meta property="worstRating" content="1"/>
+          </div>
+        </div>
+      </div>
+      <!-- sr-legend -->
+  </div>
+  <!-- star-ratings -->
+
+    <div class="tabs-top">
+	  <ul class="nav nav-tabs">
+  		<li class="active">
+  	  	  <a data-toggle="tab" href="#letra">Letra</a>
+  		</li>
+  		<li>
+  	  	  <a data-toggle="tab" href="#cifra">Cifra</a>
+  		</li>
+  		<li>
+  	  	  <a data-toggle="tab" href="#info">Info</a>
+  		</li><!--
+  		<li>
+  	  	  <a data-toggle="tab" href="#cat">Categorias</a>
+  		</li>-->
+    </ul>
+
+	  <div class="tab-content">
+  		<div id="letra" class="tab-pane fade in active">
+        <div class="btn-group btn-group-sm" role="group">
+          <button id="remove-font-size-letra" type="button" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn btn-default btn-lg disabled">
+            <span class="glyphicon glyphicon-text-size" aria-hidden="true"></span>
+          </button>
+          <button id="add-font-size-letra" type="button" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <button id="print-letra" type="button" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div id='div-letra'>
+          {{ musica.letra | safe }}
+        </div>
+      </div>
+  		<div id="cifra" class="tab-pane fade">
+        <div class="btn-group btn-group-sm" role="group">
+          <button id="remove-font-size-cifra" type="button" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn btn-default btn-lg disabled">
+            <span class="glyphicon glyphicon-text-size" aria-hidden="true"></span>
+          </button>
+          <button id="add-font-size-cifra" type="button" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <button id="print-cifra" type="button" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <button id="remove-meio-tom-cifra" type="button" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>½
+          </button>
+          <button type="button" class="btn btn-default btn-lg disabled">
+            Tom
+          </button>
+          <button id="add-meio-tom-cifra" type="button" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>½
+          </button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+        </div>
+    			<pre id='div-cifra'>
+    				{{ musica.cifra | safe }}
+    			</pre>
+  		</div>
+  		<div id="info" class="tab-pane fade">{{ musica.info | safe }}</div><!--
+  		<div id="cat" class="tab-pane fade">
+  			<ul>
+  			{% for categoria in musica.categorias.all %}
+  			    <li><a href="/musicas-de/{{ categoria.slug }}">{{ categoria }}</a></li>
+  			{% endfor %}
+  			</ul>
+  		</div>-->
+  
+	  </div>
+  </div>
+</div>
+{% include 'banners/banner-adsense-bottom.html' %}
+
+{% include 'proximas-semanas.html' %}
+
+{% endblock %}
+
+{% block jsImport %}
+<script src="{{ STATICPATH }}/js/musica-tools.min.js"></script>
+{% endblock %}

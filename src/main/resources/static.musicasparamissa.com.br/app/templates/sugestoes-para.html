@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ diaLiturgico.titulo }} - Músicas para Missa{% endblock %}
+
+{% block imageTag %}<meta property="og:image" content="{{ STATICPATH }}{{ diaLiturgico.imgUrl }}" />{% endblock %}
+{% block urlTag %}
+<link rel="canonical" href="https://musicasparamissa.com.br{{ diaLiturgico.absoluteUrl }}" />
+<meta property="og:url" content="https://musicasparamissa.com.br{{ diaLiturgico.absoluteUrl }}" />
+{% endblock %}
+
+{% block titleTag %}<meta property="og:title" content="Músicas para {{ diaLiturgico.titulo }}" />{% endblock %}
+{% block descriptionTag %}<meta property="og:description" content="Configura nossas sugestões de músicas para a missa de {{ diaLiturgico.titulo }}." />{% endblock %}
+
+{% block content %}
+
+{% include 'email-header.html' %}
+
+{% include 'banners/banner-adsense-top.html' %}
+
+{% include 'container-default.html' %}
+
+
+<h2 style="text-align:center;">{{ diaLiturgico.titulo }}</h2>
+
+{% for dt in datas %}
+<h3 style="text-align:center;">{{ dt.data | datetimeformat('%d/%m/%Y') }}</h3>
+{% endfor %}
+
+<img class="img-responsive center" src="{{ STATICPATH }}{{ diaLiturgico.img300url }}" />
+
+<p style="text-align:center;">{% autoescape off %}{{ diaLiturgico.introducao }}{% endautoescape %}</p>
+
+{% if saturday %}
+  <p style="color: red;">Importante! Confira com o celebrante se a liturgia será esta de sábado ou a de domingo, pois aos sábados, geralmente se utiliza a liturgia de domingo se a missa for a noite.</p>
+{% endif %}
+
+<div class="panel-group accordion nav-side" id="accorside1">
+  <div class="panel accordion-group">
+
+    {% for item in items %}
+      {% if item.formatedTexto or item.musicas | length > 0 %}
+        <div class="accordion-heading accordion-collapse-in">
+          <a class="active accordion-toggle icon-toggle" data-toggle="collapse" data-parent="#accorside{{ item.posicao }}" href="#accorside-{{ item.posicao }}">
+            {% if item.formatedTexto %}<i class="fa fa-font"></i>
+            {% elif item.musicas %}<i class="fa fa-microphone"></i>{% endif %}
+            {{ item.titulo }}
+          </a>
+        </div>
+        <div id="accorside-{{ item.posicao }}" class="accordion-body collapse">
+          <div class="accordion-inner">
+            <div class="panel-body">
+
+            {% if item.formatedTexto %}
+              {% autoescape off %}
+                {{ item.formatedTexto }}
+              {% endautoescape %}
+            {% elif item.musicas %}
+
+              <ul class="list-unstyled">
+                {% for mus in item.musicas %}
+                <div class="star-ratings top-right rgt">
+                  <div class="sr-stars sr-star gray">
+                    <div class="sr-fuel sr-star yellow" data-star="{{ mus.slug }}"></div>
+                    <!-- sr-fuel --><a href="#1"></a><a href="#2"></a><a href="#3"></a><a href="#4"></a><a href="#5"></a>
+                  </div>
+                </div>
+                  <li>
+                  <a href="{{ mus.absoluteUrl }}" target="_blank">{{ mus.nome }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+
+              {% if item.avulsas && item.categorias %}
+                {% for ct in item.categorias %}
+                  <div style="text-align: center; color: #DD0202;">
+                    <a href="{{ ct.absoluteUrl }}" target="_blank">Confira AQUI mais sugestões de {{ ct.nome }}</a>
+                  </div>
+                {% endfor %}
+              {% endif %}
+
+            {% endif %}
+          </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+  </div>
+</div>
+
+
+{% include 'banners/banner-adsense-bottom.html' %}
+
+{% include 'proximas-semanas.html' %}
+
+{% endblock %}

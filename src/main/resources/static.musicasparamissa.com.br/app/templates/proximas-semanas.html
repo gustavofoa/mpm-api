@@ -1,0 +1,44 @@
+
+<div class="container">
+  <div class="wrapper-row">
+    <div class="row">
+      <div class="col-sm-3 col-md-7">
+        <h3 class="title-sm hr-full">Missas em destaque</h3>
+        <div class="row">
+          <div class="col-md-6">
+            {% if destaques and destaques[0] %}
+            <div class="post-xs-side">
+              <a href="{{ destaques[0].liturgia.absoluteUrl }}"><img class="img-responsive" src="{{ STATICPATH }}{{ destaques[0].liturgia.img80x80url }}" alt="theme-img"></a>
+                <a href="{{ destaques[0].liturgia.absoluteUrl }}" class="category">{{ destaques[0].liturgia.titulo }}</a>
+                <p class="meta hidden-md hidden-sm">{{ destaques[0].data | datetimeformat('%d/%m/%Y') }}</p>
+            </div>
+            {% endif %}
+            {% if destaques and destaques[1] %}
+            <div class="post-xs-side">
+              <a href="{{ destaques[1].liturgia.absoluteUrl }}"><img class="img-responsive" src="{{ STATICPATH }}{{ destaques[1].liturgia.img80x80url }}" alt="theme-img"></a>
+                <a href="{{ destaques[1].liturgia.absoluteUrl }}" class="category">{{ destaques[1].liturgia.titulo }}</a>
+                <p class="meta hidden-md hidden-sm">{{ destaques[1].data | datetimeformat('%d/%m/%Y') }}</p>
+            </div>
+            {% endif %}
+          </div>
+          <div class="col-md-6">
+            {% if destaques and destaques[2] %}
+            <div class="post-xs-side">
+              <a href="{{destaques[2].liturgia.absoluteUrl }}"><img class="img-responsive" src="{{ STATICPATH }}{{ destaques[2].liturgia.img80x80url }}" alt="theme-img"></a>
+                <a href="{{destaques[2].liturgia.absoluteUrl }}" class="category">{{ destaques[2].liturgia.titulo }}</a>
+                <p class="meta hidden-md hidden-sm">{{ destaques[2].data | datetimeformat('%d/%m/%Y') }}</p>
+            </div>
+            {% endif %}
+            {% if destaques and destaques[3] %}
+            <div class="post-xs-side">
+              <a href="{{destaques[3].liturgia.absoluteUrl }}"><img class="img-responsive" src="{{ STATICPATH }}{{ destaques[3].liturgia.img80x80url }}" alt="theme-img"></a>
+                <a href="{{destaques[3].liturgia.absoluteUrl }}" class="category">{{ destaques[3].liturgia.titulo }}</a>
+                <p class="meta hidden-md hidden-sm">{{ destaques[3].data | datetimeformat('%d/%m/%Y') }}</p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

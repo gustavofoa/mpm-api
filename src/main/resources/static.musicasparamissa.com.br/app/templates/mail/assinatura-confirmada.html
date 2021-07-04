@@ -1,0 +1,38 @@
+{% extends 'mail/base.html' %}
+{% block title %}Confirme se e-mail - Músicas para Missa{% endblock %}
+{% block content %}
+
+<center><img class="aligncenter" src="{{ STATICPATH }}/images/logo/logoMpM-300x223.png" alt="" /></center>
+<h1 class="entry-title" style="font-size: 50px; text-align: center;">ASSINATURA CONFIRMADA!</h1>
+<p style="text-align: center;">UFA! Após esses passos chatos você já está inscrito para receber nossas sugestões de músicas para missa.</p>
+
+<h2 style="text-align: center;">Reforçando ...</h2>
+<p style="text-align: center;">Adicione o email <strong>sugestoes@musicasparamissa.com.br</strong> na sua lista de contatos para evitar que nossos e-mails vão para sua caixa de spams.</p>
+
+<h3 style="text-align: center; padding-top: 40px;">Ah! Já estava me esquecendo ...</h3>
+<p style="text-align: center;">Que tal compartilhar com seus amigos que eles também podem receber estas sugestões? Basta clicar nos botões abaixo e compartilhar!</p>
+&nbsp;
+<center><table style="text-align: center;">
+<tbody>
+<tr style="border: 30px solid white;">
+<td style="border: 30px solid white;"><a class="btn btn-twitter btn-block" href="https://twitter.com/intent/tweet?original_referer=https://musicasparamissa.com.br&source=tweetbutton&text=Acabei de me cadastrar para receber sugestões de músicas para missa gratuitamente. Cadastre-se também aqui ~> &url=https://musicasparamissa.com.br" target="_blank"><i class="fa fa-twitter"></i>| Divulge no Twitter!</a></td>
+<td style="border: 30px solid white;"><a class="btn btn-facebook btn-block" href="https://www.facebook.com/sharer.php?u=https://musicasparamissa.com.br/" target="_blank"><i class="fa fa-facebook"></i>| Compartilhe no Facebook!</a></td>
+</tr><!--http://ctt.ec/8f6aT-->
+<tr>
+<td style="border: 30px solid white;"><a class="btn btn-google-plus btn-block" href="https://plus.google.com/share?url=https://musicasparamissa.com.br/" target="_blank"><i class="fa fa-google-plus"></i>| Compartilhe no Google+!</a></td>
+<td style="border: 30px solid white;"><a class="btn btn-linkedin btn-block" href="https://www.linkedin.com/cws/share?url=https://musicasparamissa.com.br/" target="_blank"><i class="fa fa-linkedin"></i>| Compartilhe no LinkedIn!</a></td>
+</tr>
+</tbody>
+</table></center>
+&nbsp;
+<p style="text-align: center;">(Você ainda poderá editar a mensagem antes de publicá-la.)</p>
+
+<h3 style="text-align: center; padding-top: 40px;"></h3>
+
+
+
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="{{ STATICPATH }}/js/bootstrap.min.js"></script>
+<script src="{{ STATICPATH }}/js/bootswatch.js"></script>
+
+{% endblock %}

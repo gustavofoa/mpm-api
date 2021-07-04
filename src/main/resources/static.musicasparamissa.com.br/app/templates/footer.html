@@ -1,0 +1,52 @@
+<!-- SECTION FOOTER -->
+<!--===============================================================-->
+<div class="section-heading-page">
+  <div class="container">
+    <div class="row">
+
+      <!--FOOTER MPM-->
+      <div class="col-sm-3 col-xs-12">
+        <center>
+          <div class="logo-footer text-theme">
+            <img class="img-responsive" src="{{ STATICPATH }}/images/logo/logoMpM-300x223.png" alt="theme-img">
+          </div>
+          <p class="text-theme">Servir ao Senhor é uma grande honra oferecida pelo Espírito Santo através dos nossos dons, no nosso caso, a música!</p>
+          <div class="text-theme">
+            <ul class="list-inline">
+              <li><a href="https://facebook.com/MusicasParaMissa" target="_blank"><i class="fa fa-facebook fa-round"></i></a></li>
+              <li><a href="https://twitter.com/musicasmissa" target="_blank"><i class="fa fa-twitter fa-round"></i></a></li>
+            </ul>
+          </div>
+        </center>
+      </div>
+
+      <!--FOOTER CALENDAR-->
+      <div class="col-sm-3 col-xs-12">
+        <h3 class="text-theme title-sm hr-left">Qual o dia da missa?</h3>
+        <center>
+          <div id="calendar-footer"></div>
+        </center>
+      </div>
+
+      {% include 'banners/banner-curso-footer.html' %}
+
+      {% include 'email-footer.html' %}
+
+    </div>
+  </div>
+</div>
+<!--SECTION FOOTER BOTTOM -->
+<!--===============================================================-->
+<div class="section footer-bottom">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center col-footer-bottom">
+        <a id="scroll-top" href="#"><i class="fa fa-angle-up fa-2x"></i></a>
+        <p class="copyright" style="white-space: normal;">2013-{{ current_year }} &copy; Músicas para Missa - Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% include 'js-loader.html' %}

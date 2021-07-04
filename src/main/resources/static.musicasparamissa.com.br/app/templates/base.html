@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<title>{% block title %}Músicas para Missa{% endblock %}</title>
+	{% include 'header.html' %}
+
+	{% block imageTag %}
+	<meta property="og:image" content="{{ STATICPATH }}/images/MpMFace.png" />
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:width" content="843">
+	<meta property="og:image:height" content="504">
+	{% endblock %}
+	{% block urlTag %}<meta property="og:url" content="https://musicasparamissa.com.br/" />{% endblock %}
+	{% block titleTag %}<meta property="og:title" content="Músicas para Missa" />{% endblock %}
+	{% block descriptionTag %}<meta property="og:description" content="Sugestões de músicas para missas." />{% endblock %}
+
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K42RLTB');</script>
+	<!-- End Google Tag Manager -->
+
+</head>
+<body class="body-nav-fixed-menu-top">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K42RLTB"
+				  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  <div class="wrapper-body">
+		{% include 'navbar.html' %}
+    {% block content %}{% endblock %}
+
+			          </div>
+			        </div>
+			      </div>
+			    </div>
+					{% block sub %}{% endblock %}
+
+
+					{% include 'banners/banner-adsense-bottom.html' %}
+
+
+		    </div>
+
+			  <!-- GRID POSTS END -->
+			  <!--===============================================================-->
+				{% include 'sidebar.html' %}
+			</div>
+		</div>
+	</div>
+
+	{% include 'footer.html' %}
+	{% block jsImport %}{% endblock %}
+
+</body>

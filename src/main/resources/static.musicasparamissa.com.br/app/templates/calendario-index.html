@@ -1,0 +1,25 @@
+<!-- CALENDÁRIO PÁGINA INTEIRA! -->
+<!--===============================================================-->
+<div class="section section-both section-sm section-dark">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-5">
+        <center><div id="calendar"></div></center>
+      </div>
+      <div class="col-sm-6 col-sm-offset-1">
+        <h3 class="text-theme title-lg">Clique no dia da Missa!</h3>
+        <p class="text-theme">Você verá sugestões de músicas e a liturgia do dia selecionado.</p>
+        <ul class="text-theme list-unstyled list-md">
+          <li><i class="fa fa-check colored"></i>Sugestões de músicas para a missa do dia.</li>
+          <li><i class="fa fa-check colored"></i>Leituras da liturgia da palavra.</li>
+          <li><i class="fa fa-check colored"></i>Músicas para todos os momentos da missa.</li>
+          <li><i class="fa fa-check colored"></i>Seguindo o tempo litúrgico</li>
+        </ul>
+        {% if destaques %}
+        <a style="white-space: normal;" href="{{ destaques[0].liturgia.absoluteUrl }}" class="text-theme btn btn-lg btn-primary"><i class="fa fa-rocket"></i>{{ destaques[0].liturgia.titulo }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Importante! é necessário incluir o footer-calendario.html no final da página -->

@@ -1,0 +1,27 @@
+{% if posts %}
+<div class="section section-md section-both">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8 text-center">
+        <h3 class="title-lg title-section hr text-uppercase">Confira os posts do nosso blog!</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+        <div id="owl-our-work" class="owl-carousel">
+          {% for post in posts %}
+          <div class="item">
+            <a href="{{post.url}}" class="img-wrapper rounded">
+              <img class="img-responsive img-rounded" src="{{post.imagem}}" alt="theme-img">
+            </a>
+            <div class="caption-portfolio">
+              <h3 class="text-theme title-xs">{{post.titulo}}</h3>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

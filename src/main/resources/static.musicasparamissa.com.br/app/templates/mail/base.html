@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<link rel="stylesheet" href="{{ STATICPATH }}/css/bootstrap.css" media="screen">
+<link rel="stylesheet" href="{{ STATICPATH }}/css/bootswatch.css">
+<link rel="stylesheet" href="{{ STATICPATH }}/css/mail-style.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ STATICPATH }}/css/social-buttons.css">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta property="og:title" content="Sugestões de Músicas para Missa" />
+<meta property="og:description" content="Receba GRATUITAMENTE sugestões de músicas para missa por e-mail!" />
+<meta property="og:site_name" content="Músicas para Missa" />
+<meta property="og:image" content="{{ STATICPATH }}/images/MpMFace.png">
+
+<title>Confirme seu e-mail para receber sugestões de Músicas para Missa</title>
+
+</head>
+<body>
+<div class="container">
+
+  {% block content %}{% endblock %}
+
+</div>
+<script>
+    (function(w,d,t,u,n,a,m){w['MauticTrackingObject']=n;
+        w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)},a=d.createElement(t),
+        m=d.getElementsByTagName(t)[0];a.async=1;a.src=u;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//mautic.musicasparamissa.com.br/mtc.js','mt');
+
+    mt('send', 'pageview');
+</script>
+</body>
+</html>

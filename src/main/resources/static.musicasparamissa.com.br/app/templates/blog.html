@@ -1,0 +1,24 @@
+<div class="section section-sm section-top section-dark">
+
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <h3 class="text-theme title-xl title-section text-uppercase">Nosso blog!</h3><br />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <div id="owl-our-work" class="owl-carousel">
+        {% for p in posts %}
+          <div class="item">
+            <a href="{{ p.url }}" class="img-wrapper rounded">
+              <img class="img-responsive img-rounded" src="{{ p.imagem }}" alt="theme-img">
+            </a>
+            <a href="{{ p.url }}" class="category"><h3>{{ p.titulo }}</h3></a>
+            <p class="meta hidden-md hidden-sm">{{ p.autor }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</div>

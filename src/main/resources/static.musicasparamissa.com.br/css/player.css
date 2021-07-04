@@ -1,0 +1,105 @@
+.rf-player {
+    overflow: hidden;
+}
+.rf-player .offline-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -21px;
+    margin-top: -7px;
+    opacity: 0.85;
+}
+.rf-player.rf-player-fixed {
+    position: fixed;
+    z-index: 1000;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.15);
+}
+.rf-player .rf-width-control {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 5px;
+}
+.rf-player .rf-padding-control {
+    position: relative;
+    width: 100%;
+}
+.rf-player .rf-player-container {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.rf-player .rf-player-container div {
+    height: 100%;
+}
+.rf-player .rf-playing-now {
+    overflow: hidden;
+}
+.rf-player .rf-facebook {
+    display: block;
+    position: absolute;
+    width: 21px;
+}
+.rf-player .rf-twitter {
+    display: block;
+    position: absolute;
+    width: 21px;
+}
+.rf-player .rf-facebook img, .rf-player .rf-twitter img {
+    display: block;
+    width: 100%;
+}
+
+.rf-player .mobile-apps-store {
+	position: absolute;
+	top: 0;
+	right: 0px;
+	height: 100%;
+}
+.rf-player .mobile-apps-store .apps-store-content {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+.rf-player .mobile-apps-store .apps-store-content .app-list {
+	display: table-cell;
+	vertical-align: middle;
+}
+.rf-player .mobile-apps-store .apps-store-content .app-list .app-store-link {
+	display: inline-block;
+	width: 28px;
+	height: 28px;
+	margin-left: 5px;
+	margin-top: 3px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 50px 28px;
+	border-radius: 14px;
+}
+.rf-player .mobile-apps-store .apps-store-content .app-list .app-store-link.app-store-1 {
+	background-image: url('../img/app-android.png');
+}
+.rf-player .mobile-apps-store .apps-store-content .app-list .app-store-link.app-store-2 {
+	background-image: url('../img/app-ios.png');
+}
+.rf-player .mobile-apps-store .apps-store-content .app-list .app-store-link.app-store-3 {
+	background-image: url('../img/app-wphone.png');
+}
+.rf-player .mobile-apps-store .apps-store-content .app-list .app-store-link.app-store-5 {
+	background-image: url('../img/app-face.png');
+	border-radius: 0px;
+}
+
+@media (min-width: 1120px) {
+    .rf-player .rf-width-control {
+        padding: 0;
+    }
+}
+@media (max-width: 359px) {
+    #player-top .player-playing-now {
+        display: none;
+    }
+}

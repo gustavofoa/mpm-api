@@ -1,0 +1,39 @@
+
+#cifra {
+	font-size: 20px;
+	background: white;
+	font-family: monospace;
+}
+
+pre {
+	background: white;
+	border-width: 0px;
+}
+
+#cifra b {
+	color: #FF0000;
+	font-weight: bold;
+}
+
+.center {
+    margin: auto;
+    width: 300px;
+    padding: 20px;
+}
+
+@media (max-width: 500px) {
+	pre {
+		font-size: 12px;
+		padding: 0px;
+	}
+	.wrapper-post-text {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	.wrapper-post {
+		border: none;
+	}
+	.tab-content {
+		padding: 10px;
+	}
+}

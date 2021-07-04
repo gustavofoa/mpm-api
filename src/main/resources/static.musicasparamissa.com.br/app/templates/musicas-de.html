@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Músicas de {{ categoria.nome }} - Músicas para Missa{% endblock %}
+
+{% block content %}
+
+{% include 'email-header.html' %}
+
+{% include 'banners/banner-adsense-top.html' %}
+
+{% include 'container-default.html' %}
+
+
+
+{% if categoriaMae %}
+<h2 class="title-sm text-uppercase hr-left text-theme"><a href="/musicas-de/{{ categoriaMae.slug }}">{{ categoriaMae.nome }}</a><h2>
+{% endif %}
+
+<h1>{{ categoria.nome }}</h1>
+
+<ul>
+{% for filha in categoria.children %}
+    <h4><li><a href="/musicas-de/{{ filha.slug }}">{{ filha.nome }}</a></li></h4>
+{% endfor %}
+</ul>
+
+{% if not categoria.children %}
+<!--<h2>Músicas</h2>-->
+
+<ul>
+{% for musica in musicas %}
+
+    <div class="star-ratings top-right rgt">
+      <div class="sr-stars sr-star gray">
+        <div class="sr-fuel sr-star yellow" data-star="{{ musica.slug }}"></div>
+        <!-- sr-fuel --><a href="#1"></a><a href="#2"></a><a href="#3"></a><a href="#4"></a><a href="#5"></a>
+      </div>
+    </div>
+
+    <a href="/musica/{{ musica.slug }}">
+      <h4><li>{{ musica.nome }}</li></h4>
+    <p>{{ musica.letraInicio | safe }}</p>
+    </a>
+{% endfor %}
+</ul>
+
+{% endif %}
+
+
+{% include 'banners/banner-adsense-bottom.html' %}
+
+{% include 'proximas-semanas.html' %}
+
+{% endblock %}
