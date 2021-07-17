@@ -33,7 +33,13 @@ public class ApiSiteController {
     @GetMapping("/artistas")
     public List<ArtistaDto> list() {
 
-        return artistaService.list().stream().map(artista -> new ArtistaDto(artista)).collect(Collectors.toList());
+        return artistaService.list().stream()
+                .map(artista -> new ArtistaDto(artista))
+                .forEach(artistaDto ->
+                        artistaDto.add(linkTo(methodOn(ApiSiteController.class).get(artistaDto.getId())
+                        .withSelfRel()))
+                )
+                .collect(Collectors.toList());
 
     }
 
